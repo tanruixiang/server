@@ -16,7 +16,7 @@ Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` int(11) DEFAULT NULL,
   `c` int(11) GENERATED ALWAYS AS (`a`) VIRTUAL,
-  `p` varchar(20) GENERATED ALWAYS AS (rtrim(`y`)) VIRTUAL,
+  `p` varchar(20) GENERATED ALWAYS AS (mariadb_schema.rtrim(`y`)) VIRTUAL,
   `y` char(20) DEFAULT NULL,
   KEY `p` (`p`,`c`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
@@ -196,7 +196,7 @@ Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` int(11) DEFAULT NULL,
   `c` int(11) GENERATED ALWAYS AS (`a`) VIRTUAL,
-  `p` varchar(20) GENERATED ALWAYS AS (rtrim(`y`)) VIRTUAL,
+  `p` varchar(20) GENERATED ALWAYS AS (mariadb_schema.rtrim(`y`)) VIRTUAL,
   `y` char(20) DEFAULT NULL,
   KEY `p` (`p`,`c`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1

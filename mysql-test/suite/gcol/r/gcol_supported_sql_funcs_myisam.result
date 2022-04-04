@@ -785,7 +785,7 @@ Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
   `b` varchar(10) DEFAULT NULL,
-  `c` varchar(20) GENERATED ALWAYS AS (concat(`a`,',',`b`)) VIRTUAL
+  `c` varchar(20) GENERATED ALWAYS AS (mariadb_schema.concat(`a`,',',`b`)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('value1','value2',default);
 select * from t1;
@@ -1040,7 +1040,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (lpad(`a`,4,' ')) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.lpad(`a`,4,' ')) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('MySQL',default);
 insert into t1 values ('M',default);
@@ -1057,7 +1057,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (ltrim(`a`)) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.ltrim(`a`)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('  MySQL',default);
 insert into t1 values ('MySQL',default);
@@ -1093,7 +1093,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (substr(`a`,1,2)) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.substr(`a`,1,2)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('foobarbar',default);
 select * from t1;
@@ -1234,7 +1234,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(30) GENERATED ALWAYS AS (replace(`a`,'aa','bb')) VIRTUAL
+  `b` varchar(30) GENERATED ALWAYS AS (mariadb_schema.replace(`a`,'aa','bb')) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('maa',default);
 select * from t1;
@@ -1296,7 +1296,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (rpad(`a`,4,'??')) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.rpad(`a`,4,'??')) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('He',default);
 select * from t1;
@@ -1311,7 +1311,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (rtrim(`a`)) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.rtrim(`a`)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('Hello  ',default);
 select * from t1;
@@ -1361,7 +1361,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(5) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (concat(`a`,space(5))) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.concat(`a`,space(5))) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('Hello', default);
 select * from t1;
@@ -1394,7 +1394,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(5) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (substr(`a`,2)) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.substr(`a`,2)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('Hello',default);
 select * from t1;
@@ -1424,7 +1424,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(5) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (substr(`a`,2,2)) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.substr(`a`,2,2)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('Hello',default);
 select * from t1;
@@ -1439,7 +1439,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(15) DEFAULT NULL,
-  `b` varchar(10) GENERATED ALWAYS AS (trim(`a`)) VIRTUAL
+  `b` varchar(10) GENERATED ALWAYS AS (mariadb_schema.trim(`a`)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values (' aa ',default);
 select * from t1;
@@ -2866,7 +2866,7 @@ show create table t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(1024) DEFAULT NULL,
-  `b` varchar(1024) GENERATED ALWAYS AS (decode(encode(`a`,'abc'),'abc')) VIRTUAL
+  `b` varchar(1024) GENERATED ALWAYS AS (mariadb_schema.decode(encode(`a`,'abc'),'abc')) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 values ('MySQL',default);
 select * from t1;

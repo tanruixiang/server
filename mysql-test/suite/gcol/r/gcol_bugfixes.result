@@ -507,7 +507,7 @@ Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` char(1) DEFAULT NULL,
   `b` char(1) DEFAULT NULL,
-  `c` char(2) GENERATED ALWAYS AS (concat(`a`,`b`)) VIRTUAL
+  `c` char(2) GENERATED ALWAYS AS (mariadb_schema.concat(`a`,`b`)) VIRTUAL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a,b) VALUES('1','1');
 SELECT * FROM t1;

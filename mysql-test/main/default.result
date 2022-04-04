@@ -346,7 +346,7 @@ t1	CREATE TABLE `t1` (
   `a` int(11) DEFAULT NULL,
   `b` blob DEFAULT 1,
   `c` blob DEFAULT 'hello',
-  `t` text DEFAULT concat(`a`,`b`,`c`)
+  `t` text DEFAULT mariadb_schema.concat(`a`,`b`,`c`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 insert into t1 (a) values (2);
 insert into t1 (a,b) values (10,"test1");
@@ -756,7 +756,7 @@ CREATE TABLE t1 (a INT DEFAULT CONCAT('1') NOT NULL);
 SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
-  `a` int(11) NOT NULL DEFAULT concat('1')
+  `a` int(11) NOT NULL DEFAULT mariadb_schema.concat('1')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 VALUES (DEFAULT);
 SELECT * FROM t1;
@@ -816,7 +816,7 @@ Note	1265	Data truncated for column 'a' at row 1
 SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
-  `a` int(11) DEFAULT concat('1 ')
+  `a` int(11) DEFAULT mariadb_schema.concat('1 ')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 VALUES (DEFAULT);
 Warnings:
@@ -879,7 +879,7 @@ CREATE TABLE t1 (a VARCHAR(2) DEFAULT CONCAT(0x41) NOT NULL);
 SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
-  `a` varchar(2) NOT NULL DEFAULT concat(0x41)
+  `a` varchar(2) NOT NULL DEFAULT mariadb_schema.concat(0x41)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 VALUES (DEFAULT);
 SELECT * FROM t1;
@@ -901,7 +901,7 @@ CREATE TABLE t1 (a VARCHAR(2) DEFAULT CONCAT(_utf8 0x41) NOT NULL);
 SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
-  `a` varchar(2) NOT NULL DEFAULT concat(_utf8'A')
+  `a` varchar(2) NOT NULL DEFAULT mariadb_schema.concat(_utf8'A')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 VALUES (DEFAULT);
 SELECT * FROM t1;
@@ -912,7 +912,7 @@ CREATE TABLE t1 (a VARCHAR(2) DEFAULT CONCAT(_utf8 X'41') NOT NULL);
 SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
-  `a` varchar(2) NOT NULL DEFAULT concat(_utf8'A')
+  `a` varchar(2) NOT NULL DEFAULT mariadb_schema.concat(_utf8'A')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 VALUES (DEFAULT);
 SELECT * FROM t1;
@@ -2358,7 +2358,7 @@ t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
   `b` varchar(10) DEFAULT left(`a`,1),
   `c` varchar(10) DEFAULT right(`a`,1),
-  `d` varchar(10) DEFAULT substr(`a`,2,2)
+  `d` varchar(10) DEFAULT mariadb_schema.substr(`a`,2,2)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a) VALUES ('abcd');
 SELECT * FROM t1;
@@ -2383,7 +2383,7 @@ Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
   `b` varchar(10) DEFAULT NULL,
-  `c` varchar(20) DEFAULT concat(`a`,`b`)
+  `c` varchar(20) DEFAULT mariadb_schema.concat(`a`,`b`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a,b) VALUES ('a','b');
 SELECT * FROM t1;
@@ -2408,7 +2408,7 @@ SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) DEFAULT replace(`a`,'a','A')
+  `b` varchar(10) DEFAULT mariadb_schema.replace(`a`,'a','A')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a) VALUES ('abc');
 SELECT * FROM t1;
@@ -2468,8 +2468,8 @@ SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) DEFAULT lpad(`a`,10,'.'),
-  `c` varchar(10) DEFAULT rpad(`a`,10,'.')
+  `b` varchar(10) DEFAULT mariadb_schema.lpad(`a`,10,'.'),
+  `c` varchar(10) DEFAULT mariadb_schema.rpad(`a`,10,'.')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a) VALUES ('ab');
 SELECT * FROM t1;
@@ -2481,8 +2481,8 @@ SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) DEFAULT ltrim(`a`),
-  `c` varchar(10) DEFAULT rtrim(`a`)
+  `b` varchar(10) DEFAULT mariadb_schema.ltrim(`a`),
+  `c` varchar(10) DEFAULT mariadb_schema.rtrim(`a`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a) VALUES (' ab ');
 SELECT a, HEX(b), HEX(c) FROM t1;
@@ -2494,7 +2494,7 @@ SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
-  `b` varchar(10) DEFAULT trim(both 'a' from `a`)
+  `b` varchar(10) DEFAULT mariadb_schema.trim(both 'a' from `a`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a) VALUES ('abba');
 SELECT a, b FROM t1;
@@ -3043,7 +3043,7 @@ Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` varchar(10) DEFAULT NULL,
   `b` text DEFAULT encode(`a`,'test'),
-  `c` text DEFAULT decode(`b`,'test')
+  `c` text DEFAULT mariadb_schema.decode(`b`,'test')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 INSERT INTO t1 (a) VALUES ('aaaabbbb');
 SELECT a, HEX(b), c FROM t1;
@@ -3088,7 +3088,7 @@ CREATE OR REPLACE TABLE t1 (a char(2) default concat('A') COLLATE utf8mb4_unicod
 SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
-  `a` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT concat('A')
+  `a` char(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT mariadb_schema.concat('A')
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 DROP TABLE t1;
 create table t1 (a int default 1, b int default (rand()*0+2), c int);

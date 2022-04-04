@@ -144,7 +144,7 @@ SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` char(5) DEFAULT NULL,
-  `v` varchar(5) GENERATED ALWAYS AS (rtrim(`a`)) STORED
+  `v` varchar(5) GENERATED ALWAYS AS (mariadb_schema.rtrim(`a`)) STORED
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 DROP TABLE t1;
 #
@@ -332,7 +332,7 @@ SHOW CREATE TABLE t1;
 Table	Create Table
 t1	CREATE TABLE `t1` (
   `a` char(5) DEFAULT NULL,
-  `v` varchar(5) GENERATED ALWAYS AS (rtrim(`a`)) VIRTUAL,
+  `v` varchar(5) GENERATED ALWAYS AS (mariadb_schema.rtrim(`a`)) VIRTUAL,
   KEY `v` (`v`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 SELECT * FROM t1;
@@ -345,7 +345,7 @@ SHOW CREATE TABLE t2;
 Table	Create Table
 t2	CREATE TABLE `t2` (
   `a` char(5) DEFAULT NULL,
-  `v` varchar(5) GENERATED ALWAYS AS (rtrim(`a`)) VIRTUAL,
+  `v` varchar(5) GENERATED ALWAYS AS (mariadb_schema.rtrim(`a`)) VIRTUAL,
   KEY `v` (`v`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1
 DROP TABLE t2;

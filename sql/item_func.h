@@ -35,6 +35,36 @@ extern "C"				/* Bug in BSDI include file */
 #include <cmath>
 
 
+template<class FUNC>
+FUNC* item_func_create_2_3_args(THD *thd, const LEX_CSTRING &name,
+                                List<Item> *item_list)
+{
+  int arg_count= item_list ? item_list->elements : 0;
+
+  switch (arg_count) {
+  case 2:
+  {
+    Item *param_1= item_list->pop();
+    Item *param_2= item_list->pop();
+    return new (get_thd_memroot(thd)) FUNC(thd, param_1, param_2);
+  }
+  case 3:
+  {
+    Item *param_1= item_list->pop();
+    Item *param_2= item_list->pop();
+    Item *param_3= item_list->pop();
+    return new (get_thd_memroot(thd)) FUNC(thd, param_1, param_2, param_3);
+    break;
+  }
+  default:
+    my_error(ER_WRONG_PARAMCOUNT_TO_NATIVE_FCT, MYF(0), name.str);
+    break;
+  }
+
+  return NULL;
+}
+
+
 class Item_func :public Item_func_or_sum
 {
   void sync_with_sum_func_and_with_field(List<Item> &list);
@@ -56,7 +86,40 @@ protected:
   bool check_argument_types_can_return_text(uint start, uint end) const;
   bool check_argument_types_can_return_date(uint start, uint end) const;
   bool check_argument_types_can_return_time(uint start, uint end) const;
+
+  void print_schema_name_if_needed(String *to) const
+  {
+    const LEX_CSTRING schema_name= schema_name_cstring();
+    if (schema_name.length)
+    {
+      to->append(schema_name);
+      to->append('.');
+    }
+  }
+  void print_maybe_qualified_name(String *to) const
+  {
+    print_schema_name_if_needed(to);
+    to->append(func_name());
+  }
+
 public:
+
+  // Print an error message for a builtin-schema qualified function call
+  static void wrong_param_count_error(const LEX_CSTRING &schema_name,
+                                      const LEX_CSTRING &func_name);
+
+  // Check that the number of arguments is greater or equal to "expected"
+  static bool create_check_args_ge(const LEX_CSTRING &name,
+                                   const List<Item> *item_list,
+                                   uint expected)
+  {
+    if (!item_list || item_list->elements < expected)
+    {
+      my_error(ER_WRONG_PARAMCOUNT_TO_NATIVE_FCT, MYF(0), name.str);
+      return true;
+    }
+    return false;
+  }
 
   table_map not_null_tables_cache;
 

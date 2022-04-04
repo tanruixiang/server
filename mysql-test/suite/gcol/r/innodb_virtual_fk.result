@@ -995,7 +995,7 @@ email_stats	CREATE TABLE `email_stats` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `email_id` int(10) unsigned DEFAULT NULL,
   `date_sent` datetime NOT NULL,
-  `generated_sent_email` varchar(20) GENERATED ALWAYS AS (concat(year(`date_sent`),'-',coalesce(`email_id`,'$'))) VIRTUAL,
+  `generated_sent_email` varchar(20) GENERATED ALWAYS AS (mariadb_schema.concat(year(`date_sent`),'-',coalesce(`email_id`,'$'))) VIRTUAL,
   PRIMARY KEY (`id`),
   KEY `idx_es1` (`email_id`),
   KEY `mautic_generated_sent_date_email` (`generated_sent_email`,`email_id`),

@@ -28,6 +28,7 @@
 #include "field.h"                              /* Derivation */
 #include "sql_type.h"
 #include "sql_time.h"
+#include "sql_schema.h"
 #include "mem_root_array.h"
 
 C_MODE_START
@@ -4821,6 +4822,15 @@ public:
     if (walk_args(processor, walk_subquery, arg))
       return true;
     return (this->*processor)(arg);
+  }
+  /*
+    Built-in schema name, e.g.
+    mariadb_schema, oracle_schema, maxdb_schema
+  */
+  virtual LEX_CSTRING schema_name_cstring() const
+  {
+    // A function does not belong to a built-in schema by default
+    return Lex_cstring();
   }
   /*
     This method is used for debug purposes to print the name of an
