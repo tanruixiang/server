@@ -26,6 +26,8 @@ Warning	1287	The table parameter 'uhd' is deprecated and will be removed in a fu
 CREATE TABLE tbl_b (a INT) ENGINE=Spider COMMENT='use_handler "3"';
 Warnings:
 Warning	1287	The table parameter 'use_handler' is deprecated and will be removed in a future release
+DROP TABLE tbl_a;
+DROP TABLE tbl_b;
 # MDEV-28005 Deprecate Spider plugin variables regarding UDFs
 SET GLOBAL spider_udf_ds_bulk_insert_rows = 1;
 Warnings:
@@ -57,6 +59,35 @@ Warning	1287	'@@spider_udf_ct_bulk_insert_rows' is deprecated and will be remove
 SHOW VARIABLES LIKE "spider_udf_ct_bulk_insert_rows";
 Variable_name	Value
 spider_udf_ct_bulk_insert_rows	1
+# MDEV-28010 Deprecate spider_crd_type and spider_crd_weight
+SET spider_crd_type = 1;
+Warnings:
+Warning	1287	'@@spider_crd_type' is deprecated and will be removed in a future release
+SHOW VARIABLES LIKE "spider_crd_type";
+Variable_name	Value
+spider_crd_type	1
+CREATE TABLE tbl_a (a INT) ENGINE=Spider COMMENT='ctp "1"';
+Warnings:
+Warning	1287	The table parameter 'ctp' is deprecated and will be removed in a future release
+CREATE TABLE tbl_b (a INT) ENGINE=Spider COMMENT='crd_type "1"';
+Warnings:
+Warning	1287	The table parameter 'crd_type' is deprecated and will be removed in a future release
+DROP TABLE tbl_a;
+DROP TABLE tbl_b;
+SET spider_crd_weight = 1;
+Warnings:
+Warning	1287	'@@spider_crd_weight' is deprecated and will be removed in a future release
+SHOW VARIABLES LIKE "spider_crd_weight";
+Variable_name	Value
+spider_crd_weight	1
+CREATE TABLE tbl_a (a INT) ENGINE=Spider COMMENT='cwg "1"';
+Warnings:
+Warning	1287	The table parameter 'cwg' is deprecated and will be removed in a future release
+CREATE TABLE tbl_b (a INT) ENGINE=Spider COMMENT='crd_weight "1"';
+Warnings:
+Warning	1287	The table parameter 'crd_weight' is deprecated and will be removed in a future release
+DROP TABLE tbl_a;
+DROP TABLE tbl_b;
 DROP DATABASE auto_test_local;
 for master_1
 for child2

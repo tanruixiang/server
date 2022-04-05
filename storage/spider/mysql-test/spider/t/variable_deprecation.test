@@ -18,6 +18,9 @@ SHOW VARIABLES LIKE "spider_use_handler";
 eval CREATE TABLE tbl_a (a INT) $MASTER_1_ENGINE COMMENT='uhd "3"';
 eval CREATE TABLE tbl_b (a INT) $MASTER_1_ENGINE COMMENT='use_handler "3"';
 
+DROP TABLE tbl_a;
+DROP TABLE tbl_b;
+
 --echo # MDEV-28005 Deprecate Spider plugin variables regarding UDFs
 SET GLOBAL spider_udf_ds_bulk_insert_rows = 1;
 SHOW VARIABLES LIKE "spider_udf_ds_bulk_insert_rows";
@@ -33,6 +36,23 @@ SHOW VARIABLES LIKE "spider_udf_ct_bulk_insert_interval";
 
 SET GLOBAL spider_udf_ct_bulk_insert_rows = 1;
 SHOW VARIABLES LIKE "spider_udf_ct_bulk_insert_rows";
+
+--echo # MDEV-28010 Deprecate spider_crd_type and spider_crd_weight
+SET spider_crd_type = 1;
+SHOW VARIABLES LIKE "spider_crd_type";
+eval CREATE TABLE tbl_a (a INT) $MASTER_1_ENGINE COMMENT='ctp "1"';
+eval CREATE TABLE tbl_b (a INT) $MASTER_1_ENGINE COMMENT='crd_type "1"';
+
+DROP TABLE tbl_a;
+DROP TABLE tbl_b;
+
+SET spider_crd_weight = 1;
+SHOW VARIABLES LIKE "spider_crd_weight";
+eval CREATE TABLE tbl_a (a INT) $MASTER_1_ENGINE COMMENT='cwg "1"';
+eval CREATE TABLE tbl_b (a INT) $MASTER_1_ENGINE COMMENT='crd_weight "1"';
+
+DROP TABLE tbl_a;
+DROP TABLE tbl_b;
 
 DROP DATABASE auto_test_local;
 
