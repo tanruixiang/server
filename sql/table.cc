@@ -5562,12 +5562,16 @@ void TABLE::init(THD *thd, TABLE_LIST *tl)
   opt_range_condition_rows=0;
   no_cache= false;
   initialize_opt_range_structures();
+
+  file->set_optimizer_costs(thd);
+
   /*
     Update optimizer_cache_cost to ensure that a SET STATEMENT of
     the variable it will work.
   */
   file->set_optimizer_cache_cost((100 - thd->variables.
                                   optimizer_cache_hit_ratio)/100.0);
+
 #ifdef HAVE_REPLICATION
   /* used in RBR Triggers */
   master_had_triggers= 0;
@@ -10154,6 +10158,14 @@ inline void TABLE::initialize_opt_range_structures()
   TRASH_ALLOC(opt_range, s->keys * sizeof(*opt_range));
   TRASH_ALLOC(const_key_parts, s->keys * sizeof(*const_key_parts));
 }
+
+
+double TABLE::OPT_RANGE::index_only_fetch_cost(THD *thd)
+{
+  return (index_only_cost + (double) rows *
+          thd->variables.optimizer_key_copy_cost);
+}
+
 
 /*
   Mark table to be reopened after query
