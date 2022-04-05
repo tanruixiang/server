@@ -57,6 +57,13 @@ Warning	1287	'@@spider_udf_ct_bulk_insert_rows' is deprecated and will be remove
 SHOW VARIABLES LIKE "spider_udf_ct_bulk_insert_rows";
 Variable_name	Value
 spider_udf_ct_bulk_insert_rows	1
+# MDEV-28244 Deprecate spider_xa_register_mode
+SET spider_xa_register_mode = 0;
+Warnings:
+Warning	1287	'@@spider_xa_register_mode' is deprecated and will be removed in a future release
+SHOW VARIABLES LIKE "spider_xa_register_mode";
+Variable_name	Value
+spider_xa_register_mode	0
 DROP DATABASE auto_test_local;
 for master_1
 for child2
