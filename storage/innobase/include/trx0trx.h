@@ -387,13 +387,13 @@ struct trx_lock_t
 					only be modified by the thread that is
 					serving the running transaction. */
 
-	/** Pre-allocated record locks */
-	struct {
-		ib_lock_t lock; byte pad[256];
-	} rec_pool[8];
+  /** Pre-allocated record locks */
+  struct {
+    alignas(CPU_LEVEL1_DCACHE_LINESIZE) ib_lock_t lock;
+  } rec_pool[8];
 
-	/** Pre-allocated table locks */
-	ib_lock_t	table_pool[8];
+  /** Pre-allocated table locks */
+  ib_lock_t table_pool[8];
 
   /** Memory heap for trx_locks. Protected by lock_sys.assert_locked()
   and lock_sys.is_writer() || trx->mutex_is_owner(). */
@@ -889,6 +889,7 @@ public:
 	trx_mod_tables_t mod_tables;	/*!< List of tables that were modified
 					by this transaction */
 	/*------------------------------*/
+	alignas(CPU_LEVEL1_DCACHE_LINESIZE)
 	char*		detailed_error;	/*!< detailed error message for last
 					error, or empty. */
 	ulint		magic_n;
