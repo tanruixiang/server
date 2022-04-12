@@ -11036,6 +11036,10 @@ ha_innobase::commit_inplace_alter_table(
 		DBUG_ASSERT(!ctx0);
 		MONITOR_ATOMIC_DEC(MONITOR_PENDING_ALTER_TABLE);
 		ha_alter_info->group_commit_ctx = NULL;
+		if (table->found_next_number_field
+			&& !altered_table->found_next_number_field) {
+			m_prebuilt->table->persistent_autoinc = 0;
+		}
 		DBUG_RETURN(false);
 	}
 
@@ -11543,6 +11547,8 @@ foreign_fail:
 		row_mysql_unlock_data_dictionary(trx);
 		trx->free();
 		MONITOR_ATOMIC_DEC(MONITOR_PENDING_ALTER_TABLE);
+		/* There is no need to reset dict_table_t::persistent_autoinc
+		as the table is reloaded */
 		DBUG_RETURN(false);
 	}
 
@@ -11702,6 +11708,10 @@ foreign_fail:
 	}
 #endif /* DBUG_OFF */
 	MONITOR_ATOMIC_DEC(MONITOR_PENDING_ALTER_TABLE);
+	if (table->found_next_number_field
+		&& !altered_table->found_next_number_field) {
+		m_prebuilt->table->persistent_autoinc = 0;
+	}
 	DBUG_RETURN(false);
 }
 
