@@ -546,7 +546,6 @@ mysql_pfs_key_t	trx_sys_mutex_key;
 mysql_pfs_key_t	srv_threads_mutex_key;
 mysql_pfs_key_t	thread_mutex_key;
 mysql_pfs_key_t row_drop_list_mutex_key;
-mysql_pfs_key_t	rw_trx_hash_element_mutex_key;
 mysql_pfs_key_t	read_view_mutex_key;
 
 /* all_innodb_mutexes array contains mutexes that are
@@ -2925,23 +2924,6 @@ check_trx_exists(
 		trx = innobase_trx_allocate(thd);
 		thd_set_ha_data(thd, innodb_hton_ptr, trx);
 		return trx;
-	}
-}
-
-/**
-  Gets current trx.
-
-  This function may be called during InnoDB initialisation, when
-  innodb_hton_ptr->slot is not yet set to meaningful value.
-*/
-
-trx_t *current_trx()
-{
-	THD *thd=current_thd;
-	if (likely(thd != 0) && innodb_hton_ptr->slot != HA_SLOT_UNDEF) {
-		return thd_to_trx(thd);
-	} else {
-		return(NULL);
 	}
 }
 
