@@ -330,7 +330,7 @@ constexpr uint32_t TRX_SYS_DOUBLEWRITE_SPACE_ID_STORED_N= 1783657386;
 class rw_trx_hash_t
 {
   /** number of payload elements in array[] */
-  static constexpr size_t n_cells= 128;
+  static constexpr size_t n_cells= 64;
   /** Hash cell chain */
   struct hash_chain
   {

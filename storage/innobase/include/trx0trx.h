@@ -583,6 +583,7 @@ private:
     that it is no longer "active".
   */
 
+  alignas(CPU_LEVEL1_DCACHE_LINESIZE)
   Atomic_counter<int32_t> n_ref;
 public:
   /** State of the trx from the point of view of concurrency control
@@ -706,7 +707,7 @@ public:
 
   /** The locks of the transaction. Protected by lock_sys.latch
   (insertions also by trx_t::mutex). */
-  trx_lock_t lock;
+  alignas(CPU_LEVEL1_DCACHE_LINESIZE) trx_lock_t lock;
 
 #ifdef WITH_WSREP
   /** whether wsrep_on(mysql_thd) held at the start of transaction */
@@ -889,7 +890,6 @@ public:
 	trx_mod_tables_t mod_tables;	/*!< List of tables that were modified
 					by this transaction */
 	/*------------------------------*/
-	alignas(CPU_LEVEL1_DCACHE_LINESIZE)
 	char*		detailed_error;	/*!< detailed error message for last
 					error, or empty. */
 	ulint		magic_n;
