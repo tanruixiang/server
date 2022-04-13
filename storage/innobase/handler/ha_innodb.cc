@@ -12730,6 +12730,8 @@ dict_index_t::record_size_info_t dict_index_t::record_size_info() const
     {
       /* dict_index_add_col() should guarantee this */
       ut_ad(!f.prefix_len || f.fixed_len == f.prefix_len);
+      if (f.prefix_len)
+        field_max_size= f.prefix_len;
       /* Fixed lengths are not encoded
       in ROW_FORMAT=COMPACT. */
       goto add_field_size;
@@ -12783,7 +12785,8 @@ dict_index_t::record_size_info_t dict_index_t::record_size_info() const
     unique columns, result.shortest_size equals the size of the
     node pointer record minus the node pointer column. */
     if (i + 1 == dict_index_get_n_unique_in_tree(this) &&
-        result.shortest_size + REC_NODE_PTR_SIZE >= page_ptr_max)
+        result.shortest_size + REC_NODE_PTR_SIZE + comp ? 0 : 1 >=
+        page_ptr_max)
     {
       result.set_too_big(i);
     }
