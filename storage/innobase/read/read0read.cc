@@ -1,7 +1,7 @@
 /*****************************************************************************
 
 Copyright (c) 1996, 2015, Oracle and/or its affiliates. All Rights Reserved.
-Copyright (c) 2018, 2021, MariaDB Corporation.
+Copyright (c) 2018, 2022, MariaDB Corporation.
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
@@ -167,12 +167,10 @@ For details see: row_vers_old_has_index_entry() and row_purge_poss_sec()
 /**
   Creates a snapshot where exactly the transactions serialized before this
   point in time are seen in the view.
-
-  @param[in,out] trx transaction
 */
-inline void ReadViewBase::snapshot(trx_t *trx)
+inline void ReadViewBase::snapshot()
 {
-  trx_sys.snapshot_ids(trx, &m_ids, &m_low_limit_id, &m_low_limit_no);
+  trx_sys.snapshot_ids(&m_ids, &m_low_limit_id, &m_low_limit_no);
   std::sort(m_ids.begin(), m_ids.end());
   m_up_limit_id= m_ids.empty() ? m_low_limit_id : m_ids.front();
   ut_ad(m_up_limit_id <= m_low_limit_id);
@@ -227,7 +225,7 @@ void ReadView::open(trx_t *trx)
     else
     {
       mysql_mutex_lock(&m_mutex);
-      snapshot(trx);
+      snapshot();
       m_open.store(true, std::memory_order_relaxed);
       mysql_mutex_unlock(&m_mutex);
     }
@@ -244,7 +242,7 @@ void ReadView::open(trx_t *trx)
 */
 void trx_sys_t::clone_oldest_view(ReadViewBase *view) const
 {
-  view->snapshot(nullptr);
+  view->snapshot();
   /* Find oldest view. */
   trx_list.for_each([view](const trx_t &trx) {
                       trx.read_view.append_to(view);
