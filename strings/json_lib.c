@@ -31,8 +31,8 @@ int my_uni_utf16(CHARSET_INFO *cs, my_wc_t wc, uchar *s, uchar *e);
 void json_string_set_str(json_string_t *s,
                          const uchar *str, const uchar *end)
 {
-  s->c_str= str;
-  s->str_end= end;
+  s->c_str= str; //c_str是当前在json串中的位置
+  s->str_end= end; //end 是json串中的结尾位置
 }
 
 
@@ -40,11 +40,11 @@ void json_string_set_cs(json_string_t *s, CHARSET_INFO *i_cs)
 {
   s->cs= i_cs;
   s->error= 0;
-  s->wc= i_cs->cset->mb_wc;
+  s->wc= i_cs->cset->mb_wc; //cs是charset_info 不知道是干啥的  wc是unicode转换函数？
 }
 
 
-static void json_string_setup(json_string_t *s,
+static void json_string_setup(json_string_t *s,  //初始化cs和str
                               CHARSET_INFO *i_cs, const uchar *str,
                               const uchar *end)
 {
@@ -809,11 +809,11 @@ int json_scan_start(json_engine_t *je,
 {
   static const uchar no_time_to_die= 0;
 
-  json_string_setup(&je->s, i_cs, str, end);
-  je->stack[0]= JST_DONE;
-  je->stack_p= 0;
-  je->state= JST_VALUE;
-  je->killed_ptr = (uchar*)&no_time_to_die;
+  json_string_setup(&je->s, i_cs, str, end); //初始化遍历的相关信息
+  je->stack[0]= JST_DONE; // 初始化栈 这里应该是把栈底设置成了JST_DONE
+  je->stack_p= 0; //栈顶
+  je->state= JST_VALUE; //enum json_states里的值 注释说的是parse指向的值的类型？
+  je->killed_ptr = (uchar*)&no_time_to_die;  // 这是干啥的？看起来像是超时用的
   return 0;
 }
 
@@ -902,32 +902,32 @@ int json_read_keyname_chr(json_engine_t *j)
 {
   int c_len, t;
 
-  if ((c_len= json_next_char(&j->s)) > 0)
+  if ((c_len= json_next_char(&j->s)) > 0) // 获取下一个字符的长度(有unicode之类的所以长度不是每次都是1)
   {
     j->s.c_str+= c_len;
-    if (j->s.c_next>= 128 || (t= json_instr_chr_map[j->s.c_next]) <= S_ETC)
+    if (j->s.c_next>= 128 || (t= json_instr_chr_map[j->s.c_next]) <= S_ETC) //检查是否是不合法符号
       return 0;
 
     switch (t)
     {
     case S_QUOTE:
-      for (;;)  /* Skip spaces until ':'. */
+      for (;;)  /* Skip spaces until ':'. */  // 忽略空格直到: 这个应该是右“,所以会一直检查到:
       {
         if ((c_len= json_next_char(&j->s)) > 0)
         {
-          if (j->s.c_next == ':')
+          if (j->s.c_next == ':') // 找到了: 说明后面开始就是value了
           {
             j->s.c_str+= c_len;
             j->state= JST_VALUE;
             return 1;
           }
 
-          if (j->s.c_next < 128 && json_chr_map[j->s.c_next] == C_SPACE)
+          if (j->s.c_next < 128 && json_chr_map[j->s.c_next] == C_SPACE) // 空格忽略
           {
             j->s.c_str+= c_len;
             continue;
           }
-          j->s.error= JE_SYN;
+          j->s.error= JE_SYN; // 不符合Json的定义？
           break;
         }
         j->s.error= json_eos(&j->s) ? JE_EOS : JE_BAD_CHR;
@@ -952,7 +952,7 @@ int json_read_value(json_engine_t *j)
   int t_next, c_len, res;
 
   j->value_type= JSON_VALUE_UNINITIALIZED;
-  if (j->state == JST_KEY)
+  if (j->state == JST_KEY) //把key读掉然后读value? 
   {
     while (json_read_keyname_chr(j) == 0) {}
 
@@ -960,10 +960,10 @@ int json_read_value(json_engine_t *j)
       return 1;
   }
 
-  get_first_nonspace(&j->s, &t_next, &c_len);
+  get_first_nonspace(&j->s, &t_next, &c_len); // { is C_LCURB 
 
   j->value_begin= j->s.c_str-c_len;
-  res= json_actions[JST_READ_VALUE][t_next](j);
+  res= json_actions[JST_READ_VALUE][t_next](j); //t_next?  这里是判断要读的value是什么然后用对应函数读掉，例如如果是个object就读掉一整个object 如果是array就读掉整个array
   j->value_end= j->s.c_str;
   return res;
 }
@@ -1338,7 +1338,7 @@ static int handle_match(json_engine_t *je, json_path_t *p,
 
   DBUG_ASSERT(*p_cur_step < p->last_step);
 
-  if (json_read_value(je))
+  if (json_read_value(je)) // read from je->s
     return 1;
 
   if (json_value_scalar(je))
@@ -1416,16 +1416,16 @@ int json_key_matches(json_engine_t *je, json_string_t *k)
 
 int json_find_path(json_engine_t *je,
                    json_path_t *p, json_path_step_t **p_cur_step,
-                   int *array_counters)
+                   int *array_counters) // p_cur_step指向的是p中的steps数组，也就是指向指针的指针
 {
-  json_string_t key_name;
+  json_string_t key_name;     //  取当前指向的路径一层层找.D 先是. 然后是D
   int res= 0;
 
   json_string_set_cs(&key_name, p->s.cs);
 
   do
   {
-    json_path_step_t *cur_step= *p_cur_step;
+    json_path_step_t *cur_step= *p_cur_step; 
     switch (je->state)
     {
     case JST_KEY:
@@ -1453,12 +1453,12 @@ int json_find_path(json_engine_t *je,
         array_counters[cur_step - p->steps]++;
       }
       else
-        res= cur_step->n_item == array_counters[cur_step - p->steps]++;
+        res= cur_step->n_item == array_counters[cur_step - p->steps]++; //Item is array's size
       if ((cur_step->type & JSON_PATH_WILD) || res)
       {
         /* Array item matches. */
         if (cur_step == p->last_step ||
-            handle_match(je, p, p_cur_step, array_counters))
+            handle_match(je, p, p_cur_step, array_counters)) //match exit
           goto exit;
       }
       else
@@ -1478,7 +1478,7 @@ int json_find_path(json_engine_t *je,
       DBUG_ASSERT(0);
       break;
     };
-  } while (json_scan_next(je) == 0);
+  } while (json_scan_next(je) == 0); //the first " be read from there
 
   /* No luck. */
   return 1;

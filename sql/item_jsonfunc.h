@@ -791,4 +791,21 @@ public:
   { return get_item_copy<Item_func_json_overlaps>(thd, this); }
 };
 
+class Item_func_json_intersect: public Item_func_json_array
+{
+protected:
+  String tmp_js1, tmp_js2;
+public:
+  Item_func_json_intersect(THD *thd, List<Item> &list):
+    Item_func_json_array(thd, list) {}
+  String *val_str(String *) override;
+  LEX_CSTRING func_name_cstring() const override
+  {
+    static LEX_CSTRING name= {STRING_WITH_LEN("json_intersect") };
+    return name;
+  }
+  Item *get_copy(THD *thd) override
+  { return get_item_copy<Item_func_json_intersect>(thd, this); }
+};
+
 #endif /* ITEM_JSONFUNC_INCLUDED */

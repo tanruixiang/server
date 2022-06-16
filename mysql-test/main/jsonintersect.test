@@ -1,0 +1,4 @@
+SET @json1 = '{"A":{"B":"C"}}';
+SET @json2 = '{"D":1,"A":{"B":"C"}}';
+SELECT JSON_INTERSECT(@json1,@json2);
+
