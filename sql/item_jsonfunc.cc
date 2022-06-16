@@ -4469,3 +4469,239 @@ bool Item_func_json_overlaps::fix_length_and_dec(THD *thd)
 
   return Item_bool_func::fix_length_and_dec(thd);
 }
+
+bool json_intersect_arr_and_obj(String*str,json_engine_t *js, json_engine_t *value)
+{
+  st_json_engine_t loc_val= *value;
+  while (json_scan_next(js) == 0 && js->state == JST_VALUE)
+  {
+    if (json_read_value(js))
+      return FALSE;
+    if (js->value_type == JSON_VALUE_OBJECT)
+    {
+      int res1= json_find_intersect_with_object(str,js, value, true);
+      if (res1)
+        return TRUE;
+      *value= loc_val;
+    }
+    if (!json_value_scalar(js))
+      json_skip_level(js);
+  }
+  return FALSE;
+}
+
+int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
+                                  bool compare_whole)
+{
+  if (value->value_type == JSON_VALUE_OBJECT)
+  {
+    /* Find at least one common key-value pair */
+    json_string_t key_name;
+    bool found_key= false, found_value= false;
+    json_engine_t loc_js= *js;
+    json_engine_t loc_value= *value;
+    const uchar *k_start, *k_end;
+    String tmp_str;
+    bool have_value=false;
+    
+    tmp_str.set_charset(str->charset());
+    tmp_str.length(0);
+    json_string_set_cs(&key_name, value->s.cs);
+    tmp_str.append('{');
+    while (json_scan_next(value) == 0 && value->state == JST_KEY)
+    {
+      k_start= value->s.c_str;
+      do
+      {
+        k_end= value->s.c_str;
+      } while (json_read_keyname_chr(value) == 0);
+
+      if (unlikely(value->s.error))
+        return FALSE;
+
+      json_string_set_str(&key_name, k_start, k_end);
+      found_key= find_key_in_object(js, &key_name);
+      found_value= 0;
+
+      if (found_key)
+      {
+
+        if (json_read_value(js) || json_read_value(value))
+          return FALSE;
+
+        /*
+          The value of key-value pair can be an be anything. If it is an object
+          then we need to compare the whole value and if it is an array then
+          we need to compare the elements in that order. So set compare_whole
+          to true.
+        */
+        int count_key=0;
+        if(have_value){
+          tmp_str.append(',');
+          count_key=1;
+        }
+        count_key+=3+(k_end-k_start);
+        tmp_str.append('\"');
+        tmp_str.append((char*)k_start,k_end-k_start);
+        tmp_str.append("\":", 2);
+        if (js->value_type == value->value_type)
+          found_value= check_intersect(&tmp_str, js, value, true);
+        if (found_value)
+        {
+          have_value=true;
+          *js= loc_js;
+        }
+        else
+        {
+          if (compare_whole)
+          {
+            json_skip_current_level(js, value);
+            return FALSE;
+          }
+          while(count_key--)tmp_str.chop();
+          *js= loc_js;
+        }
+      }
+      else
+      {
+        // If we need to confirm whether the two objects are exactly the same.
+        // If compare_whole is true and key is not exist,return False
+        // if compare_whole is false goto next key.
+        if (compare_whole)
+        {
+          json_skip_current_level(js, value);
+          return FALSE;
+        }
+        json_skip_key(value);
+        *js= loc_js;
+      }
+    }
+    if(have_value){
+      tmp_str.append('}');
+    }else {
+      tmp_str.chop();
+    }
+    // check key
+    if (compare_whole){
+      *js= loc_js;
+      *value= loc_value;
+      while (json_scan_next(js) == 0 && js->state == JST_KEY)
+    {
+      *value= loc_value;
+      k_start= js->s.c_str;
+      do
+      {
+        k_end= js->s.c_str;
+      } while (json_read_keyname_chr(js) == 0);
+
+      if (unlikely(js->s.error))
+        return FALSE;
+
+      json_string_set_str(&key_name, k_start, k_end);
+      found_key= find_key_in_object(value, &key_name);
+      if (found_key)
+      {
+        if (json_read_value(js) || json_read_value(value))
+          return FALSE;
+      }
+      else
+      {
+        json_skip_current_level(js, value);
+        return FALSE;
+      }
+    }
+    }
+    json_skip_current_level(js, value);
+    if (have_value == false)return FALSE;
+    str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
+    return TRUE;
+  }
+  else if (value->value_type == JSON_VALUE_ARRAY)
+  {
+    if (compare_whole)
+    {
+      json_skip_current_level(js, value);
+      return FALSE;
+    }
+    return json_intersect_arr_and_obj(str, value, js);
+  }
+  return FALSE;
+}
+
+
+int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole)
+{
+  switch (js->value_type)
+  {
+  case JSON_VALUE_OBJECT:
+    return json_find_intersect_with_object(str, js, value, compare_whole);
+  case JSON_VALUE_ARRAY:
+   // return json_find_intersect_with_array(str, js, value, compare_whole);
+    return 1;
+  default:
+    if(!check_overlaps(js, value, compare_whole))return FALSE;
+    if (js->value_type == JSON_VALUE_NUMBER){
+      str->append((char *)js->value,js->value_len);
+    }else if (js->value_type == JSON_VALUE_STRING){
+      str->append('"');
+      str->append((char *)js->value, js->value_len);
+      str->append('"');
+    }
+    return TRUE;
+  }
+}
+
+
+
+String* Item_func_json_intersect::val_str(String *str){
+  DBUG_ASSERT(fixed());
+  json_engine_t je1, je2;
+  String *js1= args[0]->val_json(&tmp_js1), *js2=NULL;
+
+  if (args[0]->null_value)
+    goto null_return;
+
+  str->set_charset(js1->charset());
+  str->length(0);
+
+  js2= args[1]->val_json(&tmp_js2);
+  if (args[1]->null_value)
+    goto null_return;
+
+  json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
+                  (const uchar *) js1->ptr() + js1->length());
+
+  json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
+                  (const uchar *) js2->ptr() + js2->length());
+
+  if (json_read_value(&je1) || json_read_value(&je2))
+    goto error_return;
+
+  if(!check_intersect(str, &je1, &je2, false))
+    goto null_return;
+  json_scan_start(&je1, str->charset(),(const uchar *) str->ptr(),
+                  (const uchar *) str->ptr() + str->length());
+  str= &tmp_js1;
+  if (json_nice(&je1, str, Item_func_json_format::LOOSE))
+    goto error_return;
+
+  null_value= 0;
+  return str;
+
+error_return:
+  if (je1.s.error)
+    report_json_error(js1, &je1, 0);
+  if (je2.s.error)
+    report_json_error(js2, &je2, 1);
+null_return:
+  null_value= 1;
+  return NULL;
+}
+
+
+bool Item_func_json_intersect::fix_length_and_dec(THD *thd)
+{
+  max_length= (args[0]->max_length < args[1]->max_length) ? args[0]->max_length : args[1]->max_length;
+  set_maybe_null();
+  return FALSE;
+}
