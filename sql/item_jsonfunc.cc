@@ -4527,16 +4527,115 @@ bool json_find_intersect_with_scalar(String*str, json_engine_t *js, json_engine_
   return FALSE;
 }
 
+int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
+                                  bool compare_whole)
+{
+  if (value->value_type == JSON_VALUE_OBJECT)  // 如果都是object，则需要找到相同的key然后继续比较
+  {
+    /* Find at least one common key-value pair */
+    json_string_t key_name;
+    bool found_key= false, found_value= false;
+    bool firstkey= true;
+    json_engine_t loc_js= *js;
+    const uchar *k_start, *k_end;
+    String tmp_str;
+    
+    tmp_str.set_charset(str->charset());
+    tmp_str.length(0);
+    json_string_set_cs(&key_name, value->s.cs);
+    tmp_str.append('{');
+    while (json_scan_next(value) == 0 && value->state == JST_KEY)
+    {
+      k_start= value->s.c_str;
+      do
+      {
+        k_end= value->s.c_str;
+      } while (json_read_keyname_chr(value) == 0); // 初始化keyname
+
+      if (unlikely(value->s.error))
+        return FALSE;
+
+      json_string_set_str(&key_name, k_start, k_end);
+      found_key= find_key_in_object(js, &key_name); // 在js中找到对应的key
+      found_value= 0;
+
+      if (found_key)
+      {
+
+        if (json_read_value(js) || json_read_value(value))
+          return FALSE;
+
+        /*
+          The value of key-value pair can be an be anything. If it is an object
+          then we need to compare the whole value and if it is an array then
+          we need to compare the elements in that order. So set compare_whole
+          to true.
+        */
+        if(firstkey){
+          firstkey=false;
+        }else tmp_str.append(',');
+        
+        tmp_str.append('\"');
+        tmp_str.append((char*)k_start,k_end-k_start);
+        tmp_str.append("\":", 2);
+        if (js->value_type == value->value_type)
+          found_value= check_intersect(&tmp_str, js, value, true);
+        if (found_value)
+        {
+        //  if (!compare_whole)
+          //  return TRUE;
+          *js= loc_js;
+        }
+        else
+        {
+          if (compare_whole)
+          {
+            json_skip_current_level(js, value);
+            return FALSE;
+          }
+          tmp_str.append('\"');
+          tmp_str.append('\"');
+          *js= loc_js;
+        }
+      }
+      else
+      {
+        if (compare_whole)
+        {
+          json_skip_current_level(js, value);
+          return FALSE;
+        }
+        json_skip_key(value);
+        *js= loc_js;
+      }
+    }
+    tmp_str.append('}');
+    json_skip_current_level(js, value);
+    str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
+    return TRUE;
+  }
+  else if (value->value_type == JSON_VALUE_ARRAY)
+  {
+    // todo
+    if (compare_whole)
+    {
+      json_skip_current_level(js, value);
+      return FALSE;
+    }
+    return json_compare_arr_and_obj(value, js);
+  }
+  return FALSE;
+}
+
 
 int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole)
 {
   switch (js->value_type)
   {
   case JSON_VALUE_OBJECT:
-   // return json_find_intersect_with_object(str, js, value, compare_whole);
-   return 1;
+    return json_find_intersect_with_object(str, js, value, compare_whole);
   case JSON_VALUE_ARRAY:
-    //return json_find_intersect_with_array(str, js, value, compare_whole);
+   // return json_find_intersect_with_array(str, js, value, compare_whole);
     return 1;
   default:
     return json_find_intersect_with_scalar(str, js, value);
@@ -4575,9 +4674,8 @@ String* Item_func_json_intersect::val_str(String *str){
     if (json_read_value(&je1) || json_read_value(&je2))
       goto error_return;
 
-   // if (!check_intersect(str, &je1, &je2, true) )
-    //  goto error_return;
-    check_intersect(str, &je1, &je2, true);
+
+    check_intersect(str, &je1, &je2, false);
     {
       /* Swap str and js1. */
       if (str == &tmp_js1)
