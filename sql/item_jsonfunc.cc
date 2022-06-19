@@ -4537,6 +4537,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     bool found_key= false, found_value= false;
     bool firstkey= true;
     json_engine_t loc_js= *js;
+    json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
     String tmp_str;
     
@@ -4574,7 +4575,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         if(firstkey){
           firstkey=false;
         }else tmp_str.append(',');
-        
+
         tmp_str.append('\"');
         tmp_str.append((char*)k_start,k_end-k_start);
         tmp_str.append("\":", 2);
@@ -4610,6 +4611,36 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       }
     }
     tmp_str.append('}');
+    // check key
+    if (compare_whole){
+      *js= loc_js;
+      *value= loc_value;
+      while (json_scan_next(js) == 0 && js->state == JST_KEY)
+    {
+      *value= loc_value;
+      k_start= js->s.c_str;
+      do
+      {
+        k_end= js->s.c_str;
+      } while (json_read_keyname_chr(js) == 0); // 初始化keyname
+
+      if (unlikely(js->s.error))
+        return FALSE;
+
+      json_string_set_str(&key_name, k_start, k_end);
+      found_key= find_key_in_object(value, &key_name); // 在value中找到对应的key
+      if (found_key)
+      {
+        if (json_read_value(js) || json_read_value(value))
+          return FALSE;
+      }
+      else
+      {
+        json_skip_current_level(js, value);
+        return FALSE;
+      }
+    }
+    }
     json_skip_current_level(js, value);
     str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
     return TRUE;
