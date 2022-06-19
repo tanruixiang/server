@@ -4471,7 +4471,144 @@ bool Item_func_json_overlaps::fix_length_and_dec(THD *thd)
 }
 
 
+
+bool json_find_intersect_with_scalar(String*str, json_engine_t *js, json_engine_t *value)
+{
+  if (json_value_scalar(value))
+  {
+    if (js->value_type == value->value_type)
+    {
+      if (js->value_type == JSON_VALUE_NUMBER)
+      {
+        double d_j, d_v;
+        char *end;
+        int err;
+
+        d_j= js->s.cs->strntod((char *) js->value, js->value_len, &end, &err);
+        d_v= value->s.cs->strntod((char *) value->value, value->value_len,
+                                   &end, &err);
+
+        if (fabs(d_j - d_v) < 1e-12){
+          str->append((char *)js->value,js->value_len);
+          return true;
+        }
+        return false;
+      }
+      else if (js->value_type == JSON_VALUE_STRING)
+      {
+        if(value->value_len == js->value_len &&
+               memcmp(value->value, js->value, value->value_len) == 0){
+          str->append('"');
+          str->append((char *)value->value, value->value_len);
+          str->append('"');
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
+  }
+  else if (value->value_type == JSON_VALUE_ARRAY)
+  {
+    while (json_scan_next(value) == 0 && value->state == JST_VALUE)
+    {
+      if (json_read_value(value))
+        return FALSE;
+      if (js->value_type == value->value_type)
+      {
+        int res1= json_find_intersect_with_scalar(str, js, value);
+        if (res1)
+          return TRUE;
+      }
+      if (!json_value_scalar(value))
+        json_skip_level(value);
+    }
+  }
+  return FALSE;
+}
+
+
+int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole)
+{
+  switch (js->value_type)
+  {
+  case JSON_VALUE_OBJECT:
+   // return json_find_intersect_with_object(str, js, value, compare_whole);
+   return 1;
+  case JSON_VALUE_ARRAY:
+    //return json_find_intersect_with_array(str, js, value, compare_whole);
+    return 1;
+  default:
+    return json_find_intersect_with_scalar(str, js, value);
+  }
+}
+
+
+
 String* Item_func_json_intersect::val_str(String *str){
-  
+  DBUG_ASSERT(fixed());
+  json_engine_t je1, je2;
+  String *js1= args[0]->val_json(&tmp_js1), *js2=NULL;
+  uint n_arg;
+  THD *thd= current_thd;
+  LINT_INIT(js2);
+
+  if (args[0]->null_value)
+    goto null_return;
+
+  for (n_arg=1; n_arg < arg_count; n_arg++)
+  {
+    str->set_charset(js1->charset());
+    str->length(0);
+
+    js2= args[n_arg]->val_json(&tmp_js2);
+    if (args[n_arg]->null_value)
+      goto null_return;
+
+    json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
+                    (const uchar *) js1->ptr() + js1->length());
+    je1.killed_ptr= (uchar*)&thd->killed;
+
+    json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
+                    (const uchar *) js2->ptr() + js2->length());
+    je2.killed_ptr= (uchar*)&thd->killed;  
+    if (json_read_value(&je1) || json_read_value(&je2))
+      goto error_return;
+
+   // if (!check_intersect(str, &je1, &je2, true) )
+    //  goto error_return;
+    check_intersect(str, &je1, &je2, true);
+    {
+      /* Swap str and js1. */
+      if (str == &tmp_js1)
+      {
+        str= js1;
+        js1= &tmp_js1;
+      }
+      else
+      {
+        js1= str;
+        str= &tmp_js1;
+      }
+    }
+  }
+
+  json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
+                  (const uchar *) js1->ptr() + js1->length());
+  je1.killed_ptr= (uchar*)&thd->killed;
+  if (json_nice(&je1, str, Item_func_json_format::LOOSE))
+    goto error_return;
+
+  null_value= 0;
+  return str;
+
+error_return:
+  if (je1.s.error)
+    report_json_error(js1, &je1, 0);
+  if (je2.s.error)
+    report_json_error(js2, &je2, n_arg);
+  thd->check_killed(); // to get the error message right
+null_return:
+  null_value= 1;
   return NULL;
 }
