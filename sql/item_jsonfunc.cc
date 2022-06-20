@@ -19,7 +19,6 @@
 #include "sql_class.h"
 #include "item.h"
 
-
 /*
   Compare ASCII string against the string with the specified
   character set.
@@ -4527,6 +4526,29 @@ bool json_find_intersect_with_scalar(String*str, json_engine_t *js, json_engine_
   return FALSE;
 }
 
+
+bool json_intersect_arr_and_obj(String*str,json_engine_t *js, json_engine_t *value)
+{
+  st_json_engine_t loc_val= *value;
+  while (json_scan_next(js) == 0 && js->state == JST_VALUE)
+  {
+    if (json_read_value(js))
+      return FALSE;
+    if (js->value_type == JSON_VALUE_OBJECT)
+    {
+      int res1= json_find_intersect_with_object(str,js, value, true);
+      if (res1)
+        return TRUE;
+      *value= loc_val;
+    }
+    if (!json_value_scalar(js))
+      json_skip_level(js);
+  }
+  return FALSE;
+}
+
+
+
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
@@ -4653,7 +4675,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       json_skip_current_level(js, value);
       return FALSE;
     }
-    return json_compare_arr_and_obj(value, js);
+    return json_intersect_arr_and_obj(str, value, js);
   }
   return FALSE;
 }

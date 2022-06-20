@@ -60,7 +60,9 @@ int json_find_overlap_with_array(json_engine_t *js,
                                              bool compare_whole);
 
 int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
-
+int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
+                                  bool compare_whole);
+bool json_find_intersect_with_scalar(String*str, json_engine_t *js, json_engine_t *value);
 
 class Json_engine_scan: public json_engine_t
 {
