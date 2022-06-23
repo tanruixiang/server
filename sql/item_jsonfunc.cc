@@ -4728,7 +4728,8 @@ String* Item_func_json_intersect::val_str(String *str){
       goto error_return;
 
 
-    check_intersect(str, &je1, &je2, false);
+    if(!check_intersect(str, &je1, &je2, false))
+      goto null_return;
     {
       /* Swap str and js1. */
       if (str == &tmp_js1)
@@ -4762,4 +4763,10 @@ error_return:
 null_return:
   null_value= 1;
   return NULL;
+}
+
+
+bool Item_func_json_intersect::fix_length_and_dec(THD *thd)
+{
+  return FALSE;
 }
