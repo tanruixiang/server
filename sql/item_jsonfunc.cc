@@ -19,6 +19,7 @@
 #include "sql_class.h"
 #include "item.h"
 
+
 /*
   Compare ASCII string against the string with the specified
   character set.
@@ -1235,20 +1236,20 @@ static int check_contains(json_engine_t *js, json_engine_t *value)
 
 longlong Item_func_json_contains::val_int()
 {
-  String *js= args[0]->val_json(&tmp_js);// js:{"A":0,"B":{"C":1},"D":2} 要检测的json串
+  String *js= args[0]->val_json(&tmp_js);
   json_engine_t je, ve;
   int result;
 
-  if ((null_value= args[0]->null_value)) // val 是否为空 为空直接返回为0
+  if ((null_value= args[0]->null_value))
     return 0;
 
-  if (!a2_parsed) // 这里是判断值有没有被parse过吗？ a2_constant会被别的函数提前初始化？
+  if (!a2_parsed)
   {
     val= args[1]->val_json(&tmp_val);
     a2_parsed= a2_constant;
   }
 
-  if (val == 0)  // val 此时为“2”指的是要寻找的value
+  if (val == 0)
   {
     null_value= 1;
     return 0;
@@ -1262,21 +1263,21 @@ longlong Item_func_json_contains::val_int()
     int array_counters[JSON_DEPTH_LIMIT];
     if (!path.parsed)
     {
-      String *s_p= args[2]->val_str(&tmp_path); //s_p存的路径 样例中为"$.D"
+      String *s_p= args[2]->val_str(&tmp_path);
       if (s_p &&
-          path_setup_nwc(&path.p,s_p->charset(),(const uchar *) s_p->ptr(), //参数是s_p字符串的起始和重点，应该是用来初始化path这个类的
+          path_setup_nwc(&path.p,s_p->charset(),(const uchar *) s_p->ptr(),
                          (const uchar *) s_p->end()))
       {
         report_path_error(s_p, &path.p, 2);
         goto return_null;
       }
-      path.parsed= path.constant; // 已解析flag设置
+      path.parsed= path.constant;
     }
-    if (args[2]->null_value) // 如果要找的路径是NULL 返回
+    if (args[2]->null_value)
       goto return_null;
 
-    path.cur_step= path.p.steps;// 从路径的开头开始
-    if (json_find_path(&je, &path.p, &path.cur_step, array_counters))  //array_counters没有初始化？ je中也就是原json字符串中是否存在这个路径 path.s应该是"$.D" path.cur_step是p的开头，应该是从头开始,array_counters空数组
+    path.cur_step= path.p.steps;
+    if (json_find_path(&je, &path.p, &path.cur_step, array_counters))
     {
       if (je.s.error)
       {
@@ -1288,13 +1289,13 @@ longlong Item_func_json_contains::val_int()
     }
   }
 
-  json_scan_start(&ve, val->charset(),(const uchar *) val->ptr(), // 初始化ve，ve为寻找的值 本实例中为“2”
+  json_scan_start(&ve, val->charset(),(const uchar *) val->ptr(),
                   (const uchar *) val->end());
 
-  if (json_read_value(&je) || json_read_value(&ve)) // 把值读出来 也就是读成比如int double这样的类型
+  if (json_read_value(&je) || json_read_value(&ve))
     goto error;
 
-  result= check_contains(&je, &ve);  // 检查是否包含
+  result= check_contains(&je, &ve);
   if (unlikely(je.s.error || ve.s.error))
     goto error;
 
@@ -4272,7 +4273,7 @@ int json_find_overlap_with_array(json_engine_t *js, json_engine_t *value,
 int json_find_overlap_with_object(json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
-  if (value->value_type == JSON_VALUE_OBJECT)  // 如果都是object，则需要找到相同的key然后继续比较
+  if (value->value_type == JSON_VALUE_OBJECT)
   {
     /* Find at least one common key-value pair */
     json_string_t key_name;
@@ -4288,13 +4289,13 @@ int json_find_overlap_with_object(json_engine_t *js, json_engine_t *value,
       do
       {
         k_end= value->s.c_str;
-      } while (json_read_keyname_chr(value) == 0); // 初始化keyname
+      } while (json_read_keyname_chr(value) == 0);
 
       if (unlikely(value->s.error))
         return FALSE;
 
       json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(js, &key_name); // 在js中找到对应的key
+      found_key= find_key_in_object(js, &key_name);
       found_value= 0;
 
       if (found_key)
@@ -4552,7 +4553,7 @@ bool json_intersect_arr_and_obj(String*str,json_engine_t *js, json_engine_t *val
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
-  if (value->value_type == JSON_VALUE_OBJECT)  // 如果都是object，则需要找到相同的key然后继续比较
+  if (value->value_type == JSON_VALUE_OBJECT)
   {
     /* Find at least one common key-value pair */
     json_string_t key_name;
@@ -4562,6 +4563,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
     String tmp_str;
+    bool have_value=false;
     
     tmp_str.set_charset(str->charset());
     tmp_str.length(0);
@@ -4573,13 +4575,13 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       do
       {
         k_end= value->s.c_str;
-      } while (json_read_keyname_chr(value) == 0); // 初始化keyname
+      } while (json_read_keyname_chr(value) == 0);
 
       if (unlikely(value->s.error))
         return FALSE;
 
       json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(js, &key_name); // 在js中找到对应的key
+      found_key= find_key_in_object(js, &key_name);
       found_value= 0;
 
       if (found_key)
@@ -4597,7 +4599,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         if(firstkey){
           firstkey=false;
         }else tmp_str.append(',');
-
+        int count_key=2+(k_end-k_start);
         tmp_str.append('\"');
         tmp_str.append((char*)k_start,k_end-k_start);
         tmp_str.append("\":", 2);
@@ -4605,8 +4607,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
           found_value= check_intersect(&tmp_str, js, value, true);
         if (found_value)
         {
-        //  if (!compare_whole)
-          //  return TRUE;
+          have_value=true;
           *js= loc_js;
         }
         else
@@ -4616,8 +4617,9 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
             json_skip_current_level(js, value);
             return FALSE;
           }
-          tmp_str.append('\"');
-          tmp_str.append('\"');
+          //tmp_str.append('\"');
+          //tmp_str.append('\"');
+          while(count_key--)tmp_str.chop();
           *js= loc_js;
         }
       }
@@ -4632,7 +4634,11 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         *js= loc_js;
       }
     }
-    tmp_str.append('}');
+    if( have_value  ){
+      tmp_str.append('}');
+    }else {
+      tmp_str.chop();
+    }
     // check key
     if (compare_whole){
       *js= loc_js;
@@ -4644,13 +4650,13 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       do
       {
         k_end= js->s.c_str;
-      } while (json_read_keyname_chr(js) == 0); // 初始化keyname
+      } while (json_read_keyname_chr(js) == 0);
 
       if (unlikely(js->s.error))
         return FALSE;
 
       json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(value, &key_name); // 在value中找到对应的key
+      found_key= find_key_in_object(value, &key_name);
       if (found_key)
       {
         if (json_read_value(js) || json_read_value(value))
@@ -4664,12 +4670,12 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     }
     }
     json_skip_current_level(js, value);
+    if (have_value == false)return FALSE;
     str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
     return TRUE;
   }
   else if (value->value_type == JSON_VALUE_ARRAY)
   {
-    // todo
     if (compare_whole)
     {
       json_skip_current_level(js, value);
@@ -4691,7 +4697,15 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
    // return json_find_intersect_with_array(str, js, value, compare_whole);
     return 1;
   default:
-    return json_find_intersect_with_scalar(str, js, value);
+    if(!check_overlaps(js, value, compare_whole))return FALSE;
+    if (js->value_type == JSON_VALUE_NUMBER){
+      str->append((char *)js->value,js->value_len);
+    }else if (js->value_type == JSON_VALUE_STRING){
+      str->append('"');
+      str->append((char *)js->value, js->value_len);
+      str->append('"');
+    }
+    return TRUE;
   }
 }
 
@@ -4701,52 +4715,31 @@ String* Item_func_json_intersect::val_str(String *str){
   DBUG_ASSERT(fixed());
   json_engine_t je1, je2;
   String *js1= args[0]->val_json(&tmp_js1), *js2=NULL;
-  uint n_arg;
-  THD *thd= current_thd;
-  LINT_INIT(js2);
 
   if (args[0]->null_value)
     goto null_return;
 
-  for (n_arg=1; n_arg < arg_count; n_arg++)
-  {
-    str->set_charset(js1->charset());
-    str->length(0);
+  str->set_charset(js1->charset());
+  str->length(0);
 
-    js2= args[n_arg]->val_json(&tmp_js2);
-    if (args[n_arg]->null_value)
-      goto null_return;
-
-    json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
-                    (const uchar *) js1->ptr() + js1->length());
-    je1.killed_ptr= (uchar*)&thd->killed;
-
-    json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
-                    (const uchar *) js2->ptr() + js2->length());
-    je2.killed_ptr= (uchar*)&thd->killed;  
-    if (json_read_value(&je1) || json_read_value(&je2))
-      goto error_return;
-
-
-    check_intersect(str, &je1, &je2, false);
-    {
-      /* Swap str and js1. */
-      if (str == &tmp_js1)
-      {
-        str= js1;
-        js1= &tmp_js1;
-      }
-      else
-      {
-        js1= str;
-        str= &tmp_js1;
-      }
-    }
-  }
+  js2= args[1]->val_json(&tmp_js2);
+  if (args[1]->null_value)
+    goto null_return;
 
   json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
                   (const uchar *) js1->ptr() + js1->length());
-  je1.killed_ptr= (uchar*)&thd->killed;
+
+  json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
+                  (const uchar *) js2->ptr() + js2->length());
+
+  if (json_read_value(&je1) || json_read_value(&je2))
+    goto error_return;
+
+  if(!check_intersect(str, &je1, &je2, false))
+    goto null_return;
+  json_scan_start(&je1, str->charset(),(const uchar *) str->ptr(),
+                  (const uchar *) str->ptr() + str->length());
+  str= &tmp_js1;
   if (json_nice(&je1, str, Item_func_json_format::LOOSE))
     goto error_return;
 
@@ -4757,9 +4750,16 @@ error_return:
   if (je1.s.error)
     report_json_error(js1, &je1, 0);
   if (je2.s.error)
-    report_json_error(js2, &je2, n_arg);
-  thd->check_killed(); // to get the error message right
+    report_json_error(js2, &je2, 1);
 null_return:
   null_value= 1;
   return NULL;
+}
+
+
+bool Item_func_json_intersect::fix_length_and_dec(THD *thd)
+{
+  max_length= (args[0]->max_length < args[1]->max_length) ? args[0]->max_length : args[1]->max_length;
+  set_maybe_null();
+  return FALSE;
 }

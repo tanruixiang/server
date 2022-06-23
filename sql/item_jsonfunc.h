@@ -59,6 +59,7 @@ int json_find_overlap_with_array(json_engine_t *js,
                                              json_engine_t *value,
                                              bool compare_whole);
 
+
 int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole);
@@ -794,14 +795,15 @@ public:
   { return get_item_copy<Item_func_json_overlaps>(thd, this); }
 };
 
-class Item_func_json_intersect: public Item_func_json_array
+class Item_func_json_intersect: public Item_str_func
 {
 protected:
   String tmp_js1, tmp_js2;
 public:
-  Item_func_json_intersect(THD *thd, List<Item> &list):
-    Item_func_json_array(thd, list) {}
+  Item_func_json_intersect(THD *thd, Item *a, Item *b):
+    Item_str_func(thd, a, b) {}
   String *val_str(String *) override;
+  bool fix_length_and_dec(THD *thd) override;
   LEX_CSTRING func_name_cstring() const override
   {
     static LEX_CSTRING name= {STRING_WITH_LEN("json_intersect") };
@@ -810,5 +812,7 @@ public:
   Item *get_copy(THD *thd) override
   { return get_item_copy<Item_func_json_intersect>(thd, this); }
 };
+
+
 
 #endif /* ITEM_JSONFUNC_INCLUDED */

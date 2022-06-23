@@ -1,51 +1,85 @@
 SET @json1 = '1';
 SET @json2 = '1';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+1
 SET @json1 = '1';
 SET @json2 = '2';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '3';
 SET @json2 = '[1,2,3,4,5]';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+3
 SET @json1 = '6';
 SET @json2 = '[1,2,3,4,5]';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '"ef"';
 SET @json2 = '["a","b","cd","ef","f"]';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+"ef"
 SET @json1 = '"a"';
 SET @json2 = '"a"';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+"a"
 SET @json1 = '"a"';
 SET @json2 = '["a","b","cd","e","f"]';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+"a"
 SET @json1 = '"z"';
 SET @json2 = '["a","b,"cd","ef","f"]';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '"a"';
 SET @json2 = '"b"';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '{"key1":"value1","key2":"value2"}';
 SET @json2 = '{"key2":"value2","key1":"value1"}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+{"key2": "value2", "key1": "value1"}
 SET @json1 = '{"key1":"value1"}';
 SET @json2 = '{"key2":"value2"}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '{"key1":{"kkey1":"vvalue1"}}';
 SET @json2 = '{"key1":{"kkey1":"vvalue1"}}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+{"key1": {"kkey1": "vvalue1"}}
 SET @json1 = '{"key1":{"kkey1":"vvalue1","kkey2","vvalue2"}}';
 SET @json2 = '{"key1":{"kkey1":"vvalue1"}}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '{"key1":{"kkey1":"vvalue1","kkey2","vvalue2"}}';
 SET @json2 = '{"key1":{"kkey1":"vvalue1"}}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '{"key1":[{"kkey1":"vvalue1"},{"kkey2","vvalue2"}]}';
 SET @json2 = '{"key1":{"kkey1":"vvalue1"}}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '{"key1":[{"kkey1":"vvalue1"},{"kkey2","vvalue2"}]}';
 SET @json2 = '{"key1":{"kkey2":"vvalue2"}}';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+NULL
 SET @json1 = '{"kkey1":"vvalue1"}';
 SET @json2 = '[{"kkey1":"vvalue1"},{"kkey2","vvalue2"}]';
 SELECT JSON_INTERSECT(@json1,@json2);
+JSON_INTERSECT(@json1,@json2)
+{"kkey1": "vvalue1"}

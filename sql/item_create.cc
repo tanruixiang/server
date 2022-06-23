@@ -1339,11 +1339,10 @@ protected:
   virtual ~Create_func_json_overlaps() {}
 };
 
-class Create_func_json_intersect : public Create_native_func
+class Create_func_json_intersect : public Create_func_arg2
 {
 public:
-  virtual Item *create_native(THD *thd, const LEX_CSTRING *name,
-                              List<Item> *item_list);
+  virtual Item *create_2_arg(THD *thd, Item *arg1, Item *arg2);
 
   static Create_func_json_intersect s_singleton;
 
@@ -4158,30 +4157,16 @@ Create_func_json_length::create_native(THD *thd, const LEX_CSTRING *name,
 }
 
 Create_func_json_intersect Create_func_json_intersect::s_singleton;
-
 Item*
-Create_func_json_intersect::create_native(THD *thd, const LEX_CSTRING *name,
-                                      List<Item> *item_list)
+Create_func_json_intersect::create_2_arg(THD *thd, Item *arg1, Item *arg2)
 {
-  Item *func;
-  int arg_count;
-
-  if (unlikely(item_list == NULL ||
-               (arg_count= item_list->elements) < 2)) // json, json
+  if (unlikely( (arg1 == NULL || arg2 == NULL) )) // json, json
   {
-    my_error(ER_WRONG_PARAMCOUNT_TO_NATIVE_FCT, MYF(0), name->str);
-    func= NULL;
+    my_error(ER_WRONG_PARAMCOUNT_TO_NATIVE_FCT, MYF(0));
   }
-  else
-  {
-    func= new (thd->mem_root) Item_func_json_intersect(thd, *item_list);
-  }
-
   status_var_increment(thd->status_var.feature_json);
-  return func;
+  return new (thd->mem_root) Item_func_json_intersect(thd, arg1, arg2);
 }
-
-
 
 Create_func_json_merge Create_func_json_merge::s_singleton;
 
