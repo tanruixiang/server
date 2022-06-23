@@ -812,23 +812,6 @@ public:
   { return get_item_copy<Item_func_json_intersect>(thd, this); }
 };
 
-/*class Item_func_json_quote: public Item_str_func
-{
-protected:
-  String tmp_s;
 
-public:
-  Item_func_json_quote(THD *thd, Item *s): Item_str_func(thd, s) {}
-  LEX_CSTRING func_name_cstring() const override
-  {
-    static LEX_CSTRING name= {STRING_WITH_LEN("json_quote") };
-    return name;
-  }
-  bool fix_length_and_dec(THD *thd) override;
-  String *val_str(String *) override;
-  Item *get_copy(THD *thd) override
-  { return get_item_copy<Item_func_json_quote>(thd, this); }
-
-};*/
 
 #endif /* ITEM_JSONFUNC_INCLUDED */
