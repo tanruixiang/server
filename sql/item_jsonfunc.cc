@@ -1236,20 +1236,20 @@ static int check_contains(json_engine_t *js, json_engine_t *value)
 
 longlong Item_func_json_contains::val_int()
 {
-  String *js= args[0]->val_json(&tmp_js);// js:{"A":0,"B":{"C":1},"D":2} 要检测的json串
+  String *js= args[0]->val_json(&tmp_js);
   json_engine_t je, ve;
   int result;
 
-  if ((null_value= args[0]->null_value)) // val 是否为空 为空直接返回为0
+  if ((null_value= args[0]->null_value))
     return 0;
 
-  if (!a2_parsed) // 这里是判断值有没有被parse过吗？ a2_constant会被别的函数提前初始化？
+  if (!a2_parsed)
   {
     val= args[1]->val_json(&tmp_val);
     a2_parsed= a2_constant;
   }
 
-  if (val == 0)  // val 此时为“2”指的是要寻找的value
+  if (val == 0)
   {
     null_value= 1;
     return 0;
@@ -1263,21 +1263,21 @@ longlong Item_func_json_contains::val_int()
     int array_counters[JSON_DEPTH_LIMIT];
     if (!path.parsed)
     {
-      String *s_p= args[2]->val_str(&tmp_path); //s_p存的路径 样例中为"$.D"
+      String *s_p= args[2]->val_str(&tmp_path);
       if (s_p &&
-          path_setup_nwc(&path.p,s_p->charset(),(const uchar *) s_p->ptr(), //参数是s_p字符串的起始和重点，应该是用来初始化path这个类的
+          path_setup_nwc(&path.p,s_p->charset(),(const uchar *) s_p->ptr(),
                          (const uchar *) s_p->end()))
       {
         report_path_error(s_p, &path.p, 2);
         goto return_null;
       }
-      path.parsed= path.constant; // 已解析flag设置
+      path.parsed= path.constant;
     }
-    if (args[2]->null_value) // 如果要找的路径是NULL 返回
+    if (args[2]->null_value)
       goto return_null;
 
-    path.cur_step= path.p.steps;// 从路径的开头开始
-    if (json_find_path(&je, &path.p, &path.cur_step, array_counters))  //array_counters没有初始化？ je中也就是原json字符串中是否存在这个路径 path.s应该是"$.D" path.cur_step是p的开头，应该是从头开始,array_counters空数组
+    path.cur_step= path.p.steps;
+    if (json_find_path(&je, &path.p, &path.cur_step, array_counters))
     {
       if (je.s.error)
       {
@@ -1289,13 +1289,13 @@ longlong Item_func_json_contains::val_int()
     }
   }
 
-  json_scan_start(&ve, val->charset(),(const uchar *) val->ptr(), // 初始化ve，ve为寻找的值 本实例中为“2”
+  json_scan_start(&ve, val->charset(),(const uchar *) val->ptr(),
                   (const uchar *) val->end());
 
-  if (json_read_value(&je) || json_read_value(&ve)) // 把值读出来 也就是读成比如int double这样的类型
+  if (json_read_value(&je) || json_read_value(&ve))
     goto error;
 
-  result= check_contains(&je, &ve);  // 检查是否包含
+  result= check_contains(&je, &ve);
   if (unlikely(je.s.error || ve.s.error))
     goto error;
 
@@ -4273,7 +4273,7 @@ int json_find_overlap_with_array(json_engine_t *js, json_engine_t *value,
 int json_find_overlap_with_object(json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
-  if (value->value_type == JSON_VALUE_OBJECT)  // 如果都是object，则需要找到相同的key然后继续比较
+  if (value->value_type == JSON_VALUE_OBJECT)
   {
     /* Find at least one common key-value pair */
     json_string_t key_name;
@@ -4289,13 +4289,13 @@ int json_find_overlap_with_object(json_engine_t *js, json_engine_t *value,
       do
       {
         k_end= value->s.c_str;
-      } while (json_read_keyname_chr(value) == 0); // 初始化keyname
+      } while (json_read_keyname_chr(value) == 0);
 
       if (unlikely(value->s.error))
         return FALSE;
 
       json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(js, &key_name); // 在js中找到对应的key
+      found_key= find_key_in_object(js, &key_name);
       found_value= 0;
 
       if (found_key)
