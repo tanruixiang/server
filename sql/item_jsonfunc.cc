@@ -19,6 +19,7 @@
 #include "sql_class.h"
 #include "item.h"
 
+
 /*
   Compare ASCII string against the string with the specified
   character set.
@@ -4552,7 +4553,7 @@ bool json_intersect_arr_and_obj(String*str,json_engine_t *js, json_engine_t *val
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
-  if (value->value_type == JSON_VALUE_OBJECT)  // 如果都是object，则需要找到相同的key然后继续比较
+  if (value->value_type == JSON_VALUE_OBJECT)
   {
     /* Find at least one common key-value pair */
     json_string_t key_name;
@@ -4573,13 +4574,13 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       do
       {
         k_end= value->s.c_str;
-      } while (json_read_keyname_chr(value) == 0); // 初始化keyname
+      } while (json_read_keyname_chr(value) == 0);
 
       if (unlikely(value->s.error))
         return FALSE;
 
       json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(js, &key_name); // 在js中找到对应的key
+      found_key= find_key_in_object(js, &key_name);
       found_value= 0;
 
       if (found_key)
@@ -4605,8 +4606,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
           found_value= check_intersect(&tmp_str, js, value, true);
         if (found_value)
         {
-        //  if (!compare_whole)
-          //  return TRUE;
+
           *js= loc_js;
         }
         else
@@ -4644,13 +4644,13 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       do
       {
         k_end= js->s.c_str;
-      } while (json_read_keyname_chr(js) == 0); // 初始化keyname
+      } while (json_read_keyname_chr(js) == 0);
 
       if (unlikely(js->s.error))
         return FALSE;
 
       json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(value, &key_name); // 在value中找到对应的key
+      found_key= find_key_in_object(value, &key_name);
       if (found_key)
       {
         if (json_read_value(js) || json_read_value(value))
@@ -4669,7 +4669,6 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
   }
   else if (value->value_type == JSON_VALUE_ARRAY)
   {
-    // todo
     if (compare_whole)
     {
       json_skip_current_level(js, value);
@@ -4701,53 +4700,35 @@ String* Item_func_json_intersect::val_str(String *str){
   DBUG_ASSERT(fixed());
   json_engine_t je1, je2;
   String *js1= args[0]->val_json(&tmp_js1), *js2=NULL;
-  uint n_arg;
-  THD *thd= current_thd;
-  LINT_INIT(js2);
 
   if (args[0]->null_value)
     goto null_return;
 
-  for (n_arg=1; n_arg < arg_count; n_arg++)
-  {
-    str->set_charset(js1->charset());
-    str->length(0);
+  str->set_charset(js1->charset());
+  str->length(0);
 
-    js2= args[n_arg]->val_json(&tmp_js2);
-    if (args[n_arg]->null_value)
-      goto null_return;
-
-    json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
-                    (const uchar *) js1->ptr() + js1->length());
-    je1.killed_ptr= (uchar*)&thd->killed;
-
-    json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
-                    (const uchar *) js2->ptr() + js2->length());
-    je2.killed_ptr= (uchar*)&thd->killed;  
-    if (json_read_value(&je1) || json_read_value(&je2))
-      goto error_return;
-
-
-    if(!check_intersect(str, &je1, &je2, false))
-      goto null_return;
-    {
-      /* Swap str and js1. */
-      if (str == &tmp_js1)
-      {
-        str= js1;
-        js1= &tmp_js1;
-      }
-      else
-      {
-        js1= str;
-        str= &tmp_js1;
-      }
-    }
-  }
+  js2= args[1]->val_json(&tmp_js2);
+  if (args[1]->null_value)
+    goto null_return;
 
   json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
                   (const uchar *) js1->ptr() + js1->length());
-  je1.killed_ptr= (uchar*)&thd->killed;
+
+  json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
+                  (const uchar *) js2->ptr() + js2->length());
+
+  if (json_read_value(&je1) || json_read_value(&je2))
+    goto error_return;
+
+  if(!check_intersect(str, &je1, &je2, false))
+    goto null_return;
+  //str= js1;
+  //js1= &tmp_js1;  
+  js1= str;
+  str= &tmp_js1;
+  json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
+                  (const uchar *) js1->ptr() + js1->length());
+
   if (json_nice(&je1, str, Item_func_json_format::LOOSE))
     goto error_return;
 
@@ -4758,8 +4739,7 @@ error_return:
   if (je1.s.error)
     report_json_error(js1, &je1, 0);
   if (je2.s.error)
-    report_json_error(js2, &je2, n_arg);
-  thd->check_killed(); // to get the error message right
+    report_json_error(js2, &je2, 1);
 null_return:
   null_value= 1;
   return NULL;
@@ -4768,5 +4748,7 @@ null_return:
 
 bool Item_func_json_intersect::fix_length_and_dec(THD *thd)
 {
+  max_length= (args[0]->max_length > args[1]->max_length) ? args[0]->max_length : args[1]->max_length;
+  set_maybe_null();
   return FALSE;
 }

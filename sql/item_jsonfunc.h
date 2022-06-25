@@ -59,6 +59,7 @@ int json_find_overlap_with_array(json_engine_t *js,
                                              json_engine_t *value,
                                              bool compare_whole);
 
+
 int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole);
@@ -799,8 +800,8 @@ class Item_func_json_intersect: public Item_str_func
 protected:
   String tmp_js1, tmp_js2;
 public:
-  Item_func_json_intersect(THD *thd, List<Item> &list):
-    Item_str_func(thd, list) {}
+  Item_func_json_intersect(THD *thd, Item *a, Item *b):
+    Item_str_func(thd, a, b) {}
   String *val_str(String *) override;
   bool fix_length_and_dec(THD *thd) override;
   LEX_CSTRING func_name_cstring() const override
