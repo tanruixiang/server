@@ -4760,11 +4760,9 @@ String* Item_func_json_intersect::val_str(String *str){
 
   if(!check_intersect(str, &je1, &je2, false))
     goto null_return;
-  js1= str;
+  json_scan_start(&je1, str->charset(),(const uchar *) str->ptr(),
+                  (const uchar *) str->ptr() + str->length());
   str= &tmp_js1;
-  json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
-                  (const uchar *) js1->ptr() + js1->length());
-
   if (json_nice(&je1, str, Item_func_json_format::LOOSE))
     goto error_return;
 
