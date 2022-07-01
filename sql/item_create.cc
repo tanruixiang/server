@@ -4160,6 +4160,10 @@ Create_func_json_intersect Create_func_json_intersect::s_singleton;
 Item*
 Create_func_json_intersect::create_2_arg(THD *thd, Item *arg1, Item *arg2)
 {
+  if (unlikely( (arg1 == NULL || arg2 == NULL) )) // json, json
+  {
+    my_error(ER_WRONG_PARAMCOUNT_TO_NATIVE_FCT, MYF(0));
+  }
   status_var_increment(thd->status_var.feature_json);
   return new (thd->mem_root) Item_func_json_intersect(thd, arg1, arg2);
 }

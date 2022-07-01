@@ -4563,6 +4563,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
     String tmp_str;
+    bool have_value=false;
     
     tmp_str.set_charset(str->charset());
     tmp_str.length(0);
@@ -4598,7 +4599,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         if(firstkey){
           firstkey=false;
         }else tmp_str.append(',');
-
+        int count_key=2+(k_end-k_start);
         tmp_str.append('\"');
         tmp_str.append((char*)k_start,k_end-k_start);
         tmp_str.append("\":", 2);
@@ -4606,7 +4607,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
           found_value= check_intersect(&tmp_str, js, value, true);
         if (found_value)
         {
-
+          have_value=true;
           *js= loc_js;
         }
         else
@@ -4616,8 +4617,9 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
             json_skip_current_level(js, value);
             return FALSE;
           }
-          tmp_str.append('\"');
-          tmp_str.append('\"');
+          //tmp_str.append('\"');
+          //tmp_str.append('\"');
+          while(count_key--)tmp_str.chop();
           *js= loc_js;
         }
       }
@@ -4632,7 +4634,11 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         *js= loc_js;
       }
     }
-    tmp_str.append('}');
+    if( have_value  ){
+      tmp_str.append('}');
+    }else {
+      tmp_str.chop();
+    }
     // check key
     if (compare_whole){
       *js= loc_js;
@@ -4664,6 +4670,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     }
     }
     json_skip_current_level(js, value);
+    if (have_value == false)return FALSE;
     str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
     return TRUE;
   }
@@ -4722,8 +4729,6 @@ String* Item_func_json_intersect::val_str(String *str){
 
   if(!check_intersect(str, &je1, &je2, false))
     goto null_return;
-  //str= js1;
-  //js1= &tmp_js1;  
   js1= str;
   str= &tmp_js1;
   json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
@@ -4748,7 +4753,7 @@ null_return:
 
 bool Item_func_json_intersect::fix_length_and_dec(THD *thd)
 {
-  max_length= (args[0]->max_length > args[1]->max_length) ? args[0]->max_length : args[1]->max_length;
+  max_length= (args[0]->max_length < args[1]->max_length) ? args[0]->max_length : args[1]->max_length;
   set_maybe_null();
   return FALSE;
 }
