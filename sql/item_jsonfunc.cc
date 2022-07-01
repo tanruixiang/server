@@ -4697,7 +4697,38 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
    // return json_find_intersect_with_array(str, js, value, compare_whole);
     return 1;
   default:
-    return json_find_intersect_with_scalar(str, js, value);
+    if (json_value_scalar(value))
+    {
+        if(!check_overlaps(js, value, true))return FALSE;
+        if (js->value_type == JSON_VALUE_NUMBER){
+          str->append((char *)js->value,js->value_len);
+        }else if (js->value_type == JSON_VALUE_STRING){
+          str->append('"');
+          str->append((char *)value->value, value->value_len);
+          str->append('"');
+        }
+        return TRUE;
+    }
+    else if (value->value_type == JSON_VALUE_ARRAY)
+    {
+      if(compare_whole)return FALSE;
+
+      while (json_scan_next(value) == 0 && value->state == JST_VALUE)
+      {
+          if (json_read_value(value))
+            return FALSE;
+          if (js->value_type == value->value_type)
+          {
+            int res1= check_intersect(str, js, value, true);
+            if (res1)
+              return TRUE;
+          }
+          if (!json_value_scalar(value))
+            json_skip_level(value);
+      }
+      return FALSE;
+    }
+    return FALSE;
   }
 }
 
