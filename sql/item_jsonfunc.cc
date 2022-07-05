@@ -4558,7 +4558,6 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     /* Find at least one common key-value pair */
     json_string_t key_name;
     bool found_key= false, found_value= false;
-    bool firstkey= true;
     json_engine_t loc_js= *js;
     json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
@@ -4596,10 +4595,12 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
           we need to compare the elements in that order. So set compare_whole
           to true.
         */
-        if(firstkey){
-          firstkey=false;
-        }else tmp_str.append(',');
-        int count_key=2+(k_end-k_start);
+        int count_key=0;
+        if(have_value){
+          tmp_str.append(',');
+          count_key=1;
+        }
+        count_key+=3+(k_end-k_start);
         tmp_str.append('\"');
         tmp_str.append((char*)k_start,k_end-k_start);
         tmp_str.append("\":", 2);
@@ -4617,8 +4618,6 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
             json_skip_current_level(js, value);
             return FALSE;
           }
-          //tmp_str.append('\"');
-          //tmp_str.append('\"');
           while(count_key--)tmp_str.chop();
           *js= loc_js;
         }
