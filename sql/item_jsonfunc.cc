@@ -4470,64 +4470,6 @@ bool Item_func_json_overlaps::fix_length_and_dec(THD *thd)
   return Item_bool_func::fix_length_and_dec(thd);
 }
 
-
-
-bool json_find_intersect_with_scalar(String*str, json_engine_t *js, json_engine_t *value)
-{
-  if (json_value_scalar(value))
-  {
-    if (js->value_type == value->value_type)
-    {
-      if (js->value_type == JSON_VALUE_NUMBER)
-      {
-        double d_j, d_v;
-        char *end;
-        int err;
-
-        d_j= js->s.cs->strntod((char *) js->value, js->value_len, &end, &err);
-        d_v= value->s.cs->strntod((char *) value->value, value->value_len,
-                                   &end, &err);
-
-        if (fabs(d_j - d_v) < 1e-12){
-          str->append((char *)js->value,js->value_len);
-          return true;
-        }
-        return false;
-      }
-      else if (js->value_type == JSON_VALUE_STRING)
-      {
-        if(value->value_len == js->value_len &&
-               memcmp(value->value, js->value, value->value_len) == 0){
-          str->append('"');
-          str->append((char *)value->value, value->value_len);
-          str->append('"');
-          return true;
-        }
-        return false;
-      }
-    }
-    return false;
-  }
-  else if (value->value_type == JSON_VALUE_ARRAY)
-  {
-    while (json_scan_next(value) == 0 && value->state == JST_VALUE)
-    {
-      if (json_read_value(value))
-        return FALSE;
-      if (js->value_type == value->value_type)
-      {
-        int res1= json_find_intersect_with_scalar(str, js, value);
-        if (res1)
-          return TRUE;
-      }
-      if (!json_value_scalar(value))
-        json_skip_level(value);
-    }
-  }
-  return FALSE;
-}
-
-
 bool json_intersect_arr_and_obj(String*str,json_engine_t *js, json_engine_t *value)
 {
   st_json_engine_t loc_val= *value;
@@ -4547,8 +4489,6 @@ bool json_intersect_arr_and_obj(String*str,json_engine_t *js, json_engine_t *val
   }
   return FALSE;
 }
-
-
 
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
@@ -4624,6 +4564,9 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       }
       else
       {
+        // If we need to confirm whether the two objects are exactly the same.
+        // If compare_whole is true and key is not exist,return False
+        // if compare_whole is false goto next key.
         if (compare_whole)
         {
           json_skip_current_level(js, value);
@@ -4633,7 +4576,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         *js= loc_js;
       }
     }
-    if( have_value  ){
+    if(have_value){
       tmp_str.append('}');
     }else {
       tmp_str.chop();
