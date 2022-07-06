@@ -4651,13 +4651,67 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
   }
 }
 
+bool check_same_key_in_object(json_engine_t*js){
+    json_string_t key_name;
+    const uchar *k_start, *k_end;
+    json_string_set_cs(&key_name, js->s.cs);
+    std::vector<String>key_v;
+    while (json_scan_next(js) == 0 && js->state == JST_KEY)
+    {
+      k_start= js->s.c_str;
+      do
+      {
+        k_end= js->s.c_str;
+      } while (json_read_keyname_chr(js) == 0);
+      String tmp_str;
+      tmp_str.set_charset(js->s.cs);
+      tmp_str.length(0);
+      append_simple(&tmp_str, k_start, k_end - k_start);
+      for(auto&p:key_v){
+        if(p.eq(&tmp_str,p.charset()))return TRUE;
+      }
+      key_v.push_back(tmp_str);
+      json_skip_key(js);
+    }
+    json_skip_level(js);
+    return FALSE;
+}
+bool check_same_key_in_js(json_engine_t*js){
 
+  switch (js->value_type)
+  {
+  case JSON_VALUE_OBJECT:
+    return check_same_key_in_object(js);
+  case JSON_VALUE_ARRAY:
+    while (json_scan_next(js) == 0 && js->state == JST_VALUE)
+    {
+      json_read_value(js);
+      if(check_same_key_in_js(js))
+        return TRUE;
+    }
+    json_skip_level(js);
+    return FALSE;
+  default:
+    if (js->value_type == JSON_VALUE_ARRAY)
+    { 
+      while (json_scan_next(js) == 0 && js->state == JST_VALUE)
+      {
+        json_read_value(js);
+        if(check_same_key_in_js(js))
+          return TRUE;
+      }
+    }
+    json_skip_level(js);
+    return FALSE;
+  }
+  return FALSE;
+}
 
 String* Item_func_json_intersect::val_str(String *str){
   DBUG_ASSERT(fixed());
   json_engine_t je1, je2;
   String *js1= args[0]->val_json(&tmp_js1), *js2=NULL;
-
+  json_engine_t tmp_jse;
   if (args[0]->null_value)
     goto null_return;
 
@@ -4667,13 +4721,21 @@ String* Item_func_json_intersect::val_str(String *str){
   js2= args[1]->val_json(&tmp_js2);
   if (args[1]->null_value)
     goto null_return;
-
+  
   json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
                   (const uchar *) js1->ptr() + js1->length());
-
+  tmp_jse=je1;
+  json_read_value(&je1);
+  if(check_same_key_in_js(&je1))
+    goto error_return ;
+  je1=tmp_jse;
   json_scan_start(&je2, js2->charset(),(const uchar *) js2->ptr(),
                   (const uchar *) js2->ptr() + js2->length());
-
+  tmp_jse=je2;
+  json_read_value(&je2);
+  if(check_same_key_in_js(&je2))
+    goto error_return ;
+  je2=tmp_jse;
   if (json_read_value(&je1) || json_read_value(&je2))
     goto error_return;
 
