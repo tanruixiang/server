@@ -66,6 +66,9 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
 bool json_find_intersect_with_scalar(String*str, json_engine_t *js, json_engine_t *value);
 
 bool check_same_key_in_object(json_engine_t*js);
+bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *value, bool compare_whole);
+int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t *value,
+                                 bool compare_whole);
 
 class Json_engine_scan: public json_engine_t
 {

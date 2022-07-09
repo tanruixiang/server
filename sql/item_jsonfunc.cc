@@ -4585,32 +4585,34 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     if (compare_whole){
       *js= loc_js;
       *value= loc_value;
-      while (json_scan_next(js) == 0 && js->state == JST_KEY)
-    {
-      *value= loc_value;
-      k_start= js->s.c_str;
-      do
+        while (json_scan_next(js) == 0 && js->state == JST_KEY)
       {
-        k_end= js->s.c_str;
-      } while (json_read_keyname_chr(js) == 0);
+        *value= loc_value;
+        k_start= js->s.c_str;
+        do
+        {
+          k_end= js->s.c_str;
+        } while (json_read_keyname_chr(js) == 0);
 
-      if (unlikely(js->s.error))
-        return FALSE;
-
-      json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(value, &key_name);
-      if (found_key)
-      {
-        if (json_read_value(js) || json_read_value(value))
+        if (unlikely(js->s.error))
           return FALSE;
-      }
-      else
-      {
-        json_skip_current_level(js, value);
-        return FALSE;
+
+        json_string_set_str(&key_name, k_start, k_end);
+        found_key= find_key_in_object(value, &key_name);
+        if (found_key)
+        {
+          if (json_read_value(js) || json_read_value(value))
+            return FALSE;
+        }
+        else
+        {
+          json_skip_current_level(js, value);
+          return FALSE;
+        }
       }
     }
-    }
+    *js= loc_js;
+    *value= loc_value;
     json_skip_current_level(js, value);
     if (have_value == false)return FALSE;
     str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
@@ -4628,6 +4630,83 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
   return FALSE;
 }
 
+// compare_whole == TRUE  We need to confirm whether the two arrays are exactly the same. 
+//     Intersect([1,2,3] [1,2,3]) is true
+// compare_whole == FALSE  We take the prefix with the longest equal length of the two arrays
+//     Intersect([1,2,3] [1,2,3,4]) is true .The result is [1,2,3]
+//     Intersect([1,2,3] [1,3,3,3]) is true .The result is [1]
+//     Intersect([3,2,1] [1,2,3]) is false.
+bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *value, bool compare_whole)
+{
+  bool res= FALSE;
+  String tmp_str;
+  tmp_str.set_charset(str->charset());
+  tmp_str.length(0);
+  bool first_item=FALSE;
+  tmp_str.append('[');
+  while (json_scan_next(js) == 0 && json_scan_next(value) == 0 &&
+         js->state == JST_VALUE && value->state == JST_VALUE)
+  {
+    if(TRUE==first_item){
+      tmp_str.append(',');
+    }
+    if (json_read_value(js) || json_read_value(value))
+      return FALSE;
+    if (js->value_type != value->value_type)
+    {
+      json_skip_current_level(js, value);
+      return FALSE;
+    }
+    res=check_intersect(&tmp_str, js, value, true);
+    if (!res)
+    {
+      if(compare_whole){
+        json_skip_current_level(js, value);
+        return FALSE;
+      }else {
+        if(TRUE==first_item)tmp_str.chop();// pop comma
+        break;
+      }
+    }
+    first_item=TRUE;
+  }
+  tmp_str.append(']');
+  if(compare_whole==FALSE){
+    json_skip_current_level(js, value);
+    if(first_item){
+      str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
+      return TRUE;
+    }
+    return FALSE;
+  }
+  res= (value->state == JST_ARRAY_END && js->state == JST_ARRAY_END)?TRUE:FALSE;
+  json_skip_current_level(js, value);
+  if(res && first_item){
+    str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
+    return TRUE;
+  }
+  return FALSE;
+}
+
+int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t *value,
+                                 bool compare_whole)
+{
+  if (value->value_type == JSON_VALUE_ARRAY)
+  {
+    return json_compare_arrays_equal(str, js, value,compare_whole);
+  }
+  else if (value->value_type == JSON_VALUE_OBJECT)
+  {
+    if (compare_whole)
+    {
+      json_skip_current_level(js, value);
+      return FALSE;
+    }
+    return json_intersect_arr_and_obj(str, js, value);
+  }
+  else
+    return check_intersect(str, value, js,compare_whole);
+}
 
 int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole)
 {
@@ -4636,8 +4715,7 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
   case JSON_VALUE_OBJECT:
     return json_find_intersect_with_object(str, js, value, compare_whole);
   case JSON_VALUE_ARRAY:
-   // return json_find_intersect_with_array(str, js, value, compare_whole);
-    return 1;
+    return json_find_intersect_with_array(str, js, value, compare_whole);
   default:
     if(!check_overlaps(js, value, compare_whole))return FALSE;
     if (js->value_type == JSON_VALUE_NUMBER){
@@ -4655,7 +4733,6 @@ bool check_same_key_in_object(json_engine_t*js){
     json_string_t key_name;
     const uchar *k_start, *k_end;
     json_string_set_cs(&key_name, js->s.cs);
-  //  std::vector<String>key_v;
     std::unordered_set<std::string>vis_key;
     while (json_scan_next(js) == 0 && js->state == JST_KEY)
     {
@@ -4672,12 +4749,6 @@ bool check_same_key_in_object(json_engine_t*js){
       for(int i=0;i<k_end-k_start;i++){
         tmp_std_str.push_back(k_start[i]);
       }
-      /*for(auto&p:key_v){
-        if(p.eq(&tmp_str,p.charset()))return TRUE;
-      }
-      String str_copy;
-      str_copy.copy(tmp_str);
-      key_v.push_back(str_copy);*/
       if(vis_key.count(tmp_std_str)!=0)return TRUE;
       vis_key.insert(tmp_std_str);
       json_skip_key(js);
