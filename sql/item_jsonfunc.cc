@@ -18,7 +18,7 @@
 #include "sql_priv.h"
 #include "sql_class.h"
 #include "item.h"
-
+#include <unordered_set>
 
 /*
   Compare ASCII string against the string with the specified
@@ -4655,7 +4655,8 @@ bool check_same_key_in_object(json_engine_t*js){
     json_string_t key_name;
     const uchar *k_start, *k_end;
     json_string_set_cs(&key_name, js->s.cs);
-    std::vector<String>key_v;
+  //  std::vector<String>key_v;
+    std::unordered_set<std::string>vis_key;
     while (json_scan_next(js) == 0 && js->state == JST_KEY)
     {
       k_start= js->s.c_str;
@@ -4667,10 +4668,18 @@ bool check_same_key_in_object(json_engine_t*js){
       tmp_str.set_charset(js->s.cs);
       tmp_str.length(0);
       append_simple(&tmp_str, k_start, k_end - k_start);
-      for(auto&p:key_v){
+      std::string tmp_std_str;
+      for(int i=0;i<k_end-k_start;i++){
+        tmp_std_str.push_back(k_start[i]);
+      }
+      /*for(auto&p:key_v){
         if(p.eq(&tmp_str,p.charset()))return TRUE;
       }
-      key_v.push_back(tmp_str);
+      String str_copy;
+      str_copy.copy(tmp_str);
+      key_v.push_back(str_copy);*/
+      if(vis_key.count(tmp_std_str)!=0)return TRUE;
+      vis_key.insert(tmp_std_str);
       json_skip_key(js);
     }
     json_skip_level(js);
