@@ -4734,11 +4734,10 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
 {
   if (value->value_type == JSON_VALUE_OBJECT)
   {
-    /* Find at least one common key-value pair */
     json_string_t key_name;
     bool found_key= false, found_value= false;
-    json_engine_t loc_js= *js;
-    json_engine_t loc_value= *value;
+    const json_engine_t loc_js= *js;
+    const json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
     String tmp_str;
     bool have_value=false;
@@ -4792,6 +4791,17 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         }
         else
         {
+          /*
+          If we need to confirm whether the two objects are exactly the same.
+          If compare_whole is true and key is not exist,return False
+          if compare_whole is false goto next key.
+          Example 1: {"key1":"value1","key2":"value2"} intersect {"key1":"not_value1","key2":"value2"}
+            the first key1's value1 is not equal not_value1.but the compare_whole is false,
+            so we can continue to check key2'value. The example result is {"key2":"value2"}.
+          Example 2: {"key1":{"kkey1":"value1",kkey2":"value2"}} intersect {"key1":{"kkey1":"value1_not",kkey2":"value2"}}
+            the kkey1's value1 is not equal value1_not,the compare_whole is true,so we do not need check kkey2's value2 ,
+            we can return false immediately.The example result is NULL.
+          */
           if (compare_whole)
           {
             json_skip_current_level(js, value);
@@ -4803,9 +4813,17 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       }
       else
       {
-        // If we need to confirm whether the two objects are exactly the same.
-        // If compare_whole is true and key is not exist,return False
-        // if compare_whole is false goto next key.
+        /*
+          If we need to confirm whether the two objects are exactly the same.
+          If compare_whole is true and key is not exist,return False
+          if compare_whole is false goto next key.
+          Example 1: {"key1":"value1","key2":"value2"} intersect {"key2":"value2","key3":"value3"}
+            the first key1 is not found in {"key2":"value2","key3","value3"}.but the compare_whole 
+            is false ,so we can continue to check key2. The example result is {"key2":"value2"}.
+          Example 2: {"key1":{"kkey1":"value1"}} intersect {"key1":{"kkey2":"value1"}}
+            the kkey1 is not found in {"kkey2":"value1"},the compare_whole is true,so we should return 
+            false. The example result is NULL.
+          */
         if (compare_whole)
         {
           *js= loc_js;
@@ -4819,16 +4837,34 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
     }
     if(have_value){
       tmp_str.append('}');
-    }else {
+    }else 
+    {
       tmp_str.chop();
     }
-    // check key
-    if (compare_whole){
+    /*
+    According to the mathematical definition of set. 
+    When two sets are subsets of each other, they are equal.
+    if compare_whole == true,we should check two objects are equal.
+    Example: {"key1":"value1","key2":"value2"} 
+                          intersect 
+            {"key1":"value1","key2":"value2","key3":"value3"}
+      Objects on the left are subsets on the right in this example.
+
+      The above code value only determines that the set on the left 
+      is a subset on the right.
+
+      if compare_whole is true,Without the following code, we will 
+      get the wrong result({"key1":"value1","key2":"value2"}).
+      So we need the following code to judge that the object on the 
+      right is also a subset of the object on the left.This will prove
+      that they are equal.
+    */
+    if (compare_whole)
+    {
       *js= loc_js;
       *value= loc_value;
-        while (json_scan_next(js) == 0 && js->state == JST_KEY)
+      while (json_scan_next(js) == 0 && js->state == JST_KEY)
       {
-        *value= loc_value;
         k_start= js->s.c_str;
         do
         {
@@ -4842,14 +4878,14 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         found_key= find_key_in_object(value, &key_name);
         if (found_key)
         {
-          if (json_read_value(js) || json_read_value(value))
-            return FALSE;
+          json_skip_key(js);
         }
         else
         {
           json_skip_current_level(js, value);
           return FALSE;
         }
+        *value= loc_value;
       }
     }
     *js= loc_js;
@@ -4870,13 +4906,14 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
   }
   return FALSE;
 }
-
-// compare_whole == TRUE  We need to confirm whether the two arrays are exactly the same. 
-//     Intersect([1,2,3] [1,2,3]) is true
-// compare_whole == FALSE  We take the prefix with the longest equal length of the two arrays
-//     Intersect([1,2,3] [1,2,3,4]) is true .The result is [1,2,3]
-//     Intersect([1,2,3] [1,3,3,3]) is true .The result is [1]
-//     Intersect([3,2,1] [1,2,3]) is false.
+/*
+compare_whole == TRUE  We need to confirm whether the two arrays are exactly the same. 
+     Intersect([1,2,3] [1,2,3]) is true
+compare_whole == FALSE  We take the prefix with the longest equal length of the two arrays
+     Intersect([1,2,3] [1,2,3,4]) is true .The result is [1,2,3]
+     Intersect([1,2,3] [1,3,3,3]) is true .The result is [1]
+     Intersect([3,2,1] [1,2,3]) is false.
+*/
 bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *value, bool compare_whole)
 {
   bool res= FALSE;
@@ -4888,7 +4925,8 @@ bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *val
   while (json_scan_next(js) == 0 && json_scan_next(value) == 0 &&
          js->state == JST_VALUE && value->state == JST_VALUE)
   {
-    if(TRUE==first_item){
+    if(TRUE==first_item)
+    {
       tmp_str.append(',');
     }
     if (json_read_value(js) || json_read_value(value))
@@ -4901,10 +4939,12 @@ bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *val
     res=check_intersect(&tmp_str, js, value, true);
     if (!res)
     {
-      if(compare_whole){
+      if(compare_whole)
+      {
         json_skip_current_level(js, value);
         return FALSE;
-      }else {
+      }else
+      {
         if(TRUE==first_item)tmp_str.chop();// pop comma
         break;
       }
@@ -4912,17 +4952,18 @@ bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *val
     first_item=TRUE;
   }
   tmp_str.append(']');
-  if(compare_whole==FALSE){
-    json_skip_current_level(js, value);
-    if(first_item){
+  if(compare_whole==FALSE)
+  {
+    if(first_item)
+    {
       str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
       return TRUE;
     }
     return FALSE;
   }
   res= (value->state == JST_ARRAY_END && js->state == JST_ARRAY_END)?TRUE:FALSE;
-  json_skip_current_level(js, value);
-  if(res && first_item){
+  if(res && first_item)
+  {
     str->append((char*)tmp_str.ptr(),(char*)tmp_str.end()-(char*)tmp_str.ptr());
     return TRUE;
   }
@@ -4959,9 +5000,11 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
     return json_find_intersect_with_array(str, js, value, compare_whole);
   default:
     if(!check_overlaps(js, value, compare_whole))return FALSE;
-    if (js->value_type == JSON_VALUE_NUMBER){
+    if (js->value_type == JSON_VALUE_NUMBER)
+    {
       str->append((char *)js->value,js->value_len);
-    }else if (js->value_type == JSON_VALUE_STRING){
+    }else if (js->value_type == JSON_VALUE_STRING)
+    {
       str->append('"');
       str->append((char *)js->value, js->value_len);
       str->append('"');
@@ -4974,7 +5017,7 @@ bool check_same_key_in_object(json_engine_t*js){
     json_string_t key_name;
     const uchar *k_start, *k_end;
     json_string_set_cs(&key_name, js->s.cs);
-    std::unordered_set<std::string>vis_key;
+    json_engine_t loc_js=*js;
     while (json_scan_next(js) == 0 && js->state == JST_KEY)
     {
       k_start= js->s.c_str;
@@ -4982,21 +5025,21 @@ bool check_same_key_in_object(json_engine_t*js){
       {
         k_end= js->s.c_str;
       } while (json_read_keyname_chr(js) == 0);
-      String tmp_str;
-      tmp_str.set_charset(js->s.cs);
-      tmp_str.length(0);
-      append_simple(&tmp_str, k_start, k_end - k_start);
-      std::string tmp_std_str;
-      for(int i=0;i<k_end-k_start;i++){
-        tmp_std_str.push_back(k_start[i]);
-      }
-      if(vis_key.count(tmp_std_str)!=0)return TRUE;
-      vis_key.insert(tmp_std_str);
+      json_string_set_str(&key_name, k_start, k_end);
+      loc_js=*js;
+      json_skip_key(js);
+      if(find_key_in_object(js,&key_name))return TRUE;
+      *js=loc_js;
       json_skip_key(js);
     }
     json_skip_level(js);
     return FALSE;
 }
+/*
+  Confirm whether there are duplicate keys in the same object.
+  If have duplicate keys return TRUE
+  else return False
+*/
 bool check_same_key_in_js(json_engine_t*js){
 
   switch (js->value_type)
@@ -5045,6 +5088,16 @@ String* Item_func_json_intersect::val_str(String *str){
   
   json_scan_start(&je1, js1->charset(),(const uchar *) js1->ptr(),
                   (const uchar *) js1->ptr() + js1->length());
+  /*
+  Make legal judgments on json. If the judgment is made in check_intersect, 
+  it will not only increase the complexity, but also cause misjudgment.
+  Example : {"test":{"key1":"value1","key1":"value1"}}
+                        intersect
+            {"test":{"key2":"value2","key3":"value3"}}
+  In check_intersect,we found key1 is not in {"key2":"value2","key3":"value3"}
+  and now compare_whole is true, so we return FALSE immediately.Duplicate key1 will 
+  not be scanned.
+  */                
   tmp_jse=je1;
   json_read_value(&je1);
   if(check_same_key_in_js(&je1))
