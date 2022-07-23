@@ -4827,11 +4827,38 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
   }
 }
 
+struct LEX_CSTRINGWithCount{
+  LEX_CSTRING s;
+  int count=0;
+};
+static uchar *
+get_hash_key(const uchar *data, size_t *len_ret,
+                     my_bool __attribute__((unused)))
+{
+  LEX_CSTRINGWithCount *e= (LEX_CSTRINGWithCount *) data;
+
+  *len_ret= e->s.length;
+  return (uchar *) e->s.str;
+}
+
+static void hash_free(void *ptr)
+{
+  my_free(ptr);
+}
+
+
 bool check_same_key_in_object(json_engine_t*js){
     json_string_t key_name;
     const uchar *k_start, *k_end;
     json_string_set_cs(&key_name, js->s.cs);
-    json_engine_t loc_js=*js;
+    //json_engine_t loc_js=*js;
+    HASH key_hash;
+    my_hash_init(PSI_INSTRUMENT_ME,&key_hash,js->s.cs,0,0,0,get_hash_key,hash_free,HASH_UNIQUE);
+    /*if (my_hash_init(key_memory_ignored_db, &ignore_db_dirs_hash,
+                      lower_case_table_names ?  character_set_filesystem :
+                      &my_charset_bin, 0, 0, 0, db_dirs_hash_get_key,
+                      dispose_db_dir, HASH_UNIQUE))*/
+
     while (json_scan_next(js) == 0 && js->state == JST_KEY)
     {
       k_start= js->s.c_str;
@@ -4840,13 +4867,27 @@ bool check_same_key_in_object(json_engine_t*js){
         k_end= js->s.c_str;
       } while (json_read_keyname_chr(js) == 0);
       json_string_set_str(&key_name, k_start, k_end);
-      loc_js=*js;
-      json_skip_key(js);
-      if(find_key_in_object(js,&key_name))return TRUE;
-      *js=loc_js;
+      LEX_CSTRINGWithCount *new_entry;
+      char *new_entry_buf;
+      my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+                       &new_entry, sizeof(LEX_CSTRINGWithCount),
+                       &new_entry_buf, k_end-k_start+1,
+                       NullS);
+      memcpy(new_entry_buf, (char*)k_start, k_end-k_start);
+      new_entry->s.str = new_entry_buf;
+      new_entry->s.length= int(k_end-k_start);
+      new_entry_buf[new_entry->s.length] = '\0';
+      new_entry->count=1;
+      if(my_hash_search(&key_hash, (uchar *)new_entry->s.str, new_entry->s.length)){
+        my_free(new_entry);
+        my_hash_free(&key_hash);
+        return TRUE;
+      }
+      my_hash_insert(&key_hash, (uchar *)new_entry);
       json_skip_key(js);
     }
     json_skip_level(js);
+    my_hash_free(&key_hash);
     return FALSE;
 }
 /*
