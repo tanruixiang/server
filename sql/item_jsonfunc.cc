@@ -4728,12 +4728,137 @@ bool json_compare_arrays_equal(String*str ,json_engine_t *js, json_engine_t *val
   }
   return FALSE;
 }
+struct LEX_CSTRINGWithCount{
+  LEX_CSTRING s;
+  int count=0;
+};
+static uchar *
+get_hash_key(const uchar *data, size_t *len_ret,
+                     my_bool __attribute__((unused)))
+{
+  LEX_CSTRINGWithCount *e= (LEX_CSTRINGWithCount *) data;
 
+  *len_ret= e->s.length;
+  return (uchar *) e->s.str;
+}
+
+static void hash_free(void *ptr)
+{
+  my_free(ptr);
+}
+
+/*
+  If the outermost layer of JSON is an array, 
+  the intersection of arrays is independent of order.
+*/
+bool json_arrays_intersect(String*str, json_engine_t *js, json_engine_t *value){
+  bool first_item=FALSE;
+  HASH value_hash;
+  str->append('[');
+  json_string_t now_value;
+  my_hash_init(PSI_INSTRUMENT_ME,&value_hash,js->s.cs,0,0,0,get_hash_key,hash_free,HASH_UNIQUE);
+  while (json_scan_next(js) == 0 && js->state == JST_VALUE)
+  {
+    DYNAMIC_STRING norm_js;
+    init_dynamic_string(&norm_js, NULL, 0, 0);
+    const uchar*value_start=js->s.c_str;
+    json_read_value(js);
+    json_skip_level(js);
+    const uchar*value_end=js->s.c_str;
+    int value_len=value_end-value_start;
+
+    json_string_set_str(&now_value, value_start, value_end);
+    json_normalize(&norm_js,(char*)value_start, value_len,js->s.cs);
+
+    LEX_CSTRINGWithCount *new_entry;
+    char *new_entry_buf;
+    my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+                       &new_entry, sizeof(LEX_CSTRINGWithCount),
+                       &new_entry_buf, norm_js.length+1,
+                       NullS);
+    memcpy(new_entry_buf, norm_js.str, norm_js.length);
+    
+    new_entry->s.str = new_entry_buf;
+    new_entry->s.length= norm_js.length;
+    new_entry_buf[new_entry->s.length] = '\0';
+    new_entry->count=1;
+    dynstr_free(&norm_js);
+
+    auto search_result=my_hash_search(&value_hash, (uchar *)new_entry->s.str, new_entry->s.length);
+    // Count the number of the same value.
+    if(search_result==NULL)
+    {
+      my_hash_insert(&value_hash, (uchar *)new_entry);
+    }else
+    {
+      new_entry->count+=((LEX_CSTRINGWithCount*)search_result)->count;
+      my_hash_update(&value_hash, (uchar*)new_entry, (uchar*)new_entry->s.str,
+                       new_entry->s.length);
+    }
+  }
+  while (json_scan_next(value) == 0 && value->state == JST_VALUE)
+  {
+    DYNAMIC_STRING norm_val;
+    init_dynamic_string(&norm_val, NULL, 0, 0);
+
+    const uchar*value_start=value->s.c_str;
+    json_read_value(value);
+    json_skip_level(value);
+    const uchar*value_end=value->s.c_str;
+    int value_len=value_end-value_start;
+    json_string_set_str(&now_value, value_start, value_end);
+    json_normalize(&norm_val, (char*)value_start, value_len,value->s.cs);
+
+    LEX_CSTRINGWithCount *new_entry;
+    char *new_entry_buf;
+    my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+                       &new_entry, sizeof(LEX_CSTRINGWithCount),
+                       &new_entry_buf, norm_val.length+1,
+                       NullS);
+    memcpy(new_entry_buf, norm_val.str, norm_val.length);
+
+    new_entry->s.str = new_entry_buf;
+    new_entry->s.length= norm_val.length;
+    new_entry_buf[new_entry->s.length] = '\0';
+    new_entry->count=1;
+    dynstr_free(&norm_val);
+    
+    auto search_result=my_hash_search(&value_hash, (uchar *)new_entry->s.str, new_entry->s.length);
+    // if have common value in js,append it in str
+    if(search_result==NULL)
+    {
+      my_free(new_entry);
+    }else
+    {
+      if(TRUE==first_item)
+      {
+        str->append(',');
+      }else {
+        first_item=TRUE;
+      }
+      str->append((char*)now_value.c_str,now_value.str_end-now_value.c_str);
+      new_entry->count=((LEX_CSTRINGWithCount*)search_result)->count-1;
+      if(new_entry->count==0){
+        my_hash_delete(&value_hash,search_result);
+        my_free(new_entry);
+      }else {
+        my_hash_update(&value_hash, (uchar*)new_entry, (uchar*)new_entry->s.str,
+                       new_entry->s.length);
+      }
+    }
+  }
+  my_hash_free(&value_hash);
+  str->append(']');
+  return first_item;
+}
 int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t *value,
                                  bool compare_whole)
 {
   if (value->value_type == JSON_VALUE_ARRAY)
   {
+    if(!compare_whole){
+      return json_arrays_intersect(str,js, value);
+    }
     return json_compare_arrays_equal(str, js, value,compare_whole);
   }
   else if (value->value_type == JSON_VALUE_OBJECT)
@@ -4772,37 +4897,15 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
   }
 }
 
-struct LEX_CSTRINGWithCount{
-  LEX_CSTRING s;
-  int count=0;
-};
-static uchar *
-get_hash_key(const uchar *data, size_t *len_ret,
-                     my_bool __attribute__((unused)))
-{
-  LEX_CSTRINGWithCount *e= (LEX_CSTRINGWithCount *) data;
 
-  *len_ret= e->s.length;
-  return (uchar *) e->s.str;
-}
-
-static void hash_free(void *ptr)
-{
-  my_free(ptr);
-}
 
 
 bool check_same_key_in_object(json_engine_t*js){
     json_string_t key_name;
     const uchar *k_start, *k_end;
     json_string_set_cs(&key_name, js->s.cs);
-    //json_engine_t loc_js=*js;
     HASH key_hash;
     my_hash_init(PSI_INSTRUMENT_ME,&key_hash,js->s.cs,0,0,0,get_hash_key,hash_free,HASH_UNIQUE);
-    /*if (my_hash_init(key_memory_ignored_db, &ignore_db_dirs_hash,
-                      lower_case_table_names ?  character_set_filesystem :
-                      &my_charset_bin, 0, 0, 0, db_dirs_hash_get_key,
-                      dispose_db_dir, HASH_UNIQUE))*/
 
     while (json_scan_next(js) == 0 && js->state == JST_KEY)
     {
