@@ -4762,9 +4762,14 @@ bool json_arrays_intersect(String*str, json_engine_t *js, json_engine_t *value){
     DYNAMIC_STRING norm_js;
     init_dynamic_string(&norm_js, NULL, 0, 0);
     const uchar*value_start=js->s.c_str;
+    const uchar*value_end;
     json_read_value(js);
-    json_skip_level(js);
-    const uchar*value_end=js->s.c_str;
+    if(json_value_scalar(js)){
+     value_end=js->value_end; 
+    }else {
+      json_skip_level(js);
+      value_end=js->s.c_str;
+    }
     int value_len=value_end-value_start;
 
     json_string_set_str(&now_value, value_start, value_end);
@@ -4791,9 +4796,10 @@ bool json_arrays_intersect(String*str, json_engine_t *js, json_engine_t *value){
       my_hash_insert(&value_hash, (uchar *)new_entry);
     }else
     {
-      new_entry->count+=((LEX_CSTRINGWithCount*)search_result)->count;
-      my_hash_update(&value_hash, (uchar*)new_entry, (uchar*)new_entry->s.str,
-                       new_entry->s.length);
+      ((LEX_CSTRINGWithCount*)search_result)->count+=1;
+      my_hash_update(&value_hash, (uchar*)search_result, (uchar*)(((LEX_CSTRINGWithCount*)search_result)->s.str),
+                       ((LEX_CSTRINGWithCount*)search_result)->s.length);
+      my_free(new_entry);
     }
   }
   while (json_scan_next(value) == 0 && value->state == JST_VALUE)
@@ -4802,9 +4808,14 @@ bool json_arrays_intersect(String*str, json_engine_t *js, json_engine_t *value){
     init_dynamic_string(&norm_val, NULL, 0, 0);
 
     const uchar*value_start=value->s.c_str;
+    const uchar*value_end;
     json_read_value(value);
-    json_skip_level(value);
-    const uchar*value_end=value->s.c_str;
+    if(json_value_scalar(value)){
+     value_end=value->value_end; 
+    }else {
+      json_skip_level(value);
+      value_end=value->s.c_str;
+    }
     int value_len=value_end-value_start;
     json_string_set_str(&now_value, value_start, value_end);
     json_normalize(&norm_val, (char*)value_start, value_len,value->s.cs);
@@ -4842,8 +4853,10 @@ bool json_arrays_intersect(String*str, json_engine_t *js, json_engine_t *value){
         my_hash_delete(&value_hash,search_result);
         my_free(new_entry);
       }else {
-        my_hash_update(&value_hash, (uchar*)new_entry, (uchar*)new_entry->s.str,
-                       new_entry->s.length);
+        ((LEX_CSTRINGWithCount*)search_result)->count-=1;
+        my_hash_update(&value_hash, (uchar*)search_result, (uchar*)(((LEX_CSTRINGWithCount*)search_result)->s.str),
+                        ((LEX_CSTRINGWithCount*)search_result)->s.length);
+        my_free(new_entry);
       }
     }
   }
