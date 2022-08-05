@@ -4493,6 +4493,42 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
 {
   if (value->value_type == JSON_VALUE_OBJECT)
   {
+    if(compare_whole)
+    {
+      String object_js;
+      json_engine_t object_js_e;
+      const uchar*object_js_start= js->value_begin;
+      json_skip_level(js);
+      const uchar*object_js_end= js->s.c_str;
+      object_js.set_charset(str->charset());
+      object_js.length(0);
+      object_js.append((char*)object_js_start, object_js_end-object_js_start);
+
+
+      json_scan_start(&object_js_e, object_js.charset(), (const uchar *) (object_js.ptr()),
+                  (const uchar *) (object_js.ptr() + object_js.length()));
+      json_read_value(&object_js_e);
+
+      String object_value;
+      json_engine_t object_value_e;
+      const uchar*object_value_start= value->value_begin;
+      json_skip_level(value);
+      const uchar*object_value_end= value->s.c_str;
+      object_value.set_charset(str->charset());
+      object_value.length(0);
+      object_value.append((char*)object_value_start, object_value_end-object_value_start);
+      
+      json_scan_start(&object_value_e, object_value.charset(), (const uchar *) (object_value.ptr()),
+                  (const uchar *) (object_value.ptr() + object_value.length()));
+      json_read_value(&object_value_e);
+
+      if(check_overlaps(&object_value_e, &object_js_e, true))
+      {
+          str->append((char*)object_js_start,object_js_end-object_js_start);
+          return TRUE;
+      }
+      return FALSE;
+    }
     json_string_t key_name;
     bool found_key= false, found_value= false;
     const json_engine_t loc_js= *js;
@@ -4914,6 +4950,12 @@ bool check_same_key_in_object(json_engine_t*js)
       {
         k_end= js->s.c_str;
       } while (json_read_keyname_chr(js) == 0);
+      json_read_value(js);
+      if (check_same_key_in_js(js))
+      {
+        my_hash_free(&key_hash);
+        return TRUE;
+      }
       json_string_set_str(&key_name, k_start, k_end);
       LEX_CSTRINGWithCount *new_entry;
       char *new_entry_buf;
@@ -4959,17 +5001,8 @@ bool check_same_key_in_js(json_engine_t*js)
     json_skip_level(js);
     return FALSE;
   default:
-    if (js->value_type == JSON_VALUE_ARRAY)
-    { 
-      while (json_scan_next(js) == 0 && js->state == JST_VALUE)
-      {
-        json_read_value(js);
-        if (check_same_key_in_js(js))
-          return TRUE;
-      }
-    }
-    json_skip_level(js);
-    return FALSE;
+    if (json_value_scalar(js))
+      return FALSE;
   }
   return FALSE;
 }
