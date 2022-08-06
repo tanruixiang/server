@@ -4488,6 +4488,25 @@ bool json_intersect_arr_and_obj(String*str, json_engine_t *js, json_engine_t *va
   return FALSE;
 }
 
+
+struct LEX_CSTRING_KEYVALUE{
+  LEX_CSTRING key;
+  LEX_CSTRING value;
+};
+static uchar *
+get_hash_kv_key(const uchar *data, size_t *len_ret,
+                     my_bool __attribute__((unused)))
+{
+  LEX_CSTRING_KEYVALUE *e= (LEX_CSTRING_KEYVALUE *) data;
+  *len_ret= e->key.length;
+  return (uchar *) e->key.str;
+}
+static void hash_free(void *ptr)
+{
+  my_free(ptr);
+}
+
+
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
@@ -4529,18 +4548,19 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       }
       return FALSE;
     }
-    json_string_t key_name;
-    bool found_key= false, found_value= false;
-    const json_engine_t loc_js= *js;
-    const json_engine_t loc_value= *value;
+    // const json_engine_t loc_js= *js;
+    // const json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
-    String tmp_str;
-    bool have_value= false;
-    
-    tmp_str.set_charset(str->charset());
-    tmp_str.length(0);
-    json_string_set_cs(&key_name, value->s.cs);
-    tmp_str.append('{');
+    bool first_item= false;
+
+    HASH value_hash;
+    my_hash_init(PSI_INSTRUMENT_ME, &value_hash, js->s.cs, 0, 
+    0, 0, get_hash_kv_key,hash_free, HASH_UNIQUE);
+    // tmp_str.set_charset(str->charset());
+    // tmp_str.length(0);
+    // json_string_set_cs(&key_name, value->s.cs);
+    // tmp_str.append('{');
+
     while (json_scan_next(value) == 0 && value->state == JST_KEY)
     {
       k_start= value->s.c_str;
@@ -4551,144 +4571,156 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
 
       if (unlikely(value->s.error))
         return FALSE;
+      json_read_value(value);
+      const char *start_ptr= (const char*)value->value;
+      if (!json_value_scalar(value))
+        json_skip_level(value);
+      const char *end_ptr= (const char*)(value->s.c_str);
 
-      json_string_set_str(&key_name, k_start, k_end);
-      found_key= find_key_in_object(js, &key_name);
-      found_value= 0;
 
-      if (found_key)
+      LEX_CSTRING_KEYVALUE *new_entry;
+      char *new_entry_key_buf;
+      char *new_entry_value_buf;
+      int value_len= end_ptr-start_ptr+1;
+      my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+                        &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
+                        &new_entry_key_buf, k_end-k_start,
+                        &new_entry_value_buf,end_ptr-start_ptr+1,
+                        NullS);
+      memcpy(new_entry_key_buf, k_start, k_end-k_start);
+     // memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr+2);
+      if (value->value_type == JSON_VALUE_NUMBER)
       {
+        value_len--;
+        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+      }else if (value->value_type == JSON_VALUE_STRING)
+      {
+        new_entry_value_buf[0]='"';
+        memcpy(new_entry_value_buf+1, start_ptr, end_ptr-start_ptr);
+        //new_entry_value_buf[end_ptr-start_ptr+1]='"';
+      }else if (value->value_type == JSON_VALUE_ARRAY)
+      {
+        value_len--;
+        // new_entry_value_buf[0]='[';
+        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+        // new_entry_value_buf[end_ptr-start_ptr+1]=']';
+      }else if (value->value_type == JSON_VALUE_OBJECT)
+      {
+        value_len--;
+        // new_entry_value_buf[0]='{';
+        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+        // new_entry_value_buf[end_ptr-start_ptr+1]='}';
+      }
+      new_entry->key.str= new_entry_key_buf;
+      new_entry->key.length= k_end-k_start;
+      new_entry->value.str= new_entry_value_buf;
+      new_entry->value.length= value_len;
+      my_hash_insert(&value_hash, (uchar *)new_entry);
+    }
 
-        if (json_read_value(js) || json_read_value(value))
-          return FALSE;
+     while (json_scan_next(js) == 0 && js->state == JST_KEY)
+    {
+      k_start= js->s.c_str;
+      do
+      {
+        k_end= js->s.c_str;
+      } while (json_read_keyname_chr(js) == 0);
 
-        /*
-          The value of key-value pair can be an be anything. If it is an object
-          then we need to compare the whole value and if it is an array then
-          we need to compare the elements in that order. So set compare_whole
-          to true.
-        */
-        int count_key= 0;
-        if(have_value){
-          tmp_str.append(',');
-          count_key= 1;
-        }
-        count_key+= 3+(k_end-k_start);
-        tmp_str.append('\"');
-        tmp_str.append((char*)k_start,k_end-k_start);
-        tmp_str.append("\":", 2);
-        if (js->value_type == value->value_type)
-          found_value= check_intersect(&tmp_str, js, value, true);
-        if (found_value)
+      if (unlikely(js->s.error))
+        return FALSE;
+      json_read_value(js);
+      const char *start_ptr= (const char*)js->value;
+      if (!json_value_scalar(js))
+        json_skip_level(js);
+      const char *end_ptr= (const char*)(js->s.c_str);
+
+
+      LEX_CSTRING_KEYVALUE *new_entry;
+      char *new_entry_key_buf;
+      char *new_entry_value_buf;
+      int value_len = end_ptr-start_ptr+1;
+      my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+                        &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
+                        &new_entry_key_buf, k_end-k_start,
+                        &new_entry_value_buf,end_ptr-start_ptr+1,
+                        NullS);
+      memcpy(new_entry_key_buf, k_start, k_end-k_start);
+      if (js->value_type == JSON_VALUE_NUMBER)
+      {
+        value_len--;
+        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+      }else if (js->value_type == JSON_VALUE_STRING)
+      {
+       
+        new_entry_value_buf[0]='"';
+        memcpy(new_entry_value_buf+1, start_ptr, end_ptr-start_ptr);
+        //new_entry_value_buf[end_ptr-start_ptr+1]='"';
+         
+      }else if (js->value_type == JSON_VALUE_ARRAY)
+      {
+        value_len--;
+        // new_entry_value_buf[0]='[';
+        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+        // new_entry_value_buf[end_ptr-start_ptr+1]=']';
+      }else if (js->value_type == JSON_VALUE_OBJECT)
+      {
+         value_len--;
+        // new_entry_value_buf[0]='{';
+        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+        // new_entry_value_buf[end_ptr-start_ptr+1]='}';
+      }
+      new_entry->key.str= new_entry_key_buf;
+      new_entry->key.length= k_end-k_start;
+      new_entry->value.str= new_entry_value_buf;
+      new_entry->value.length= value_len;
+          
+      auto search_result=my_hash_search(&value_hash, (uchar *)new_entry->key.str, new_entry->key.length);
+      if (search_result == NULL)
+      {
+        my_free(new_entry);
+      }else
+      {
+        //LEX_CSTRING_KEYVALUE* search_result = ((LEX_CSTRING_KEYVALUE*)search_result);
+        
+        String object_js;
+        object_js.set_charset(str->charset());
+        object_js.length(0);
+        object_js.append(new_entry->value.str,new_entry->value.length);
+
+        String object_value;
+        object_value.set_charset(str->charset());
+        object_value.length(0);
+        object_value.append(((LEX_CSTRING_KEYVALUE*)search_result)->value.str,((LEX_CSTRING_KEYVALUE*)search_result)->value.length);
+
+        json_engine_t temp_value, temp_js;
+        json_scan_start(&temp_js, object_js.charset(), (const uchar *) (object_js.ptr()),
+                  (const uchar *) (object_js.ptr() + object_js.length()));
+        json_scan_start(&temp_value, object_value.charset(), (const uchar *) (object_value.ptr()),
+                  (const uchar *) (object_value.ptr() + object_value.length()));
+        json_read_value(&temp_js);
+        json_read_value(&temp_value);
+        if(check_overlaps(&temp_js, &temp_value, true))
         {
-          have_value= true;
-          *js= loc_js;
-        }
-        else
-        {
-          /*
-          If we need to confirm whether the two objects are exactly the same.
-          If compare_whole is true and key is not exist,return False
-          if compare_whole is false goto next key.
-          Example 1: {"key1":"value1","key2":"value2"} intersect {"key1":"not_value1","key2":"value2"}
-            the first key1's value1 is not equal not_value1.but the compare_whole is false,
-            so we can continue to check key2'value. The example result is {"key2":"value2"}.
-          Example 2: {"key1":{"kkey1":"value1",kkey2":"value2"}} intersect {"key1":{"kkey1":"value1_not",kkey2":"value2"}}
-            the kkey1's value1 is not equal value1_not,the compare_whole is true,so we do not need check kkey2's value2 ,
-            we can return false immediately.The example result is NULL.
-          */
-          if (compare_whole)
+          if(TRUE == first_item)
           {
-            json_skip_current_level(js, value);
-            return FALSE;
+            str->append(',');
+          }else
+          {
+            str->append('{');
+            first_item= TRUE;
           }
-          while (count_key--)tmp_str.chop();
-          *js= loc_js;
+          str->append('"');
+          str->append(new_entry->key.str, new_entry->key.length);
+          str->append('"');
+          str->append(':');
+          str->append(new_entry->value.str, new_entry->value.length);
         }
-      }
-      else
-      {
-        /*
-          If we need to confirm whether the two objects are exactly the same.
-          If compare_whole is true and key is not exist,return False
-          if compare_whole is false goto next key.
-          Example 1: {"key1":"value1","key2":"value2"} intersect {"key2":"value2","key3":"value3"}
-            the first key1 is not found in {"key2":"value2","key3","value3"}.but the compare_whole 
-            is false ,so we can continue to check key2. The example result is {"key2":"value2"}.
-          Example 2: {"key1":{"kkey1":"value1"}} intersect {"key1":{"kkey2":"value1"}}
-            the kkey1 is not found in {"kkey2":"value1"},the compare_whole is true,so we should return 
-            false. The example result is NULL.
-          */
-        if (compare_whole)
-        {
-          *js= loc_js;
-          *value= loc_value;
-          json_skip_current_level(js, value);
-          return FALSE;
-        }
-        json_skip_key(value);
-        *js= loc_js;
+        my_free(new_entry);
       }
     }
-    if(have_value){
-      tmp_str.append('}');
-    }else 
-    {
-      tmp_str.chop();
-    }
-    /*
-    According to the mathematical definition of set. 
-    When two sets are subsets of each other, they are equal.
-    if compare_whole == true,we should check two objects are equal.
-    Example: {"key1":"value1","key2":"value2"} 
-                          intersect 
-            {"key1":"value1","key2":"value2","key3":"value3"}
-      Objects on the left are subsets on the right in this example.
-
-      The above code value only determines that the set on the left 
-      is a subset on the right.
-
-      if compare_whole is true,Without the following code, we will 
-      get the wrong result({"key1":"value1","key2":"value2"}).
-      So we need the following code to judge that the object on the 
-      right is also a subset of the object on the left.This will prove
-      that they are equal.
-    */
-    if (compare_whole)
-    {
-      *js= loc_js;
-      *value= loc_value;
-      while (json_scan_next(js) == 0 && js->state == JST_KEY)
-      {
-        k_start= js->s.c_str;
-        do
-        {
-          k_end= js->s.c_str;
-        } while (json_read_keyname_chr(js) == 0);
-
-        if (unlikely(js->s.error))
-          return FALSE;
-
-        json_string_set_str(&key_name, k_start, k_end);
-        found_key= find_key_in_object(value, &key_name);
-        if (found_key)
-        {
-          json_skip_key(js);
-        }
-        else
-        {
-          json_skip_current_level(js, value);
-          return FALSE;
-        }
-        *value= loc_value;
-      }
-    }
-    *js= loc_js;
-    *value= loc_value;
-    json_skip_current_level(js, value);
-    if (have_value == false)return FALSE;
-    str->append((char*)tmp_str.ptr(), (char*)tmp_str.end()-(char*)tmp_str.ptr());
-    return TRUE;
+    my_hash_free(&value_hash);
+    if(first_item)str->append('}');
+    return first_item;
   }
   else if (value->value_type == JSON_VALUE_ARRAY)
   {
@@ -4757,10 +4789,7 @@ get_hash_key(const uchar *data, size_t *len_ret,
   return (uchar *) e->s.str;
 }
 
-static void hash_free(void *ptr)
-{
-  my_free(ptr);
-}
+
 
 /*
   If the outermost layer of JSON is an array, 
@@ -4893,7 +4922,7 @@ int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t 
     if(!compare_whole){
       return json_arrays_intersect(str, js, value);
     }
-    return json_compare_arrays_equal_in_order(str, js, value);
+    return json_compare_arrays_equal_in_order(str, js, value); // todo: use overlaps replace
   }
   else if (value->value_type == JSON_VALUE_OBJECT)
   {
@@ -4902,7 +4931,7 @@ int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t 
       json_skip_current_level(js, value);
       return FALSE;
     }
-    return json_intersect_arr_and_obj(str, js, value);
+    return json_intersect_arr_and_obj(str, js, value); // todo: use overlaps replace
   }
   else
     return check_intersect(str, value, js, compare_whole);
