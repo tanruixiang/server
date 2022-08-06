@@ -4479,7 +4479,7 @@ bool json_intersect_arr_and_obj(String*str, json_engine_t *js, json_engine_t *va
       return FALSE;
     if (js->value_type == JSON_VALUE_OBJECT)
     {
-      int res1= json_find_intersect_with_object(str,js, value, true);
+      int res1= json_find_intersect_with_object(str, js, value, true);
       if (res1)
         return TRUE;
       *value= loc_val;
@@ -4548,18 +4548,12 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       }
       return FALSE;
     }
-    // const json_engine_t loc_js= *js;
-    // const json_engine_t loc_value= *value;
     const uchar *k_start, *k_end;
     bool first_item= false;
 
     HASH value_hash;
     my_hash_init(PSI_INSTRUMENT_ME, &value_hash, js->s.cs, 0, 
     0, 0, get_hash_kv_key,hash_free, HASH_UNIQUE);
-    // tmp_str.set_charset(str->charset());
-    // tmp_str.length(0);
-    // json_string_set_cs(&key_name, value->s.cs);
-    // tmp_str.append('{');
 
     while (json_scan_next(value) == 0 && value->state == JST_KEY)
     {
@@ -4588,7 +4582,6 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
                         &new_entry_value_buf,end_ptr-start_ptr+1,
                         NullS);
       memcpy(new_entry_key_buf, k_start, k_end-k_start);
-     // memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr+2);
       if (value->value_type == JSON_VALUE_NUMBER)
       {
         value_len--;
@@ -4597,19 +4590,14 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       {
         new_entry_value_buf[0]='"';
         memcpy(new_entry_value_buf+1, start_ptr, end_ptr-start_ptr);
-        //new_entry_value_buf[end_ptr-start_ptr+1]='"';
       }else if (value->value_type == JSON_VALUE_ARRAY)
       {
         value_len--;
-        // new_entry_value_buf[0]='[';
         memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-        // new_entry_value_buf[end_ptr-start_ptr+1]=']';
       }else if (value->value_type == JSON_VALUE_OBJECT)
       {
         value_len--;
-        // new_entry_value_buf[0]='{';
         memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-        // new_entry_value_buf[end_ptr-start_ptr+1]='}';
       }
       new_entry->key.str= new_entry_key_buf;
       new_entry->key.length= k_end-k_start;
@@ -4654,20 +4642,15 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
        
         new_entry_value_buf[0]='"';
         memcpy(new_entry_value_buf+1, start_ptr, end_ptr-start_ptr);
-        //new_entry_value_buf[end_ptr-start_ptr+1]='"';
          
       }else if (js->value_type == JSON_VALUE_ARRAY)
       {
         value_len--;
-        // new_entry_value_buf[0]='[';
         memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-        // new_entry_value_buf[end_ptr-start_ptr+1]=']';
       }else if (js->value_type == JSON_VALUE_OBJECT)
       {
          value_len--;
-        // new_entry_value_buf[0]='{';
         memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-        // new_entry_value_buf[end_ptr-start_ptr+1]='}';
       }
       new_entry->key.str= new_entry_key_buf;
       new_entry->key.length= k_end-k_start;
@@ -4680,8 +4663,6 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
         my_free(new_entry);
       }else
       {
-        //LEX_CSTRING_KEYVALUE* search_result = ((LEX_CSTRING_KEYVALUE*)search_result);
-        
         String object_js;
         object_js.set_charset(str->charset());
         object_js.length(0);
@@ -4733,48 +4714,7 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
   }
   return FALSE;
 }
-/*
-  Check whether the order and values of the two arrays are exactly equal, and update str.
-*/
-bool json_compare_arrays_equal_in_order(String*str, json_engine_t *js, json_engine_t *value)
-{
-  bool res= FALSE;
-  String tmp_str;
-  tmp_str.set_charset(str->charset());
-  tmp_str.length(0);
-  bool first_item= FALSE;
-  tmp_str.append('[');
-  while (json_scan_next(js) == 0 && json_scan_next(value) == 0 &&
-         js->state == JST_VALUE && value->state == JST_VALUE)
-  {
-    if (TRUE == first_item)
-    {
-      tmp_str.append(',');
-    }
-    if (json_read_value(js) || json_read_value(value))
-      return FALSE;
-    if (js->value_type != value->value_type)
-    {
-      json_skip_current_level(js, value);
-      return FALSE;
-    }
-    res= check_intersect(&tmp_str, js, value, true);
-    if (!res)
-    {
-        json_skip_current_level(js, value);
-        return FALSE;
-    }
-    first_item= TRUE;
-  }
-  tmp_str.append(']');
-  res= (value->state == JST_ARRAY_END && js->state == JST_ARRAY_END)? TRUE : FALSE;
-  if (res && first_item)
-  {
-    str->append((char*)tmp_str.ptr(), (char*)tmp_str.end()-(char*)tmp_str.ptr());
-    return TRUE;
-  }
-  return FALSE;
-}
+
 struct LEX_CSTRINGWithCount{
   LEX_CSTRING s;
   int count=0;
@@ -4919,10 +4859,23 @@ int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t 
 {
   if (value->value_type == JSON_VALUE_ARRAY)
   {
-    if(!compare_whole){
+    if(!compare_whole)
+    {
       return json_arrays_intersect(str, js, value);
     }
-    return json_compare_arrays_equal_in_order(str, js, value); // todo: use overlaps replace
+    
+    bool is_same=false;
+    json_engine_t tmp_js= *js;
+    const char *start_ptr= (const char*)tmp_js.value;
+    json_skip_level(&tmp_js);
+    const char *end_ptr= (const char*)(tmp_js.s.c_str);
+
+    is_same=json_compare_arrays_in_order(js, value);
+    if(is_same)
+    {
+      str->append(start_ptr,end_ptr-start_ptr);
+    }
+    return is_same;
   }
   else if (value->value_type == JSON_VALUE_OBJECT)
   {
@@ -4931,7 +4884,7 @@ int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t 
       json_skip_current_level(js, value);
       return FALSE;
     }
-    return json_intersect_arr_and_obj(str, js, value); // todo: use overlaps replace
+    return json_intersect_arr_and_obj(str, js, value);
   }
   else
     return check_intersect(str, value, js, compare_whole);
@@ -5003,9 +4956,7 @@ bool check_same_key_in_object(json_engine_t*js)
         return TRUE;
       }
       my_hash_insert(&key_hash, (uchar *)new_entry);
-      json_skip_key(js);
     }
-    json_skip_level(js);
     my_hash_free(&key_hash);
     return FALSE;
 }
@@ -5027,7 +4978,6 @@ bool check_same_key_in_js(json_engine_t*js)
       if(check_same_key_in_js(js))
         return TRUE;
     }
-    json_skip_level(js);
     return FALSE;
   default:
     if (json_value_scalar(js))
