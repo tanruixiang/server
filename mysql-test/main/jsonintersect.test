@@ -24,7 +24,7 @@ SELECT JSON_INTERSECT(@json1,@json2);
 
 # scalar(string) intersect scalar(string) array
 SET @json1 = '"z"';
-SET @json2 = '["a","b,"cd","ef","f"]';
+SET @json2 = '["a","b","cd","ef","f"]';
 SELECT JSON_INTERSECT(@json1,@json2);
 
 # object intersect object
