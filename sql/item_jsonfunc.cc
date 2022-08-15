@@ -4493,6 +4493,7 @@ struct LEX_CSTRING_KEYVALUE
   LEX_CSTRING value;
   int count = 0;
 };
+
 static uchar *
 get_hash_kv_key(const uchar *data, size_t *len_ret,
                      my_bool __attribute__((unused)))
@@ -4528,7 +4529,11 @@ bool get_hash_from_json(json_engine_t*value, HASH&value_hash)
         my_hash_free(&value_hash);
         return FALSE;
       }
-      json_read_value(value);
+      if(json_read_value(value))
+      {
+        my_hash_free(&value_hash);
+        return FALSE;
+      }
       const char *start_ptr= (const char*)value->value;
       if (!json_value_scalar(value))
         json_skip_level(value);
@@ -4539,28 +4544,20 @@ bool get_hash_from_json(json_engine_t*value, HASH&value_hash)
       char *new_entry_key_buf;
       char *new_entry_value_buf;
       int value_len= end_ptr-start_ptr+1;
+      if (value->value_type != JSON_VALUE_STRING)value_len-= 1;
       my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                         &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                         &new_entry_key_buf, k_end-k_start,
-                        &new_entry_value_buf,end_ptr-start_ptr+1,
+                        &new_entry_value_buf, value_len,
                         NullS);
       memcpy(new_entry_key_buf, k_start, k_end-k_start);
-      if (value->value_type == JSON_VALUE_NUMBER)
-      {
-        value_len--;
-        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-      }else if (value->value_type == JSON_VALUE_STRING)
+      if (value->value_type == JSON_VALUE_STRING)
       {
         new_entry_value_buf[0]='"';
-        memcpy(new_entry_value_buf+1, start_ptr, end_ptr-start_ptr);
-      }else if (value->value_type == JSON_VALUE_ARRAY)
+        memcpy(new_entry_value_buf+1, start_ptr, value_len-1);
+      }else
       {
-        value_len--;
-        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-      }else if (value->value_type == JSON_VALUE_OBJECT)
-      {
-        value_len--;
-        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+        memcpy(new_entry_value_buf, start_ptr, value_len);
       }
       new_entry->key.str= new_entry_key_buf;
       new_entry->key.length= k_end-k_start;
@@ -4568,6 +4565,7 @@ bool get_hash_from_json(json_engine_t*value, HASH&value_hash)
       new_entry->value.length= value_len;
       my_hash_insert(&value_hash, (uchar *)new_entry);
     }
+    return TRUE;
   }else if(value->value_type == JSON_VALUE_ARRAY)
   {
     json_string_t now_value;
@@ -4619,6 +4617,7 @@ bool get_hash_from_json(json_engine_t*value, HASH&value_hash)
         my_free(new_entry);
       }
     }
+    return TRUE;
   }
   return FALSE;
 }
@@ -4685,7 +4684,10 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
 
       if (unlikely(js->s.error))
         return FALSE;
-      json_read_value(js);
+      if(json_read_value(js))
+      {
+        my_hash_free(&value_hash);
+      }
       const char *start_ptr= (const char*)js->value;
       if (!json_value_scalar(js))
         json_skip_level(js);
@@ -4696,30 +4698,20 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
       char *new_entry_key_buf;
       char *new_entry_value_buf;
       int value_len = end_ptr-start_ptr+1;
+      if (js->value_type != JSON_VALUE_STRING)value_len-= 1;
       my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                         &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                         &new_entry_key_buf, k_end-k_start,
-                        &new_entry_value_buf,end_ptr-start_ptr+1,
+                        &new_entry_value_buf,value_len,
                         NullS);
       memcpy(new_entry_key_buf, k_start, k_end-k_start);
-      if (js->value_type == JSON_VALUE_NUMBER)
+      if (js->value_type == JSON_VALUE_STRING)
       {
-        value_len--;
-        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-      }else if (js->value_type == JSON_VALUE_STRING)
-      {
-       
         new_entry_value_buf[0]='"';
-        memcpy(new_entry_value_buf+1, start_ptr, end_ptr-start_ptr);
-         
-      }else if (js->value_type == JSON_VALUE_ARRAY)
+        memcpy(new_entry_value_buf+1, start_ptr, value_len-1);
+      }else
       {
-        value_len--;
-        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
-      }else if (js->value_type == JSON_VALUE_OBJECT)
-      {
-         value_len--;
-        memcpy(new_entry_value_buf, start_ptr, end_ptr-start_ptr);
+        memcpy(new_entry_value_buf, start_ptr, value_len);
       }
       new_entry->key.str= new_entry_key_buf;
       new_entry->key.length= k_end-k_start;
@@ -4783,8 +4775,6 @@ int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t
   }
   return FALSE;
 }
-
-
 
 /*
   If the outermost layer of JSON is an array, 
@@ -4868,6 +4858,7 @@ bool json_arrays_intersect(String*str, json_engine_t *js, json_engine_t *value)
   str->append(']');
   return first_item;
 }
+
 int json_find_intersect_with_array(String*str, json_engine_t *js, json_engine_t *value,
                                  bool compare_whole)
 {
@@ -4928,9 +4919,6 @@ int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool co
   }
 }
 
-
-
-
 bool check_same_key_in_object(json_engine_t*js)
 {
     json_string_t key_name;
@@ -4979,6 +4967,7 @@ bool check_same_key_in_object(json_engine_t*js)
     my_hash_free(&key_hash);
     return FALSE;
 }
+
 /*
   Confirm whether there are duplicate keys in the same object.
   If have duplicate keys return TRUE
@@ -5075,7 +5064,6 @@ null_return:
   null_value= 1;
   return NULL;
 }
-
 
 bool Item_func_json_intersect::fix_length_and_dec(THD *thd)
 {
