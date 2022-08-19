@@ -4487,6 +4487,7 @@ bool json_intersect_arr_and_obj(String*str, json_engine_t *js, json_engine_t *va
   }
   return FALSE;
 }
+
 struct LEX_CSTRING_KEYVALUE
 {
   LEX_CSTRING key;
@@ -4502,12 +4503,13 @@ get_hash_kv_key(const uchar *data, size_t *len_ret,
   *len_ret= e->key.length;
   return (uchar *) e->key.str;
 }
+
 static void hash_free(void *ptr)
 {
   my_free(ptr);
 }
 
-bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
+bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
   const uchar *k_start, *k_end;
   my_hash_init(PSI_INSTRUMENT_ME, &value_hash, value->s.cs, 0, 
@@ -4545,10 +4547,10 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
        value_len-= 1;
     my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
-                      &new_entry_key_buf, k_end-k_start,
+                      &new_entry_key_buf, k_end - k_start,
                       &new_entry_value_buf, value_len,
                       NullS);
-    memcpy(new_entry_key_buf, k_start, k_end-k_start);
+    memcpy(new_entry_key_buf, k_start, k_end - k_start);
     if (value->value_type == JSON_VALUE_STRING)
     {
       new_entry_value_buf[0]= '"';
@@ -4566,8 +4568,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
   }
   return TRUE;
 }
-
-bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
+bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
   json_string_t now_value;
   my_hash_init(PSI_INSTRUMENT_ME, &value_hash, value->s.cs, 0, 
@@ -4592,8 +4593,8 @@ bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
       json_skip_level(value);
       value_end= value->s.c_str;
     }
-    int value_len= value_end - value_start;
 
+    int value_len= value_end - value_start;
     json_string_set_str(&now_value, value_start, value_end);
     json_normalize(&norm_js, (const char*) value_start, value_len, value->s.cs);
 
@@ -4633,11 +4634,11 @@ bool get_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
   if(value->value_type == JSON_VALUE_OBJECT)
   {
-    return get_array_hash_from_json(value, value_hash);
+    return get_object_hash_from_json(value, value_hash);
   }
   else if(value->value_type == JSON_VALUE_ARRAY)
   {
-    return get_object_hash_from_json(value, value_hash);
+    return get_array_hash_from_json(value, value_hash);
   }
   return FALSE;
 }
@@ -4678,7 +4679,7 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       if(json_read_value(&object_value_e))
         return FALSE;
 
-      if(check_overlaps(&object_value_e, &object_js_e, true))
+      if(check_overlaps(&object_value_e, &object_js_e, TRUE))
       {
           str->append( (const char*) object_js_start, object_js_end - object_js_start);
           return TRUE;
@@ -4717,19 +4718,19 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       LEX_CSTRING_KEYVALUE *new_entry;
       char *new_entry_key_buf;
       char *new_entry_value_buf;
-      int value_len= end_ptr - start_ptr+1;
+      int value_len= end_ptr - start_ptr + 1;
       if (js->value_type != JSON_VALUE_STRING)
         value_len-= 1;
       my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                         &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
-                        &new_entry_key_buf, k_end-k_start,
+                        &new_entry_key_buf, k_end - k_start,
                         &new_entry_value_buf, value_len,
                         NullS);
-      memcpy(new_entry_key_buf, k_start, k_end-k_start);
+      memcpy(new_entry_key_buf, k_start, k_end - k_start);
       if (js->value_type == JSON_VALUE_STRING)
       {
         new_entry_value_buf[0]='"';
-        memcpy(new_entry_value_buf+1, start_ptr, value_len-1);
+        memcpy(new_entry_value_buf + 1, start_ptr, value_len - 1);
       }
       else
       {
@@ -4831,7 +4832,8 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
     if (json_value_scalar(value))
     {
      value_end= value->value_end; 
-    }else
+    }
+    else
     {
       json_skip_level(value);
       value_end= value->s.c_str;
@@ -4856,13 +4858,13 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
     auto search_result= my_hash_search(&value_hash, (const uchar *) new_entry->key.str,
                                         new_entry->key.length);
     // if have common value in js,append it in str
-    if (search_result == NULL)
+    if (NULL == search_result)
     {
       my_free(new_entry);
     }
     else
     {
-      if(TRUE == first_item)
+      if(first_item)
       {
         str->append(',');
       }
@@ -4912,7 +4914,7 @@ int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t
     is_same= json_compare_arrays_in_order(js, value);
     if(is_same)
     {
-      str->append( (const char*) start_ptr,end_ptr-start_ptr);
+      str->append( (const char*) start_ptr, end_ptr - start_ptr);
     }
     return is_same;
   }
@@ -4960,7 +4962,7 @@ bool check_same_key_in_object(json_engine_t *js)
     json_string_set_cs(&key_name, js->s.cs);
     HASH key_hash;
     my_hash_init(PSI_INSTRUMENT_ME, &key_hash, js->s.cs, 
-                0, 0, 0, get_hash_kv_key,hash_free, HASH_UNIQUE);
+                0, 0, 0, get_hash_kv_key, hash_free, HASH_UNIQUE);
 
     while (json_scan_next(js) == 0 && js->state == JST_KEY)
     {
@@ -4984,11 +4986,11 @@ bool check_same_key_in_object(json_engine_t *js)
       char *new_entry_buf;
       my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                        &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
-                       &new_entry_buf, k_end-k_start,
+                       &new_entry_buf, k_end - k_start,
                        NullS);
       memcpy(new_entry_buf, (const char*)k_start, k_end - k_start);
       new_entry->key.str= new_entry_buf;
-      new_entry->key.length= int(k_end-k_start);
+      new_entry->key.length= k_end-k_start;
       new_entry->count= 1;
       if(my_hash_search(&key_hash, (const uchar *) new_entry->key.str, new_entry->key.length))
       {
