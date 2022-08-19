@@ -59,7 +59,6 @@ int json_find_overlap_with_array(json_engine_t *js,
                                              json_engine_t *value,
                                              bool compare_whole);
 
-
 int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
 int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole);
@@ -71,6 +70,7 @@ bool check_same_key_in_js(json_engine_t *js);
 bool get_hash_from_json(json_engine_t *value, HASH &value_hash);
 bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash);
 bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash);
+
 class Json_engine_scan: public json_engine_t
 {
 public:
