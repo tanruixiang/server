@@ -4779,33 +4779,46 @@ bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
       json_skip_level(value);
     const uchar *end_ptr= value->s.c_str;
 
-
     LEX_CSTRING_KEYVALUE *new_entry;
     char *new_entry_key_buf;
     char *new_entry_value_buf;
     int value_len= end_ptr - start_ptr + 1;
+
     if (value->value_type != JSON_VALUE_STRING)
-       value_len-= 1;
+    {
+      value_len-= 1;
+    }
+    else 
+    {
+      start_ptr-= 1;
+    }
+
+    DYNAMIC_STRING norm_js;
+    init_dynamic_string(&norm_js, NULL, 0, 0);
+    json_normalize(&norm_js, (const char*) start_ptr, value_len, value->s.cs);
+
     my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                       &new_entry_key_buf, k_end - k_start,
-                      &new_entry_value_buf, value_len,
+                      &new_entry_value_buf, norm_js.length,
                       NullS);
     memcpy(new_entry_key_buf, k_start, k_end - k_start);
-    if (value->value_type == JSON_VALUE_STRING)
-    {
-      new_entry_value_buf[0]= '"';
-      memcpy(new_entry_value_buf + 1, start_ptr, value_len - 1);
-    }
-    else
-    {
-      memcpy(new_entry_value_buf, start_ptr, value_len);
-    }
+    memcpy(new_entry_value_buf, norm_js.str, norm_js.length);
+    // if (value->value_type == JSON_VALUE_STRING)
+    // {
+    //   new_entry_value_buf[0]= '"';
+    //   memcpy(new_entry_value_buf + 1, start_ptr, value_len - 1);
+    // }
+    // else
+    // {
+    //   memcpy(new_entry_value_buf, start_ptr, value_len);
+    // }
     new_entry->key.str= new_entry_key_buf;
     new_entry->key.length= k_end - k_start;
     new_entry->value.str= new_entry_value_buf;
-    new_entry->value.length= value_len;
+    new_entry->value.length= norm_js.length;
     my_hash_insert(&value_hash, (const uchar *) new_entry);
+    dynstr_free(&norm_js);
   }
   return TRUE;
 }
@@ -4892,35 +4905,36 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
     if(compare_whole)
     {
       String object_js;
-      json_engine_t object_js_e;
+      DYNAMIC_STRING norm_js;
+      object_js.set_charset(str->charset());
+      object_js.length(0);
+      init_dynamic_string(&norm_js, NULL, 0, 0);
+     
       const uchar *object_js_start= js->value_begin;
       json_skip_level(js);
       const uchar *object_js_end= js->s.c_str;
-      object_js.set_charset(str->charset());
-      object_js.length(0);
-      object_js.append( (const char*) object_js_start, object_js_end - object_js_start);
 
-
-      json_scan_start(&object_js_e, object_js.charset(), (const uchar *) (object_js.ptr()),
-                  (const uchar *) (object_js.ptr() + object_js.length()));
-      if(json_read_value(&object_js_e))
-        return FALSE;
+      json_normalize(&norm_js, (const char*) object_js_start, 
+                      object_js_end - object_js_start, js->s.cs);
+      object_js.append(norm_js.str, norm_js.length);
+      dynstr_free(&norm_js);
 
       String object_value;
-      json_engine_t object_value_e;
+      DYNAMIC_STRING norm_value;
+      object_value.set_charset(str->charset());
+      object_value.length(0);
+      init_dynamic_string(&norm_value, NULL, 0, 0);
+
       const uchar *object_value_start= value->value_begin;
       json_skip_level(value);
       const uchar *object_value_end= value->s.c_str;
-      object_value.set_charset(str->charset());
-      object_value.length(0);
-      object_value.append( (const char*) object_value_start, object_value_end - object_value_start);
-      
-      json_scan_start(&object_value_e, object_value.charset(), (const uchar *) (object_value.ptr()),
-                  (const uchar *) (object_value.ptr() + object_value.length()));
-      if(json_read_value(&object_value_e))
-        return FALSE;
 
-      if(check_overlaps(&object_value_e, &object_js_e, TRUE))
+      json_normalize(&norm_value, (const char*) object_value_start, 
+                      object_value_end - object_value_start, value->s.cs);
+      object_value.append(norm_value.str, norm_value.length);
+      dynstr_free(&norm_value);
+
+      if(object_js.eq(&object_value, str->charset()))
       {
           str->append( (const char*) object_js_start, object_js_end - object_js_start);
           return TRUE;
@@ -4990,9 +5004,13 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       else
       {
         String object_js;
+        DYNAMIC_STRING norm_js;
         object_js.set_charset(str->charset());
         object_js.length(0);
-        object_js.append(new_entry->value.str, new_entry->value.length);
+        init_dynamic_string(&norm_js, NULL, 0, 0);
+        json_normalize(&norm_js, (const char*) new_entry->value.str, new_entry->value.length, value->s.cs);
+        object_js.append(norm_js.str,norm_js.length);
+        dynstr_free(&norm_js);
 
         String object_value;
         object_value.set_charset(str->charset());
@@ -5000,14 +5018,15 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
         object_value.append(( (LEX_CSTRING_KEYVALUE*) search_result)->value.str,
           ( (LEX_CSTRING_KEYVALUE*) search_result)->value.length);
 
-        json_engine_t temp_value, temp_js;
-        json_scan_start(&temp_js, object_js.charset(), (const uchar *) (object_js.ptr()),
-                  (const uchar *) (object_js.ptr() + object_js.length()));
-        json_scan_start(&temp_value, object_value.charset(), (const uchar *) (object_value.ptr()),
-                  (const uchar *) (object_value.ptr() + object_value.length()));
-        json_read_value(&temp_js);
-        json_read_value(&temp_value);
-        if(check_overlaps(&temp_js, &temp_value, TRUE))
+        // json_engine_t temp_value, temp_js;
+        // json_scan_start(&temp_js, object_js.charset(), (const uchar *) (object_js.ptr()),
+        //           (const uchar *) (object_js.ptr() + object_js.length()));
+        // json_scan_start(&temp_value, object_value.charset(), (const uchar *) (object_value.ptr()),
+        //           (const uchar *) (object_value.ptr() + object_value.length()));
+        // json_read_value(&temp_js);
+        // json_read_value(&temp_value);
+        //  if(check_overlaps(&temp_js, &temp_value, TRUE))
+        if(object_js.eq(&object_value,str->charset()))
         {
           if(first_item)
           {
