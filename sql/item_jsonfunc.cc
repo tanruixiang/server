@@ -4794,14 +4794,29 @@ bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
     }
 
     DYNAMIC_STRING norm_js;
-    init_dynamic_string(&norm_js, NULL, 0, 0);
-    json_normalize(&norm_js, (const char*) value_start, value_len, value->s.cs);
+    if(init_dynamic_string(&norm_js, NULL, 0, 0))
+    {
+      my_hash_free(&value_hash);
+      return FALSE;
+    }
+    
+    if(json_normalize(&norm_js, (const char*) value_start, value_len, value->s.cs))
+    {
+      dynstr_free(&norm_js);
+      my_hash_free(&value_hash);
+      return FALSE;
+    }
 
-    my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+    if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                       &new_entry_key_buf, key_end - key_start,
                       &new_entry_value_buf, norm_js.length,
-                      NullS);
+                      NullS))
+    {
+      dynstr_free(&norm_js);
+      my_hash_free(&value_hash);
+      return FALSE;
+    }
     memcpy(new_entry_key_buf, key_start, key_end - key_start);
     memcpy(new_entry_value_buf, norm_js.str, norm_js.length);
 
@@ -4846,10 +4861,14 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
 
     LEX_CSTRING_KEYVALUE *new_entry;
     char *new_entry_buf;
-    my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+    if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                       &new_entry_buf, norm_js.length,
-                      NullS);
+                      NullS))
+    {
+      my_hash_free(&value_hash);
+      return FALSE;
+    }
     memcpy(new_entry_buf, norm_js.str, norm_js.length);
     
     new_entry->key.str= new_entry_buf;
@@ -4896,40 +4915,15 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
   {
     if(compare_whole)
     {
-      String object_js;
-      DYNAMIC_STRING norm_js;
-      object_js.set_charset(str->charset());
-      object_js.length(0);
-      init_dynamic_string(&norm_js, NULL, 0, 0);
-     
+      json_engine_t tmp_js= *js;
       const uchar *object_js_start= js->value_begin;
       json_skip_level(js);
       const uchar *object_js_end= js->s.c_str;
-
-      json_normalize(&norm_js, (const char*) object_js_start, 
-                      object_js_end - object_js_start, js->s.cs);
-      object_js.append(norm_js.str, norm_js.length);
-      dynstr_free(&norm_js);
-
-      String object_value;
-      DYNAMIC_STRING norm_value;
-      object_value.set_charset(str->charset());
-      object_value.length(0);
-      init_dynamic_string(&norm_value, NULL, 0, 0);
-
-      const uchar *object_value_start= value->value_begin;
-      json_skip_level(value);
-      const uchar *object_value_end= value->s.c_str;
-
-      json_normalize(&norm_value, (const char*) object_value_start, 
-                      object_value_end - object_value_start, value->s.cs);
-      object_value.append(norm_value.str, norm_value.length);
-      dynstr_free(&norm_value);
-
-      if(object_js.eq(&object_value, str->charset()))
+      *js= tmp_js;
+      if(compare_nested_object(js, value))
       {
-          str->append( (const char*) object_js_start, object_js_end - object_js_start);
-          return TRUE;
+        str->append( (const char*) object_js_start, object_js_end - object_js_start);
+        return TRUE;
       }
       return FALSE;
     }
@@ -4955,6 +4949,7 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       if(json_read_value(js))
       {
         my_hash_free(&value_hash);
+        return FALSE;
       }
       const uchar *value_start= js->value;
       if (!json_value_scalar(js))
@@ -4968,11 +4963,15 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       int value_len= value_end - value_start + 1;
       if (js->value_type != JSON_VALUE_STRING)
         value_len-= 1;
-      my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+      if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                         &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                         &new_entry_key_buf, key_end - key_start,
                         &new_entry_value_buf, value_len,
-                        NullS);
+                        NullS))
+      {
+        my_hash_free(&value_hash);
+        return FALSE;
+      }
       memcpy(new_entry_key_buf, key_start, key_end - key_start);
       if (js->value_type == JSON_VALUE_STRING)
       {
@@ -4997,14 +4996,23 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       {
         String object_js;
         DYNAMIC_STRING norm_js;
+        String object_value;
         object_js.set_charset(str->charset());
         object_js.length(0);
-        init_dynamic_string(&norm_js, NULL, 0, 0);
-        json_normalize(&norm_js, (const char*) new_entry->value.str, new_entry->value.length, value->s.cs);
+        if(init_dynamic_string(&norm_js, NULL, 0, 0))
+        {
+          my_free(new_entry);
+          return FALSE;
+        }
+        if(json_normalize(&norm_js, (const char*) new_entry->value.str, new_entry->value.length, value->s.cs))
+        {
+          my_free(new_entry);
+          dynstr_free(&norm_js);
+          return FALSE;
+        }
         object_js.append(norm_js.str,norm_js.length);
         dynstr_free(&norm_js);
 
-        String object_value;
         object_value.set_charset(str->charset());
         object_value.length(0);
         object_value.append(( (LEX_CSTRING_KEYVALUE*) search_result)->value.str,
@@ -5064,7 +5072,11 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
   while (json_scan_next(value) == 0 && value->state == JST_VALUE)
   {
     DYNAMIC_STRING norm_val;
-    init_dynamic_string(&norm_val, NULL, 0, 0);
+    if(init_dynamic_string(&norm_val, NULL, 0, 0))
+    {
+        first_item= FALSE;
+        goto error;
+    }
 
     const uchar *value_start= value->s.c_str;
     const uchar *value_end;
@@ -5084,14 +5096,23 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
     }
     int value_len= value_end - value_start;
     json_string_set_str(&now_value, value_start, value_end);
-    json_normalize(&norm_val, (const char*) value_start, value_len, value->s.cs);
+    if(json_normalize(&norm_val, (const char*) value_start, value_len, value->s.cs))
+    {
+      first_item= FALSE;
+      dynstr_free(&norm_val);
+      goto error;
+    }
 
     LEX_CSTRING_KEYVALUE *new_entry;
     char *new_entry_buf;
-    my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+    if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                        &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                        &new_entry_buf, norm_val.length,
-                       NullS);
+                       NullS))
+    {
+      first_item= FALSE;
+      goto error;
+    }
     memcpy(new_entry_buf, norm_val.str, norm_val.length);
 
     new_entry->key.str= new_entry_buf;
@@ -5134,8 +5155,9 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
       }
     }
   }
-  my_hash_free(&value_hash);
   str->append(']');
+error:
+  my_hash_free(&value_hash);
   return first_item;
 }
 
@@ -5225,10 +5247,13 @@ bool check_same_key_in_object(json_engine_t *js)
       }
       LEX_CSTRING_KEYVALUE *new_entry;
       char *new_entry_buf;
-      my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
+      if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                        &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                        &new_entry_buf, key_end - key_start,
-                       NullS);
+                       NullS))
+      {
+        goto error;
+      }
       memcpy(new_entry_buf, (const char*)key_start, key_end - key_start);
       new_entry->key.str= new_entry_buf;
       new_entry->key.length= key_end-key_start;
@@ -5241,6 +5266,7 @@ bool check_same_key_in_object(json_engine_t *js)
       }
       my_hash_insert(&key_hash, (const uchar *) new_entry);
     }
+error:
     my_hash_free(&key_hash);
     return FALSE;
 }
