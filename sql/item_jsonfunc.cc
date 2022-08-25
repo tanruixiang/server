@@ -4607,39 +4607,23 @@ bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
       value_start-= 1;
     }
 
-    DYNAMIC_STRING norm_js;
-    if(init_dynamic_string(&norm_js, NULL, 0, 0))
-    {
-      my_hash_free(&value_hash);
-      return FALSE;
-    }
-    
-    if(json_normalize(&norm_js, (const char*) value_start, value_len, value->s.cs))
-    {
-      dynstr_free(&norm_js);
-      my_hash_free(&value_hash);
-      return FALSE;
-    }
-
     if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                       &new_entry_key_buf, key_end - key_start,
-                      &new_entry_value_buf, norm_js.length,
+                      &new_entry_value_buf, value_len,
                       NullS))
     {
-      dynstr_free(&norm_js);
       my_hash_free(&value_hash);
       return FALSE;
     }
     memcpy(new_entry_key_buf, key_start, key_end - key_start);
-    memcpy(new_entry_value_buf, norm_js.str, norm_js.length);
+    memcpy(new_entry_value_buf, value_start, value_len);
 
     new_entry->key.str= new_entry_key_buf;
     new_entry->key.length= key_end - key_start;
     new_entry->value.str= new_entry_value_buf;
-    new_entry->value.length= norm_js.length;
+    new_entry->value.length= value_len;
     my_hash_insert(&value_hash, (const uchar *) new_entry);
-    dynstr_free(&norm_js);
   }
   return TRUE;
 }
@@ -4775,8 +4759,14 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
       char *new_entry_key_buf;
       char *new_entry_value_buf;
       int value_len= value_end - value_start + 1;
-      if (js->value_type != JSON_VALUE_STRING)
+      if (value->value_type != JSON_VALUE_STRING)
+      {
         value_len-= 1;
+      }
+      else
+      {
+        value_start-= 1;
+      }
       if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
                         &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                         &new_entry_key_buf, key_end - key_start,
@@ -4787,15 +4777,8 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
         return FALSE;
       }
       memcpy(new_entry_key_buf, key_start, key_end - key_start);
-      if (js->value_type == JSON_VALUE_STRING)
-      {
-        new_entry_value_buf[0]='"';
-        memcpy(new_entry_value_buf + 1, value_start, value_len - 1);
-      }
-      else
-      {
-        memcpy(new_entry_value_buf, value_start, value_len);
-      }
+      memcpy(new_entry_value_buf, value_start, value_len);
+
       new_entry->key.str= new_entry_key_buf;
       new_entry->key.length= key_end - key_start;
       new_entry->value.str= new_entry_value_buf;
@@ -4813,26 +4796,40 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
         String object_value;
         object_js.set_charset(str->charset());
         object_js.length(0);
+        object_value.set_charset(str->charset());
+        object_value.length(0);
         if(init_dynamic_string(&norm_js, NULL, 0, 0))
         {
           my_free(new_entry);
           return FALSE;
         }
+        
         if(json_normalize(&norm_js, (const char*) new_entry->value.str, new_entry->value.length, value->s.cs))
         {
           my_free(new_entry);
           dynstr_free(&norm_js);
           return FALSE;
         }
-        object_js.append(norm_js.str,norm_js.length);
+        object_js.append(norm_js.str, norm_js.length);
+
+        dynstr_free(&norm_js);
+        if(init_dynamic_string(&norm_js, NULL, 0, 0))
+        {
+          my_free(new_entry);
+          return FALSE;
+        }
+        if(json_normalize(&norm_js, ( (LEX_CSTRING_KEYVALUE*) search_result)->value.str,
+                               ( (LEX_CSTRING_KEYVALUE*) search_result)->value.length,
+                               value->s.cs))
+        {
+          my_free(new_entry);
+          dynstr_free(&norm_js);
+          return FALSE;
+        }
+        object_value.append(norm_js.str, norm_js.length);
         dynstr_free(&norm_js);
 
-        object_value.set_charset(str->charset());
-        object_value.length(0);
-        object_value.append(( (LEX_CSTRING_KEYVALUE*) search_result)->value.str,
-          ( (LEX_CSTRING_KEYVALUE*) search_result)->value.length);
-
-        if(object_js.eq(&object_value,str->charset()))
+        if(object_js.eq(&object_value, str->charset()))
         {
           if(first_item)
           {
