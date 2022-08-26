@@ -4160,7 +4160,7 @@ Create_func_json_intersect Create_func_json_intersect::s_singleton;
 Item*
 Create_func_json_intersect::create_2_arg(THD *thd, Item *arg1, Item *arg2)
 {
-  if (unlikely( (arg1 == NULL || arg2 == NULL) )) // json, json
+  if (unlikely( ( !arg1 || !arg2 ) )) // json, json
   {
     my_error(ER_WRONG_PARAMCOUNT_TO_NATIVE_FCT, MYF(0));
   }
