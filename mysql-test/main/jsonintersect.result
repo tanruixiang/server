@@ -185,12 +185,12 @@ SET @json1 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
 SET @json2 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
 SELECT JSON_INTERSECT(@json1, @json2);
 JSON_INTERSECT(@json1, @json2)
-NULL
+{"k1": "v1", "k2": "v2", "k3": {"kk1": "v1", "kk1": "v2"}}
 SET @json1 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
 SET @json2 = '{"k1":"v1","k2":"v2","k3":{"k1":"v1","k2":"v2"}}';
 SELECT JSON_INTERSECT(@json1, @json2);
 JSON_INTERSECT(@json1, @json2)
-NULL
+{"k1": "v1", "k2": "v2"}
 SET @json1 = '{"k2":{"1":"2"},"k1":{"k1":"v1","k2":"v2"}}';
 SET @json2 = '{"k1":{"k1":"v1","k2":"v2"},"k2":{"1":"2"}}';
 SELECT JSON_INTERSECT(@json1, @json2);
