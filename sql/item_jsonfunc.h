@@ -70,7 +70,6 @@ bool check_same_key_in_js(json_engine_t *js);
 bool get_hash_from_json(json_engine_t *value, HASH &value_hash);
 bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash);
 bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash);
-
 struct LEX_CSTRING_KEYVALUE
 {
   LEX_CSTRING key;
