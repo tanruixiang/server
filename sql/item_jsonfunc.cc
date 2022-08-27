@@ -4558,13 +4558,19 @@ static void hash_free(void *ptr)
 {
   my_free(ptr);
 }
-
+/* 
+Get the hash table from JSON_VALUE_OBJECT.
+  RETURN
+    FALSE - If an error occurs.
+    TRUE  - If no error occurs.
+*/
 bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
   const uchar *key_start, *key_end;
   const uchar *value_start;
   size_t value_len;
-
+  LEX_CSTRING_KEYVALUE *new_entry;
+  uchar *search_result;
   if(my_hash_init(PSI_INSTRUMENT_ME, &value_hash, value->s.cs, 0, 
   0, 0, get_hash_kv_key, hash_free, HASH_UNIQUE))
     return FALSE;
@@ -4580,26 +4586,14 @@ bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
     if (unlikely(value->s.error))
       goto error;
 
-    get_value_from_json(value, value_start, value_len);
+    if(get_value_from_json(value, value_start, value_len))
+      goto error;
 
-    LEX_CSTRING_KEYVALUE *new_entry;
-    char *new_entry_key_buf;
-    char *new_entry_value_buf;
-
-    if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
-                      &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
-                      &new_entry_key_buf, key_end - key_start,
-                      &new_entry_value_buf, value_len,
-                      NullS))
-                      goto error;
-    memcpy(new_entry_key_buf, key_start, key_end - key_start);
-    memcpy(new_entry_value_buf, value_start, value_len);
-
-    new_entry->key.str= new_entry_key_buf;
-    new_entry->key.length= key_end - key_start;
-    new_entry->value.str= new_entry_value_buf;
-    new_entry->value.length= value_len;
-    // TODO
+    if(search_item_in_hash(new_entry, value_hash, search_result, value_start,
+                  value_len, key_start, key_end - key_start))
+                  return FALSE;
+    if(search_result)
+      goto error;
     my_hash_insert(&value_hash, (const uchar *) new_entry);
   }
   return TRUE;
@@ -4607,11 +4601,20 @@ error:
   my_hash_free(&value_hash);
   return FALSE;
 }
+
+/* 
+Get the hash table from JSON_VALUE_ARRAY.
+  RETURN
+    FALSE - If an error occurs.
+    TRUE  - If no error occurs.
+*/
 bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
   json_string_t now_value;
   const uchar *value_start;
   size_t value_len;
+  LEX_CSTRING_KEYVALUE *new_entry;
+  uchar *search_result;
 
   if(my_hash_init(PSI_INSTRUMENT_ME, &value_hash, value->s.cs, 0, 
   0, 0, get_hash_kv_key, hash_free, HASH_UNIQUE))
@@ -4633,26 +4636,16 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
       dynstr_free(&norm_js);
       goto error;
     }
-
-    LEX_CSTRING_KEYVALUE *new_entry;
-    char *new_entry_buf;
-    if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
-                      &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
-                      &new_entry_buf, norm_js.length,
-                      NullS))
-                      goto error;
-    memcpy(new_entry_buf, norm_js.str, norm_js.length);
-    
-    new_entry->key.str= new_entry_buf;
-    new_entry->key.length= norm_js.length;
-    new_entry->count= 1;
+    if(search_item_in_hash(new_entry, value_hash, search_result,
+                (const uchar *) norm_js.str, norm_js.length, NULL, 0))
+                return FALSE;
+   
     dynstr_free(&norm_js);
 
-    auto search_result= my_hash_search(&value_hash, (const uchar *) new_entry->key.str,
-                                        new_entry->key.length);
     // Count the number of the same value.
     if (search_result == NULL)
     {
+      new_entry->count= 1;
       if(my_hash_insert(&value_hash, (const uchar *) new_entry))
       {
         my_free(new_entry);
@@ -4678,6 +4671,12 @@ error:
   return FALSE;
 }
 
+/* 
+Get the hash table from json_engine_t.
+  RETURN
+    FALSE - If an error occurs.
+    TRUE  - If no error occurs.
+*/
 bool get_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
   if(value->value_type == JSON_VALUE_OBJECT)
@@ -4686,6 +4685,13 @@ bool get_hash_from_json(json_engine_t *value, HASH &value_hash)
     return get_array_hash_from_json(value, value_hash);
   return FALSE;
 }
+
+/*
+Get the starting pointer and length of the value of the current layer.
+  RETURN
+    FALSE - If no error occurs.
+    TRUE  - If an error occurs.
+*/
 bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &value_len)
 {
   if(json_read_value(js))
@@ -4704,6 +4710,24 @@ bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &v
   return FALSE;
 }
 
+/*
+  Allocate space for entry and search in the hash table.
+  Parameter
+    new_entry: Used to get the address of the entry.
+    value_hash: Searched HASH.
+    search_result: Search result.
+    value_start: Start pointer of value to be inserted.
+    value_len: The length of the value to be inserted.
+    key_start: Start pointer of key to be inserted.
+               If it is not inserted in the form of key value pair,
+               it needs to be set to NULL.
+    key_len: The length of the key to be inserted.
+               If it is not inserted in the form of key value pair,
+               it needs to be set to 0.
+  RETURN
+    FALSE - If no error occurs.
+    TRUE  - If an error occurs.
+*/
 bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &value_hash,
         uchar *&search_result, const uchar *value_start, size_t value_len,
                                       const uchar *key_start, size_t key_len)
@@ -4747,46 +4771,7 @@ bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &value_hash,
   search_result= my_hash_search(&value_hash, (const uchar *) new_entry->key.str, new_entry->key.length);
   return FALSE;
 }
-bool get_value_and_search_in_hash(json_engine_t *js, uchar *&search_result,
-                        HASH &value_hash, LEX_CSTRING_KEYVALUE *&new_entry,
-                        const uchar *&value_start, size_t &value_len,
-                        const uchar *key_start, size_t key_len)
-{
-  if(json_read_value(js))
-    return TRUE;
-  value_start= js->value;
-  if (!json_value_scalar(js))
-    json_skip_level(js);
 
-  const uchar *value_end= js->s.c_str;
-  value_len= value_end - value_start + 1;
-
-  if (js->value_type != JSON_VALUE_STRING)
-    value_len-= 1;
-  else
-    value_start-= 1;
-  char *new_entry_key_buf;
-  char *new_entry_value_buf;
-  if(!my_multi_malloc(PSI_INSTRUMENT_ME, MYF(0),
-                    &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
-                    &new_entry_key_buf, key_len,
-                    &new_entry_value_buf, value_len,
-                    NullS))
-  {
-    my_hash_free(&value_hash);
-    return TRUE;
-  }
-  memcpy(new_entry_key_buf, key_start, key_len);
-  memcpy(new_entry_value_buf, value_start, value_len);
-
-  new_entry->key.str= new_entry_key_buf;
-  new_entry->key.length= key_len;
-  new_entry->value.str= new_entry_value_buf;
-  new_entry->value.length= value_len;
-      
-  search_result= my_hash_search(&value_hash, (const uchar *) new_entry->key.str, new_entry->key.length);
-  return FALSE;
-}
 
 int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
@@ -4812,7 +4797,8 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
     HASH value_hash;
     const uchar *value_start;
     size_t value_len;
-
+    LEX_CSTRING_KEYVALUE *new_entry;
+    uchar* search_result= NULL;
     if(!get_hash_from_json(value, value_hash))
       return FALSE;
 
@@ -4826,16 +4812,19 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
 
       if (unlikely(js->s.error))
         return FALSE;
-      LEX_CSTRING_KEYVALUE *new_entry;
-      uchar* search_result= NULL;
-      if(get_value_and_search_in_hash(js, search_result, value_hash, new_entry,
-                        value_start, value_len, key_start, key_end - key_start))
-                        return FALSE;
+
+      if(get_value_from_json(js, value_start, value_len))
+      {
+        my_hash_free(&value_hash);
+        return FALSE;
+      }
+
+      if(search_item_in_hash(new_entry, value_hash, search_result,
+                value_start, value_len, key_start, key_end - key_start))
+                return FALSE;
 
       if (!search_result)
-      {
         my_free(new_entry);
-      }
       else
       {
         String object_js;
@@ -4916,6 +4905,10 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
 /*
   If the outermost layer of JSON is an array, 
   the intersection of arrays is independent of order.
+
+  RETURN
+    FALSE - If two array documents do not have intersection
+    TRUE  - if two array documents have intersection
 */
 bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
 {
@@ -5026,7 +5019,11 @@ int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t
   else
     return check_intersect(str, value, js, compare_whole);
 }
-
+/*
+  RETURN
+    FALSE - If two json documents do not have intersection
+    TRUE  - if two json documents have intersection
+*/
 int check_intersect(String *str, json_engine_t *js, json_engine_t *value, bool compare_whole)
 {
   switch (js->value_type)
