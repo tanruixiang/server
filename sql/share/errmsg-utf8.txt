@@ -9498,7 +9498,10 @@ ER_FLASHBACK_NOT_SUPPORTED
         chi "闪回不支持%s%s"
         eng "Flashback does not support %s %s"
         spa "Retrospectiva no soporta %s %s"
-
+ER_NON_UNIQUE_KEYS_FOUND
+        chi "同一对象中有重复的键"
+        eng "Duplicate keys in the same object"
+        spa "Duplicar claves en el mismo objeto"
 #
 # MyRocks error messages
 #

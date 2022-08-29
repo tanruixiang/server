@@ -59,30 +59,29 @@ int json_find_overlap_with_array(json_engine_t *js,
                                              json_engine_t *value,
                                              bool compare_whole);
 
-int check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
-int json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
+bool check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
+bool json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole);
 bool json_find_intersect_with_scalar(String *str, json_engine_t *js, json_engine_t *value);
-bool check_same_key_in_object(json_engine_t *js);
-int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t *value,
+bool check_unique_key_in_object(json_engine_t *js);
+bool json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t *value,
                                  bool compare_whole);
-bool check_same_key_in_js(json_engine_t *js);
-bool get_hash_from_json(json_engine_t *value, HASH &value_hash);
-bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash);
-bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash);
+bool check_unique_key_in_js(json_engine_t *js);
+bool get_hash_from_json(json_engine_t *value, HASH &property_hash);
+bool get_object_hash_from_json(json_engine_t *value, HASH &property_hash);
+bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash);
 struct LEX_CSTRING_KEYVALUE
 {
   LEX_CSTRING key;
   LEX_CSTRING value;
   int count= 0;
 };
-bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &value_hash,
+bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &property_hash,
         uchar *&search_result, const uchar *value_start, size_t value_len,
                                       const uchar *key_start= NULL, size_t key_len= 0);
 bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &value_len);
 bool json_intersect_arr_and_obj(String *str, json_engine_t *js, json_engine_t *value);
 bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value);
-
 
 class Json_engine_scan: public json_engine_t
 {
