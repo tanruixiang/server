@@ -4532,16 +4532,15 @@ bool json_intersect_arr_and_obj(String *str, json_engine_t *js, json_engine_t *v
   while (json_scan_next(js) == 0 && js->state == JST_VALUE)
   {
     if (json_read_value(js))
-      return FALSE;
+      return TRUE;
     if (js->value_type == JSON_VALUE_OBJECT)
     {
-      int res1= json_find_intersect_with_object(str, js, value, TRUE);
-      if (res1)
-        return TRUE;
+      if(!json_find_intersect_with_object(str, js, value, TRUE))
+        return FALSE;
       *value= loc_val;
     }
   }
-  return FALSE;
+  return TRUE;
 }
 
 static uchar *
@@ -4563,8 +4562,8 @@ static void hash_free(void *ptr)
 Get the hash table from JSON_VALUE_OBJECT.Insert each key value-pair
 in the object into the hash table.
   RETURN
-    TRUE   - If an error occurs.
-    FALSE  - If no error occurs.
+    FALSE - The function was successfully completed without errors.
+    TRUE  - An error occurred while running.
 */
 bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
@@ -4577,7 +4576,7 @@ bool get_object_hash_from_json(json_engine_t *value, HASH &value_hash)
   0, 0, get_hash_key, hash_free, HASH_UNIQUE))
     goto error;
 
-  while (json_scan_next(value) == 0 && JST_KEY == value->state)
+  while (json_scan_next(value) == 0 && value->state == JST_KEY)
   {
     key_start= value->s.c_str;
     do
@@ -4610,8 +4609,8 @@ error:
 Get the hash table from JSON_VALUE_ARRAY.The values under each
 index in the array are normalized and inserted into the hash table.
   RETURN
-    TRUE   - If an error occurs.
-    FALSE  - If no error occurs.
+    FALSE - The function was successfully completed without errors.
+    TRUE  - An error occurred while running.
 */
 bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
@@ -4624,7 +4623,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
   0, 0, get_hash_key, hash_free, HASH_UNIQUE))
     goto error;
 
-  while (json_scan_next(value) == 0 && JST_VALUE == value->state)
+  while (json_scan_next(value) == 0 && value->state == JST_VALUE)
   {
     DYNAMIC_STRING norm_js;
     value_start= value->s.c_str;
@@ -4648,7 +4647,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &value_hash)
     dynstr_free(&norm_js);
 
     // Count the number of the same value.
-    if (search_result == NULL)
+    if (!search_result)
     {
       new_entry->count= 1;
       if (my_hash_insert(&value_hash, (const uchar *) new_entry))
@@ -4676,14 +4675,14 @@ error:
 /* 
 Get the hash table from json_engine_t.
   RETURN
-    TRUE   - If an error occurs.
-    FALSE  - If no error occurs.
+    FALSE - The function was successfully completed without errors.
+    TRUE  - An error occurred while running.
 */
 bool get_hash_from_json(json_engine_t *value, HASH &value_hash)
 {
-  if (JSON_VALUE_OBJECT == value->value_type)
+  if (value->value_type == JSON_VALUE_OBJECT)
     return get_object_hash_from_json(value, value_hash);
-  else if (JSON_VALUE_ARRAY == value->value_type)
+  else if (value->value_type == JSON_VALUE_ARRAY)
     return get_array_hash_from_json(value, value_hash);
   return TRUE;
 }
@@ -4691,8 +4690,8 @@ bool get_hash_from_json(json_engine_t *value, HASH &value_hash)
 /*
 Get the starting pointer and length of the value of the current layer.
   RETURN
-    TRUE  - If an error occurs.
-    FALSE - If no error occurs.
+    FALSE - The function was successfully completed without errors.
+    TRUE  - An error occurred while running.
 */
 bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &value_len)
 {
@@ -4700,7 +4699,8 @@ bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &v
     return TRUE;
   value_start= js->value;
   if (!json_value_scalar(js))
-    json_skip_level(js);
+    if(json_skip_level(js))
+      return TRUE;
 
   const uchar *value_end= js->s.c_str;
   value_len= value_end - value_start + 1;
@@ -4715,9 +4715,9 @@ bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &v
 /*
   Allocate space for entry and search in the hash table.
   Parameter
-    new_entry: Used to get the address of the entry.
+    new_entry[output]: Used to get the address of the entry.
     value_hash: Searched HASH.
-    search_result: Search result.
+    search_result[output]: Search result.
     value_start: Start pointer of value to be inserted.
     value_len: The length of the value to be inserted.
     key_start: Start pointer of key to be inserted.
@@ -4727,8 +4727,8 @@ bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &v
                If it is not inserted in the form of key-value pair,
                it needs to be set to 0.
   RETURN
-    TRUE  - If an error occurs.
-    FALSE - If no error occurs.
+    FALSE - The function was successfully completed without errors.
+    TRUE  - An error occurred while running.
 */
 bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &value_hash,
         uchar *&search_result, const uchar *value_start, size_t value_len,
@@ -4764,34 +4764,36 @@ bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &value_hash,
     new_entry->value.str= new_entry_value_buf;
     new_entry->value.length= value_len;
   }
+  // search_result is a reference.It is used to store the results of the search
   search_result= my_hash_search(&value_hash, (const uchar *) new_entry->key.str, new_entry->key.length);
   return FALSE;
 }
 
 
-int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_t *value,
+bool json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_t *value,
                                   bool compare_whole)
 {
-  if (JSON_VALUE_OBJECT == value->value_type)
+  if (value->value_type == JSON_VALUE_OBJECT)
   {
     // Two objects are required to be identical.
     if (compare_whole)
     {
       json_engine_t tmp_js= *js;
       const uchar *object_js_start= js->value_begin;
-      json_skip_level(js);
+      if(json_skip_level(js))
+        return TRUE;
       const uchar *object_js_end= js->s.c_str;
       *js= tmp_js;
       if (compare_nested_object(js, value))
       {
         str->append( (const char*) object_js_start, object_js_end - object_js_start);
-        return TRUE;
+        return FALSE;
       }
-      return FALSE;
+      return TRUE;
     }
 
     const uchar *key_start, *key_end;
-    bool have_item= false;
+    bool have_item= FALSE;
     HASH value_hash;
     const uchar *value_start;
     size_t value_len;
@@ -4887,21 +4889,21 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
     my_hash_free(&value_hash);
     if (have_item)
       str->append('}');
-    return have_item;
+    return !have_item;
   error:
     my_hash_free(&value_hash);
-    return FALSE;
+    return TRUE;
   }
-  else if (JSON_VALUE_ARRAY == value->value_type)
+  else if (value->value_type == JSON_VALUE_ARRAY)
   {
     if (compare_whole)
     {
       json_skip_current_level(js, value);
-      return FALSE;
+      return TRUE;
     }
     return json_intersect_arr_and_obj(str, value, js);
   }
-  return FALSE;
+  return TRUE;
 }
 
 /*
@@ -4910,10 +4912,10 @@ int json_find_intersect_with_object(String *str, json_engine_t *js, json_engine_
   All common values are obtained.
 
   RETURN
-    TRUE  - if two array documents have intersection
-    FALSE - If two array documents do not have intersection
+    FALSE  - if two array documents have intersection
+    TRUE - If two array documents do not have intersection
 */
-bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
+bool json_intersect_between_arrays(String *str, json_engine_t *js, json_engine_t *value)
 {
   bool have_item= FALSE;
   HASH value_hash;
@@ -4924,7 +4926,7 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
 
   if (get_hash_from_json(js, value_hash))
     goto error;
-  while (json_scan_next(value) == 0 && JST_VALUE == value->state)
+  while (json_scan_next(value) == 0 && value->state == JST_VALUE)
   {
     if (get_value_from_json(value, value_start, value_len))
       goto error;
@@ -4980,41 +4982,42 @@ bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value)
   if (have_item)
     str->append(']');
   my_hash_free(&value_hash);
-  return have_item;
+  return !have_item;
 
 error:
   my_hash_free(&value_hash);
-  return FALSE;
+  return TRUE;
 }
 
-int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t *value,
+bool json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t *value,
                                  bool compare_whole)
 {
-  if (JSON_VALUE_ARRAY == value->value_type)
+  if (value->value_type == JSON_VALUE_ARRAY)
   {
     if (!compare_whole)
     {
-      return json_arrays_intersect(str, js, value);
+      return json_intersect_between_arrays(str, js, value);
     }
     
     json_engine_t tmp_js= *js;
     const uchar *value_start= tmp_js.value;
-    json_skip_level(&tmp_js);
+    if(json_skip_level(&tmp_js))
+      return TRUE;
     const uchar *value_end= tmp_js.s.c_str;
 
     if (json_compare_arrays_in_order(js, value))
     {
       str->append( (const char*) value_start, value_end - value_start);
-      return TRUE;
+      return FALSE;
     }
-    return FALSE;
+    return TRUE;
   }
-  else if (JSON_VALUE_OBJECT == value->value_type)
+  else if (value->value_type == JSON_VALUE_OBJECT)
   {
     if (compare_whole)
     {
       json_skip_current_level(js, value);
-      return FALSE;
+      return TRUE;
     }
     return json_intersect_arr_and_obj(str, js, value);
   }
@@ -5037,18 +5040,18 @@ int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t
   IMPLEMENTATION
   We can compare two json datatypes if they are of same type to check if
   they are equal. When comparing between json1 and json2.there can be
-  following cases(When true is returned, the result of the intersection
+  following cases(When false is returned, the result of the intersection
   will be added to str):
   1  When at least one of the two json documents is of scalar type:
      1.1  If json1 and json2 both are scalar and they have same type
-          and value, then return true, otherwise, return false.
+          and value, then return false, otherwise, return true.
      1.2  If json1 is scalar but other is array (or vice versa):
           1.2.1 if compare_whole = true:
-            Return false.
+            Return true.
           1.2.2 if compare_whole = false:
-            Return true if array has at least one element of
+            Return false if array has at least one element of
             same type and value as scalar.
-      1.3 If one is scalar and other is object, then return false because
+      1.3 If one is scalar and other is object, then return true because
           it can't be compared.
 
   2  When json1 and json2 are non-scalar type:
@@ -5058,10 +5061,10 @@ int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t
            Scan the values in json2 and normalize them, find out whether there
            are equal values in the hash, and count the number.
            2.1.1 compare_whole = true:
-             The values, order and length of the two arrays are identical, return true.
-             otherwise, return false.
+             The values, order and length of the two arrays are identical, return false,
+             otherwise, return true.
            2.1.2 compare_whole = false:
-             If at least one value is equal, return true, otherwise, return false.
+             If at least one value is equal, return false, otherwise, return true.
       2.2  If both arguments are objects:
            Use hash to store all the key-value pairs in the json1 object.
            Scan the key-value pair in json2. Find out if there is the same key in the
@@ -5069,19 +5072,19 @@ int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t
            Then compare it with the value(normalization is also required) in the
            json2's key-value pair.
            2.2.1 compare_whole = true:
-             All key value pairs of the two objects are the same and return true,
-             otherwise, return false.
+             All key value pairs of the two objects are the same and return false,
+             otherwise, return true.
            2.2.2 compare_whole = false:
              If at least one key-value pair of the two objects is the same,
-             return true, otherwise, return false.
+             return false, otherwise, return true.
       2.3  If either of json document or value is array and other is object:
            2.3.1 compare_whole = true:
-             Return false.
+             Return true.
            2.3.2 compare_whole = false:
              Iterate over the array, if an element of type object is found,
              then compare it with the object (which is the other arguemnt).
              If the entire object matches i.e all they key value pairs match,
-             then return true else return false.
+             then return false else return true.
   
 
   When the array or object is not at the outermost layer, compare_whole is true.
@@ -5091,10 +5094,10 @@ int json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t
   should be identical.
 
   RETURN
-    TRUE  - if two json documents have intersection.
-    FALSE - If two json documents do not have intersection.
+    FALSE  - if two json documents have intersection.
+    TRUE   - If two json documents do not have intersection.
 */
-int check_intersect(String *str, json_engine_t *js, json_engine_t *value, bool compare_whole)
+bool check_intersect(String *str, json_engine_t *js, json_engine_t *value, bool compare_whole)
 {
   switch (js->value_type)
   {
@@ -5104,79 +5107,86 @@ int check_intersect(String *str, json_engine_t *js, json_engine_t *value, bool c
     return json_find_intersect_with_array(str, js, value, compare_whole);
   default:
     if (!json_find_overlap_with_scalar(js, value))
-      return FALSE;
-    if (JSON_VALUE_NUMBER == js->value_type)
+      return TRUE;
+    if (js->value_type == JSON_VALUE_NUMBER)
     {
       str->append( (const char *) js->value,js->value_len);
     }
-    else if (JSON_VALUE_STRING == js->value_type)
+    else if (js->value_type == JSON_VALUE_STRING)
     {
       str->append('"');
       str->append( (const char *) js->value, js->value_len);
       str->append('"');
     }
-    return TRUE;
+    return FALSE;
   }
 }
 
-bool check_same_key_in_object(json_engine_t *js)
+bool check_unique_key_in_object(json_engine_t *js)
 {
-    const uchar *key_start, *key_end;
-    HASH key_hash;
-    if (my_hash_init(PSI_INSTRUMENT_ME, &key_hash, js->s.cs, 
-                0, 0, 0, get_hash_key, hash_free, HASH_UNIQUE))
-                goto error;
-    LEX_CSTRING_KEYVALUE *new_entry;
-    uchar* search_result;
-    while (json_scan_next(js) == 0 && JST_KEY == js->state)
+  const uchar *key_start, *key_end;
+  HASH key_hash;
+  LEX_CSTRING_KEYVALUE *new_entry;
+  uchar* search_result;
+
+  if (my_hash_init(PSI_INSTRUMENT_ME, &key_hash, js->s.cs, 
+              0, 0, 0, get_hash_key, hash_free, HASH_UNIQUE))
+              goto error;
+
+  while (json_scan_next(js) == 0 && js->state == JST_KEY)
+  {
+    key_start= js->s.c_str;
+    do
     {
-      key_start= js->s.c_str;
-      do
-      {
-        key_end= js->s.c_str;
-      } while (json_read_keyname_chr(js) == 0);
-      if (json_read_value(js))
-        goto error;
-      if (check_same_key_in_js(js))
-        goto error;
+      key_end= js->s.c_str;
+    } while (json_read_keyname_chr(js) == 0);
 
-      if (search_item_in_hash(new_entry, key_hash, search_result,
-                            key_start, key_end - key_start, NULL, 0))
-                            goto error;
+    if (unlikely(js->s.error))
+      goto error;
+    if (json_read_value(js))
+      goto error;
+    if (check_unique_key_in_js(js))
+      goto error;
 
-      if (search_result)
-      {
-        my_free(new_entry);
-        my_hash_free(&key_hash);
-        return TRUE;
-      }
-      if (my_hash_insert(&key_hash, (const uchar *) new_entry))
-        goto error;
+    if (search_item_in_hash(new_entry, key_hash, search_result,
+                          key_start, key_end - key_start, NULL, 0))
+                          goto error;
+
+    if (search_result)
+    {
+      my_free(new_entry);
+      goto error;
     }
+    if (my_hash_insert(&key_hash, (const uchar *) new_entry))
+      goto error;
+  }
+
+  my_hash_free(&key_hash);
+  return FALSE;
 error:
-    my_hash_free(&key_hash);
-    return FALSE;
+  my_hash_free(&key_hash);
+  return TRUE;
 }
 
 /*
   Confirm whether there are duplicate keys in the same object.
   Return
-    TRUE: If have duplicate keys.
-    FALSE: no duplicate keys.
+    FALSE: No duplicate keys in the same object.
+    TRUE : Have duplicate keys in the same object.
 */
-bool check_same_key_in_js(json_engine_t *js)
+bool check_unique_key_in_js(json_engine_t *js)
 {
-  if (JSON_VALUE_OBJECT == js->value_type)
+  if (js->value_type == JSON_VALUE_OBJECT)
   {
-    return check_same_key_in_object(js);
+    return check_unique_key_in_object(js);
   }
-  else if (JSON_VALUE_ARRAY == js->value_type)
+  else if (js->value_type == JSON_VALUE_ARRAY)
   {
-    while (json_scan_next(js) == 0 && JST_VALUE == js->state)
+    while (json_scan_next(js) == 0 && js->state == JST_VALUE)
     {
       if (json_read_value(js))
-        return FALSE;
-      if (check_same_key_in_js(js))
+        return TRUE;
+      if (check_unique_key_in_js(js))
         return TRUE;
     }
   }
@@ -5213,8 +5223,12 @@ String* Item_func_json_intersect::val_str(String *str)
   */
   tmp_jse= je1;
   json_read_value(&je1);
-  if (check_same_key_in_js(&je1))
+  if (check_unique_key_in_js(&je1))
+  {
+    // push_warning_printf(thd, Sql_condition::WARN_LEVEL_WARN, ER_NON_UNIQUE_KEYS_FOUND, ER_THD(thd, ER_NON_UNIQUE_KEYS_FOUND));
+    push_warning_printf(current_thd, Sql_condition::WARN_LEVEL_WARN, ER_NON_UNIQUE_KEYS_FOUND,ER_THD(current_thd, ER_NON_UNIQUE_KEYS_FOUND));
     goto error_return ;
+  }
   if (unlikely(je1.s.error))
     goto error_return;
   je1= tmp_jse;
@@ -5222,15 +5236,19 @@ String* Item_func_json_intersect::val_str(String *str)
                   (const uchar *) js2->ptr() + js2->length());
   tmp_jse= je2;
   json_read_value(&je2);
-  if (check_same_key_in_js(&je2))
+  if (check_unique_key_in_js(&je2))
+  {
+    push_warning_printf(current_thd, Sql_condition::WARN_LEVEL_WARN, ER_NON_UNIQUE_KEYS_FOUND,ER_THD(current_thd, ER_NON_UNIQUE_KEYS_FOUND));
+    // push_warning_printf(thd, Sql_condition::WARN_LEVEL_WARN, ER_NON_UNIQUE_KEYS_FOUND, ER_THD(thd, ER_NON_UNIQUE_KEYS_FOUND));
     goto error_return ;
+  }
   if (unlikely(je2.s.error))
     goto error_return;
   je2= tmp_jse;
   if (json_read_value(&je1) || json_read_value(&je2))
     goto error_return;
 
-  if (!check_intersect(str, &je1, &je2, FALSE))
+  if (check_intersect(str, &je1, &je2, FALSE))
     goto null_return;
   if (unlikely(je1.s.error||je2.s.error))
     goto error_return;
