@@ -5176,8 +5176,8 @@ error:
 /*
   Confirm whether there are duplicate keys in the same object.
   Return
-    FALSE: No duplicate keys in the same object.
-    TRUE : Have duplicate keys in the same object.
+    FALSE - No duplicate keys in the same object.
+    TRUE  - Have duplicate keys in the same object.
 */
 bool check_unique_key_in_js(json_engine_t *js)
 {
