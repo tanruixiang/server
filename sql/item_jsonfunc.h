@@ -59,13 +59,13 @@ int json_find_overlap_with_array(json_engine_t *js,
                                              json_engine_t *value,
                                              bool compare_whole);
 
-bool check_intersect(String*str, json_engine_t *js, json_engine_t *value, bool compare_whole);
-bool json_find_intersect_with_object(String*str, json_engine_t *js, json_engine_t *value,
-                                  bool compare_whole);
-bool json_find_intersect_with_scalar(String *str, json_engine_t *js, json_engine_t *value);
+bool check_intersect(String *str, json_engine_t *js,
+            json_engine_t *value, bool compare_whole);
+bool json_find_intersect_with_object(String *str, json_engine_t *js,
+                                  json_engine_t *value, bool compare_whole);
 bool check_unique_key_in_object(json_engine_t *js);
-bool json_find_intersect_with_array(String *str, json_engine_t *js, json_engine_t *value,
-                                 bool compare_whole);
+bool json_find_intersect_with_array(String *str, json_engine_t *js,
+                            json_engine_t *value, bool compare_whole);
 bool check_unique_key_in_js(json_engine_t *js);
 bool get_hash_from_json(json_engine_t *value, HASH &property_hash);
 bool get_object_hash_from_json(json_engine_t *value, HASH &property_hash);
@@ -75,13 +75,32 @@ struct LEX_CSTRING_KEYVALUE
   LEX_CSTRING key;
   LEX_CSTRING value;
   int count= 0;
+
+  static uchar *
+  get_hash_key(const uchar *data, size_t *len_ret,
+                      my_bool __attribute__((unused)))
+  {
+    LEX_CSTRING_KEYVALUE *e= (LEX_CSTRING_KEYVALUE *) data;
+
+    *len_ret= e->key.length;
+    return (uchar *) e->key.str;
+  }
+
+  static void hash_free(void *ptr)
+  {
+    my_free(ptr);
+  }
 };
-bool search_item_in_hash(LEX_CSTRING_KEYVALUE *&new_entry, HASH &property_hash,
-        uchar *&search_result, const uchar *value_start, size_t value_len,
-                                      const uchar *key_start= NULL, size_t key_len= 0);
-bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &value_len);
-bool json_intersect_arr_and_obj(String *str, json_engine_t *js, json_engine_t *value);
-bool json_arrays_intersect(String *str, json_engine_t *js, json_engine_t *value);
+bool create_kv_pair_and_search_in_hash(LEX_CSTRING_KEYVALUE *&new_entry,
+                              HASH &property_hash, uchar *&search_result,
+                              const uchar *value_start, size_t value_len,
+                              const uchar *key_start= NULL, size_t key_len= 0);
+bool get_value_from_json(json_engine_t *js, const uchar *&value_start,
+                                                    size_t &value_len);
+bool json_intersect_arr_and_obj(String *str, json_engine_t *js,
+                                          json_engine_t *value);
+bool json_intersect_between_arrays(String *str, json_engine_t *js,
+                                            json_engine_t *value);
 
 class Json_engine_scan: public json_engine_t
 {

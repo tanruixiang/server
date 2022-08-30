@@ -81,23 +81,29 @@ SELECT JSON_INTERSECT(@json1, @json2);
 # object have duplicate keys
 SET @json1= '{"key1":"val1", "key2":"val2", "key3":"val3"}';
 SET @json2= '{"key3":"val3", "key2":"val2", "key4":"val4", "key3":"val3", "key5":"val5"}';
+--error ER_JSON_NON_UNIQUE_KEY_FOUND
 SELECT JSON_INTERSECT(@json1, @json2);
+--error ER_JSON_NON_UNIQUE_KEY_FOUND
 SELECT JSON_INTERSECT(@json2, @json1);
+SET @json1 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
+SET @json2 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
+--error ER_JSON_NON_UNIQUE_KEY_FOUND
+SELECT JSON_INTERSECT(@json1, @json2);
 
 
 # array intersect array
-SET @json1= '[1,2,3]'; 
-SET @json2= '[1,2,3]'; 
+SET @json1= '[1,2,3]';
+SET @json2= '[1,2,3]';
 SELECT JSON_INTERSECT(@json1, @json2);
-SET @json1= '[1,2,3]'; 
-SET @json2= '[1,2,4]'; 
+SET @json1= '[1,2,3]';
+SET @json2= '[1,2,4]';
 SELECT JSON_INTERSECT(@json1, @json2);
 # object(with array value)intersect object
-SET @json1= '{"key1":[1,2,3]}'; 
-SET @json2= '{"key1":[1,2,3]}'; 
+SET @json1= '{"key1":[1,2,3]}';
+SET @json2= '{"key1":[1,2,3]}';
 SELECT JSON_INTERSECT(@json1, @json2);
-SET @json1= '{"key1":[1,2,3]}'; 
-SET @json2= '{"key1":[1,2,4]}'; 
+SET @json1= '{"key1":[1,2,3]}';
+SET @json2= '{"key1":[1,2,4]}';
 SELECT JSON_INTERSECT(@json1, @json2);
 
 # object array intersect object array
@@ -157,10 +163,7 @@ SELECT JSON_INTERSECT(@json1, @json2);
 SET @json1 = '[{"k1":"v1","k2":[1,2,3]},{"k2":"v2","k1":"v1"}]';
 SET @json2 = '[{"k1":"v1","k2":"v2"},{"k1":"v1","k2":[3,2,1]},{"k1":"v1","k2":"v2"}]';
 SELECT JSON_INTERSECT(@json1, @json2);
-SET @json1 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
-SET @json2 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
-SELECT JSON_INTERSECT(@json1, @json2);
-SET @json1 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk1":"v2"}}';
+SET @json1 = '{"k1":"v1","k2":"v2","k3":{"kk1":"v1","kk3":"v2"}}';
 SET @json2 = '{"k1":"v1","k2":"v2","k3":{"k1":"v1","k2":"v2"}}';
 SELECT JSON_INTERSECT(@json1, @json2);
 
