@@ -4701,6 +4701,11 @@ bool get_value_from_json(json_engine_t *js, const uchar *&value_start, size_t &v
   {
     value_start= js->value;
     value_len= js->value_len;
+    if(js->value_type == JSON_VALUE_STRING)
+    {
+      value_start-= 1;
+      value_len+= 2;
+    }
   }
   else 
   {
@@ -4871,11 +4876,7 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js, json_engine
           str->append(new_entry->key.str, new_entry->key.length);
           str->append('"');
           str->append(':');
-          if(js->value_type == JSON_VALUE_STRING)
-            str->append('"');
           str->append(new_entry->value.str, new_entry->value.length);
-          if(js->value_type == JSON_VALUE_STRING)
-            str->append('"');
         }
         my_free(new_entry);
       }
@@ -4962,11 +4963,7 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js, json_engine_t
         str->append('[');
         have_item= TRUE;
       }
-      if(value->value_type == JSON_VALUE_STRING)
-        str->append('"');
       str->append( (const char*) value_start, value_len);
-      if(value->value_type == JSON_VALUE_STRING)
-        str->append('"');
       new_entry->count= ( (LEX_CSTRING_KEYVALUE*) search_result)->count - 1;
       if (new_entry->count == 0)
       {
