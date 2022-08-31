@@ -35,7 +35,6 @@
                                 my_checksum(0, array, A); \
                               } while(0)
 
-
 /*
   Compare ASCII string against the string with the specified
   character set.
@@ -323,7 +322,7 @@ static int json_nice(json_engine_t *je, String *nice_js,
         {
           key_end= je->s.c_str;
         } while (json_read_keyname_chr(je) == 0);
-
+        
         if (unlikely(je->s.error))
           goto error;
 
@@ -2084,7 +2083,7 @@ String *Item_func_json_array_insert::val_str(String *str)
       {
         if (c_path->p.s.error == 0)
           c_path->p.s.error= SHOULD_END_WITH_ARRAY;
-
+        
         report_path_error(s_p, &c_path->p, n_arg);
 
         goto return_null;
@@ -2271,7 +2270,7 @@ static int do_merge(String *str, json_engine_t *je1, json_engine_t *je2)
 
     int first_key= 1;
     json_string_t key_name;
-
+  
     json_string_set_cs(&key_name, je1->s.cs);
 
     if (str->append('{'))
@@ -2917,7 +2916,7 @@ longlong Item_func_json_length::val_int()
       goto null_return;
     }
   }
-
+  
 
   if (json_read_value(&je))
     goto err_return;
@@ -3502,7 +3501,7 @@ v_found:
     if (json_skip_key(&je) || json_scan_next(&je))
       goto js_error;
 
-    rem_end= (je.state == JST_VALUE && n_item == 0) ?
+    rem_end= (je.state == JST_VALUE && n_item == 0) ? 
       (const char *) je.s.c_str : (const char *) (je.s.c_str - je.sav_c_len);
 
     str->length(0);
@@ -3639,7 +3638,7 @@ skip_search:
 
   if (je.value_type != JSON_VALUE_OBJECT)
     goto null_return;
-
+  
   str->length(0);
   if (str->append('['))
     goto err_return; /* Out of memory. */
@@ -3662,7 +3661,7 @@ skip_search:
       key_len= (int)(key_end - key_start);
 
       if (!check_key_in_list(str, key_start, key_len))
-      {
+      { 
         if ((n_keys > 0 && str->append(", ", 2)) ||
           str->append('"') ||
           append_simple(str, key_start, key_len) ||
@@ -3755,7 +3754,7 @@ int Item_func_json_search::compare_json_value_wild(json_engine_t *je,
 
     esc_len= json_unescape(je->s.cs, je->value, je->value + je->value_len,
                            je->s.cs, (uchar *) esc_value.ptr(),
-                           (uchar *) (esc_value.ptr() +
+                           (uchar *) (esc_value.ptr() + 
                                       esc_value.alloced_length()));
     if (esc_len <= 0)
       return 0;
@@ -4463,7 +4462,7 @@ int compare_nested_object(json_engine_t *js, json_engine_t *value)
   DYNAMIC_STRING a_res, b_res;
   if (init_dynamic_string(&a_res, NULL, 4096, 1024) ||
       init_dynamic_string(&b_res, NULL, 4096, 1024))
-  {
+  { 
     goto error;
   }
   if (json_normalize(&a_res, a.ptr(), a.length(), value->s.cs) ||
@@ -4731,8 +4730,8 @@ bool json_intersect_arr_and_obj(String *str, json_engine_t *js,
 }
 
 /*
-Get the hash table from JSON_VALUE_OBJECT.Insert each key value-pair
-in the object into the hash table.
+  Get the hash table from JSON_VALUE_OBJECT.Insert each key value-pair
+  in the object into the hash table.
   RETURN
     FALSE - The function was successfully completed without errors.
     TRUE  - An error occurred while running.
@@ -4779,8 +4778,8 @@ error:
 }
 
 /*
-Get the hash table from JSON_VALUE_ARRAY.The values under each
-index in the array are normalized and inserted into the hash table.
+  Get the hash table from JSON_VALUE_ARRAY.The values under each
+  index in the array are normalized and inserted into the hash table.
   RETURN
     FALSE - The function was successfully completed without errors.
     TRUE  - An error occurred while running.
@@ -4791,7 +4790,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
   size_t value_len= 0;
   LEX_CSTRING_KEYVALUE *new_entry= NULL;
   uchar *search_result= NULL;
-
+  DYNAMIC_STRING norm_js;
   if (my_hash_init(PSI_INSTRUMENT_ME, &property_hash, value->s.cs, 0, 0, 0,
     LEX_CSTRING_KEYVALUE::get_hash_key, LEX_CSTRING_KEYVALUE::hash_free,
     HASH_UNIQUE))
@@ -4802,7 +4801,6 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
     if (get_value_from_json(value, value_start, value_len))
       goto error;
 
-    DYNAMIC_STRING norm_js;
     if (init_dynamic_string(&norm_js, NULL, 0, 0))
       goto error;
 
@@ -4819,7 +4817,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
 
     dynstr_free(&norm_js);
 
-    // Count the number of the same value.
+    /* Maintains the number of occurrences of each value. */
     if (!search_result)
     {
       new_entry->count= 1;
@@ -4836,7 +4834,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
       if (my_hash_update(&property_hash, (uchar*) search_result,
             (uchar*) (( (LEX_CSTRING_KEYVALUE*) search_result)->key.str),
                       ( (LEX_CSTRING_KEYVALUE*) search_result)->key.length))
-                        goto error;
+        goto error;
     }
   }
   return FALSE;
@@ -4846,7 +4844,7 @@ error:
 }
 
 /*
-Get the hash table from json_engine_t.
+  Get the hash table from json_engine_t.
   RETURN
     FALSE - The function was successfully completed without errors.
     TRUE  - An error occurred while running.
@@ -4861,7 +4859,7 @@ bool get_hash_from_json(json_engine_t *value, HASH &property_hash)
 }
 
 /*
-Get the starting pointer and length of the value of the current layer.
+  Get the starting pointer and length of the value of the current layer.
   RETURN
     FALSE - The function was successfully completed without errors.
     TRUE  - An error occurred while running.
@@ -4922,7 +4920,7 @@ bool create_kv_pair_and_search_in_hash(LEX_CSTRING_KEYVALUE *&new_entry,
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                       &new_entry_key_buf, value_len,
                       NullS))
-                      return TRUE;
+      return TRUE;
     memcpy(new_entry_key_buf, value_start, value_len);
     new_entry->key.str= new_entry_key_buf;
     new_entry->key.length= value_len;
@@ -4936,7 +4934,7 @@ bool create_kv_pair_and_search_in_hash(LEX_CSTRING_KEYVALUE *&new_entry,
                       &new_entry_key_buf, key_len,
                       &new_entry_value_buf, value_len,
                       NullS))
-                      return TRUE;
+      return TRUE;
     memcpy(new_entry_key_buf, key_start, key_len);
     memcpy(new_entry_value_buf, value_start, value_len);
     new_entry->key.str= new_entry_key_buf;
@@ -4944,7 +4942,10 @@ bool create_kv_pair_and_search_in_hash(LEX_CSTRING_KEYVALUE *&new_entry,
     new_entry->value.str= new_entry_value_buf;
     new_entry->value.length= value_len;
   }
-  // search_result is a reference.It is used to store the results of the search
+  /*
+    search_result is a reference.It is used to
+    store the results of the search
+  */
   search_result= my_hash_search(&property_hash,
               (const uchar *) new_entry->key.str, new_entry->key.length);
   return FALSE;
@@ -4956,7 +4957,7 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
 {
   if (value->value_type == JSON_VALUE_OBJECT)
   {
-    // Two objects are required to be identical.
+    /* Two objects are required to be identical. */
     if (compare_whole)
     {
       json_engine_t tmp_js= *js;
@@ -4967,8 +4968,9 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
       *js= tmp_js;
       if (compare_nested_object(js, value))
       {
-        str->append( (const char*) object_js_start,
-                    object_js_end - object_js_start);
+        if (str->append( (const char*) object_js_start,
+                    object_js_end - object_js_start))
+          return TRUE;
         return FALSE;
       }
       return TRUE;
@@ -4981,6 +4983,7 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
     size_t value_len= 0;
     LEX_CSTRING_KEYVALUE *new_entry= NULL;
     uchar* search_result= NULL;
+    DYNAMIC_STRING norm_js, norm_value;
     if (get_hash_from_json(value, property_hash))
       goto error;
     /*
@@ -5019,27 +5022,18 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
                   new_entry->value.length);
         else
         {
-          DYNAMIC_STRING norm_js, norm_value;
           if (init_dynamic_string(&norm_js, NULL, 0, 0) ||
               init_dynamic_string(&norm_value, NULL, 0, 0))
-          {
-            my_free(new_entry);
-            dynstr_free(&norm_js);
-            dynstr_free(&norm_value);
-            goto error;
-          }
+            goto error_free_space;
+
           if (json_normalize(&norm_js, (const char*) new_entry->value.str,
                                       new_entry->value.length, value->s.cs)||
               json_normalize(&norm_value,
                     ( (LEX_CSTRING_KEYVALUE*) search_result)->value.str,
                     ( (LEX_CSTRING_KEYVALUE*) search_result)->value.length,
                     value->s.cs))
-          {
-            my_free(new_entry);
-            dynstr_free(&norm_js);
-            dynstr_free(&norm_value);
-            goto error;
-          }
+            goto error_free_space;
+
           equal= norm_js.length == norm_value.length &&
                 !strncmp(norm_js.str, norm_value.str, norm_js.length);
           dynstr_free(&norm_js);
@@ -5050,26 +5044,33 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
         {
           if (have_item)
           {
-            str->append(',');
+            if (str->append(','))
+              goto string_append_error;
           }
           else
           {
-            str->append('{');
+            if (str->append('{'))
+              goto string_append_error;
             have_item= TRUE;
           }
-          str->append('"');
-          str->append(new_entry->key.str, new_entry->key.length);
-          str->append('"');
-          str->append(':');
-          str->append(new_entry->value.str, new_entry->value.length);
+          if (str->append('"') ||
+              str->append(new_entry->key.str, new_entry->key.length) ||
+              str->append("\":",2) ||
+              str->append(new_entry->value.str, new_entry->value.length))
+            goto string_append_error;
         }
         my_free(new_entry);
       }
     }
     my_hash_free(&property_hash);
-    if (have_item)
-      str->append('}');
+    if (have_item && str->append('}'))
+      return TRUE;
     return !have_item;
+  error_free_space:
+    dynstr_free(&norm_js);
+    dynstr_free(&norm_value);
+  string_append_error:
+    my_free(new_entry);
   error:
     my_hash_free(&property_hash);
     return TRUE;
@@ -5104,14 +5105,17 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
   size_t value_len= 0;
   uchar* search_result= NULL;
   LEX_CSTRING_KEYVALUE *new_entry= NULL;
-
+  DYNAMIC_STRING norm_val;
+  /*
+    Put the value in js into the hash table. Scan value uses
+    the hash table to get the intersection of two arrays.
+  */
   if (get_hash_from_json(js, property_hash))
     goto error;
   while (json_scan_next(value) == 0 && value->state == JST_VALUE)
   {
     if (get_value_from_json(value, value_start, value_len))
       goto error;
-    DYNAMIC_STRING norm_val;
     if (init_dynamic_string(&norm_val, NULL, 0, 0))
       goto error;
     if (value->value_type == JSON_VALUE_STRING)
@@ -5138,19 +5142,28 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
 
     dynstr_free(&norm_val);
 
-    // if have common value in js,append it in str.
+    /*
+      If the same value is found in the hash table, add
+      that value to str. At the same time, update the number
+      of times the value appears in the hash table.
+    */
     if (!search_result)
       my_free(new_entry);
     else
     {
       if (have_item)
-        str->append(',');
+      {
+        if (str->append(','))
+          goto string_append_error;
+      }
       else
       {
-        str->append('[');
+        if (str->append('['))
+          goto string_append_error;
         have_item= TRUE;
       }
-      str->append( (const char*) value_start, value_len);
+      if (str->append( (const char*) value_start, value_len))
+        goto string_append_error;
       new_entry->count= ( (LEX_CSTRING_KEYVALUE*) search_result)->count - 1;
       if (new_entry->count == 0)
       {
@@ -5165,16 +5178,17 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
         if (my_hash_update(&property_hash, (uchar*) search_result,
                   (uchar*) (( (LEX_CSTRING_KEYVALUE*) search_result)->key.str),
                   ( (LEX_CSTRING_KEYVALUE*) search_result)->key.length))
-                  goto error;
+          goto error;
       }
     }
   }
 
-  if (have_item)
-    str->append(']');
+  if (have_item && str->append(']'))
+    return TRUE;
   my_hash_free(&property_hash);
   return !have_item;
-
+string_append_error:
+  my_free(new_entry);
 error:
   my_hash_free(&property_hash);
   return TRUE;
@@ -5198,7 +5212,8 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
 
     if (json_compare_arrays_in_order(js, value))
     {
-      str->append( (const char*) value_start, value_end - value_start);
+      if (str->append( (const char*) value_start, value_end - value_start))
+        return TRUE;
       return FALSE;
     }
     return TRUE;
@@ -5304,13 +5319,15 @@ bool check_intersect(String *str, json_engine_t *js,
       return TRUE;
     if (js->value_type == JSON_VALUE_NUMBER)
     {
-      str->append( (const char *) js->value,js->value_len);
+      if (str->append( (const char *) js->value,js->value_len))
+        return TRUE;
     }
     else if (js->value_type == JSON_VALUE_STRING)
     {
-      str->append('"');
-      str->append( (const char *) js->value, js->value_len);
-      str->append('"');
+      if (str->append('"') ||
+          str->append( (const char *) js->value, js->value_len) ||
+          str->append('"'))
+        return TRUE;
     }
     return FALSE;
   }
@@ -5327,7 +5344,10 @@ bool check_unique_key_in_object(json_engine_t *js)
     LEX_CSTRING_KEYVALUE::get_hash_key, LEX_CSTRING_KEYVALUE::hash_free,
     HASH_UNIQUE))
     goto error;
-
+  /*
+    Scan js and insert the key into the hash table
+    to determine whether there are duplicate keys.
+  */
   while (json_scan_next(js) == 0 && js->state == JST_KEY)
   {
     key_start= js->s.c_str;
@@ -5345,7 +5365,7 @@ bool check_unique_key_in_object(json_engine_t *js)
 
     if (create_kv_pair_and_search_in_hash(new_entry, key_hash, search_result,
                           key_start, key_end - key_start, NULL, 0))
-                          goto error;
+      goto error;
 
     if (search_result)
     {
@@ -5406,14 +5426,14 @@ String* Item_func_json_intersect::val_str(String *str)
   json_scan_start(&je1, js1->charset(), (const uchar *) js1->ptr(),
                   (const uchar *) js1->ptr() + js1->length());
   /*
-  Make legal judgments on json. If the judgment is made in check_intersect,
-  it will not only increase the complexity, but also cause misjudgment.
-  Example : {"test":{"key1":"value1","key1":"value1"}}
-                        intersect
-            {"test":{"key2":"value2","key3":"value3"}}
-  In check_intersect,we found key1 is not in {"key2":"value2","key3":"value3"}
-  and now compare_whole is true, so we return FALSE immediately.Duplicate key1
-  will not be scanned.
+    Make legal judgments on json. If the judgment is made in check_intersect,
+    it will not only increase the complexity, but also cause misjudgment.
+    Example : {"test":{"key1":"value1","key1":"value1"}}
+                          intersect
+              {"test":{"key2":"value2","key3":"value3"}}
+    In check_intersect,we found key1 is not in {"key2":"value2","key3":"value3"}
+    and now compare_whole is true, so we return FALSE immediately.Duplicate key1
+    will not be scanned.
   */
   tmp_jse= je1;
   json_read_value(&je1);
@@ -5441,9 +5461,8 @@ String* Item_func_json_intersect::val_str(String *str)
     goto error_return;
 
   if (check_intersect(str, &je1, &je2, FALSE))
-    goto null_return;
-  if (unlikely(je1.s.error||je2.s.error))
     goto error_return;
+
   json_scan_start(&je1, str->charset(), (const uchar *) str->ptr(),
                   (const uchar *) str->ptr() + str->length());
   str= &tmp_js1;

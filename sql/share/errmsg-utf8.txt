@@ -4,11 +4,11 @@ default-language eng
 
 start-error-number 1000
 
-ER_HASHCHK
+ER_HASHCHK  
         eng "hashchk"
-ER_NISAMCHK
+ER_NISAMCHK  
         eng "isamchk"
-ER_NO
+ER_NO  
         chi "不"
         cze "NE"
         dan "NEJ"
@@ -30,7 +30,7 @@ ER_NO
         serbian "NE"
         slo "NIE"
         ukr "НІ"
-ER_YES
+ER_YES  
         chi "是的"
         cze "ANO"
         dan "JA"
@@ -54,7 +54,7 @@ ER_YES
         slo "Áno"
         spa "SÍ"
         ukr "ТАК"
-ER_CANT_CREATE_FILE
+ER_CANT_CREATE_FILE  
         chi "无法创建文件'%-.200s'（错误号码：%M）"
         cze "Nemohu vytvořit soubor '%-.200s' (chybový kód: %M)"
         dan "Kan ikke oprette filen '%-.200s' (Fejlkode: %M)"
@@ -80,7 +80,7 @@ ER_CANT_CREATE_FILE
         spa "No puedo crear el fichero/archivo '%-.200s' (Error: %M)"
         swe "Kan inte skapa filen '%-.200s' (Felkod: %M)"
         ukr "Не можу створити файл '%-.200s' (помилка: %M)"
-ER_CANT_CREATE_TABLE
+ER_CANT_CREATE_TABLE  
         chi "无法创建表%`s.%`s（错误号码：%M）"
         cze "Nemohu vytvořit tabulku %`s.%`s (chybový kód: %M)"
         dan "Kan ikke oprette tabellen %`s.%`s (Fejlkode: %M)"
@@ -106,7 +106,7 @@ ER_CANT_CREATE_TABLE
         spa "No puedo crear la tabla %`s.%`s (Error: %M)"
         swe "Kan inte skapa tabellen %`s.%`s (Felkod: %M)"
         ukr "Не можу створити таблицю %`s.%`s (помилка: %M)"
-ER_CANT_CREATE_DB
+ER_CANT_CREATE_DB  
         chi "无法创建数据库'%-.192s'（错误号码：%M）"
         cze "Nemohu vytvořit databázi '%-.192s' (chybový kód: %M)"
         dan "Kan ikke oprette databasen '%-.192s' (Fejlkode: %M)"
@@ -132,7 +132,7 @@ ER_CANT_CREATE_DB
         spa "No puedo crear la base de datos '%-.192s' (Error: %M)"
         swe "Kan inte skapa databasen '%-.192s' (Felkod: %M)"
         ukr "Не можу створити базу данних '%-.192s' (помилка: %M)"
-ER_DB_CREATE_EXISTS
+ER_DB_CREATE_EXISTS  
         chi "无法创建数据库'%-.192s';已经存在"
         cze "Nemohu vytvořit databázi '%-.192s'; databáze již existuje"
         dan "Kan ikke oprette databasen '%-.192s'; databasen eksisterer"
@@ -158,7 +158,7 @@ ER_DB_CREATE_EXISTS
         spa "No puedo crear la base de datos '%-.192s'; la base de datos ya existe"
         swe "Databasen '%-.192s' existerar redan"
         ukr "Не можу створити базу данних '%-.192s'. База данних існує"
-ER_DB_DROP_EXISTS
+ER_DB_DROP_EXISTS  
         chi "无法删除数据库'%-.192s';数据库不存在"
         cze "Nemohu zrušit databázi '%-.192s', databáze neexistuje"
         dan "Kan ikke slette (droppe) '%-.192s'; databasen eksisterer ikke"
@@ -184,7 +184,7 @@ ER_DB_DROP_EXISTS
         spa "No puedo eliminar la base de datos '%-.192s'; la base de datos no existe"
         swe "Kan inte radera databasen '%-.192s'; databasen finns inte"
         ukr "Не можу видалити базу данних '%-.192s'. База данних не існує"
-ER_DB_DROP_DELETE
+ER_DB_DROP_DELETE  
         chi "删除数据库错误（无法删除'%-.192s'，错误号码：%M）"
         cze "Chyba při rušení databáze (nemohu vymazat '%-.192s', chyba %M)"
         dan "Fejl ved sletning (drop) af databasen (kan ikke slette '%-.192s', Fejlkode %M)"
@@ -210,7 +210,7 @@ ER_DB_DROP_DELETE
         spa "Error eliminando la base de datos (no puedo borrar '%-.192s', error %M)"
         swe "Fel vid radering av databasen (Kan inte radera '%-.192s'. Felkod: %M)"
         ukr "Не можу видалити базу данних (Не можу видалити '%-.192s', помилка: %M)"
-ER_DB_DROP_RMDIR
+ER_DB_DROP_RMDIR  
         chi "删除数据库错误（无法rmdir '%-.192s'，错误号码：%M）"
         cze "Chyba při rušení databáze (nemohu vymazat adresář '%-.192s', chyba %M)"
         dan "Fejl ved sletting af database (kan ikke slette folderen '%-.192s', Fejlkode %M)"
@@ -236,7 +236,7 @@ ER_DB_DROP_RMDIR
         spa "Error eliminando la base de datos (No puedo borrar el directorio '%-.192s', error %M)"
         swe "Fel vid radering av databasen (Kan inte radera biblioteket '%-.192s'. Felkod: %M)"
         ukr "Не можу видалити базу данних (Не можу видалити теку '%-.192s', помилка: %M)"
-ER_CANT_DELETE_FILE
+ER_CANT_DELETE_FILE  
         chi "删除'%-.192s'出错（错误号码：%M）"
         cze "Chyba při výmazu '%-.192s' (chybový kód: %M)"
         dan "Fejl ved sletning af '%-.192s' (Fejlkode: %M)"
@@ -262,7 +262,7 @@ ER_CANT_DELETE_FILE
         spa "Error en el borrado de '%-.192s' (Error: %M)"
         swe "Kan inte radera filen '%-.192s' (Felkod: %M)"
         ukr "Не можу видалити '%-.192s' (помилка: %M)"
-ER_CANT_FIND_SYSTEM_REC
+ER_CANT_FIND_SYSTEM_REC  
         chi "无法在系统表中读取记录"
         cze "Nemohu číst záznam v systémové tabulce"
         dan "Kan ikke læse posten i systemfolderen"
@@ -288,7 +288,7 @@ ER_CANT_FIND_SYSTEM_REC
         spa "No puedo leer el registro en la tabla del sistema"
         swe "Hittar inte posten i systemregistret"
         ukr "Не можу зчитати запис з системної таблиці"
-ER_CANT_GET_STAT
+ER_CANT_GET_STAT  
         chi "无法获得'%-.200s'的状态（错误号码：%M）"
         cze "Nemohu získat stav '%-.200s' (chybový kód: %M)"
         dan "Kan ikke læse status af '%-.200s' (Fejlkode: %M)"
@@ -314,7 +314,7 @@ ER_CANT_GET_STAT
         spa "No puedo obtener el estado de '%-.200s' (Error: %M)"
         swe "Kan inte läsa filinformationen (stat) från '%-.200s' (Felkod: %M)"
         ukr "Не можу отримати статус '%-.200s' (помилка: %M)"
-ER_CANT_GET_WD
+ER_CANT_GET_WD  
         chi "无法获取工作目录（错误号码：%M）"
         cze "Chyba při zjišťování pracovní adresář (chybový kód: %M)"
         dan "Kan ikke læse aktive folder (Fejlkode: %M)"
@@ -340,7 +340,7 @@ ER_CANT_GET_WD
         spa "No puedo obtener directorio de trabajo (Error: %M)"
         swe "Kan inte inte läsa aktivt bibliotek. (Felkod: %M)"
         ukr "Не можу визначити робочу теку (помилка: %M)"
-ER_CANT_LOCK
+ER_CANT_LOCK  
         chi "无法锁定文件（错误号码：%M）"
         cze "Nemohu uzamknout soubor (chybový kód: %M)"
         dan "Kan ikke låse fil (Fejlkode: %M)"
@@ -366,7 +366,7 @@ ER_CANT_LOCK
         spa "No puedo bloquear fichero/archivo: (Error: %M)"
         swe "Kan inte låsa filen. (Felkod: %M)"
         ukr "Не можу заблокувати файл (помилка: %M)"
-ER_CANT_OPEN_FILE
+ER_CANT_OPEN_FILE  
         chi "无法打开文件：'%-.200s'（错误号码：%M）"
         cze "Nemohu otevřít soubor '%-.200s' (chybový kód: %M)"
         dan "Kan ikke åbne fil: '%-.200s' (Fejlkode: %M)"
@@ -392,7 +392,7 @@ ER_CANT_OPEN_FILE
         spa "No puedo abrir el fichero/archivo: '%-.200s' (Error: %M)"
         swe "Kan inte använda '%-.200s' (Felkod: %M)"
         ukr "Не можу відкрити файл: '%-.200s' (помилка: %M)"
-ER_FILE_NOT_FOUND
+ER_FILE_NOT_FOUND  
         chi "找不到文件：'%-.200s'（错误号码：%M）"
         cze "Nemohu najít soubor '%-.200s' (chybový kód: %M)"
         dan "Kan ikke finde fila: '%-.200s' (Fejlkode: %M)"
@@ -418,7 +418,7 @@ ER_FILE_NOT_FOUND
         spa "No puedo hallar el fichero/archivo: '%-.200s' (Error: %M)"
         swe "Hittar inte filen '%-.200s' (Felkod: %M)"
         ukr "Не можу знайти файл: '%-.200s' (помилка: %M)"
-ER_CANT_READ_DIR
+ER_CANT_READ_DIR  
         chi "无法读取'%-.192s'的文件夹（错误号码：%M）"
         cze "Nemohu číst adresář '%-.192s' (chybový kód: %M)"
         dan "Kan ikke læse folder '%-.192s' (Fejlkode: %M)"
@@ -444,7 +444,7 @@ ER_CANT_READ_DIR
         spa "No puedo leer el directorio de '%-.192s' (Error: %M)"
         swe "Kan inte läsa från bibliotek '%-.192s' (Felkod: %M)"
         ukr "Не можу прочитати теку '%-.192s' (помилка: %M)"
-ER_CANT_SET_WD
+ER_CANT_SET_WD  
         chi "无法将dir更改为'%-.192s'（错误号码：%M）"
         cze "Nemohu změnit adresář na '%-.192s' (chybový kód: %M)"
         dan "Kan ikke skifte folder til '%-.192s' (Fejlkode: %M)"
@@ -470,7 +470,7 @@ ER_CANT_SET_WD
         spa "No puedo cambiar al directorio a '%-.192s' (Error: %M)"
         swe "Kan inte byta till '%-.192s' (Felkod: %M)"
         ukr "Не можу перейти у теку '%-.192s' (помилка: %M)"
-ER_CHECKREAD
+ER_CHECKREAD  
         chi "这个表自上次读后数据有变化'%-.192s'"
         cze "Záznam byl změněn od posledního čtení v tabulce '%-.192s'"
         dan "Posten er ændret siden sidste læsning '%-.192s'"
@@ -522,7 +522,7 @@ ER_DISK_FULL
         spa "Disco lleno (%s). Esperando a que alguien libere algo de espacio... (Error: %M)"
         swe "Disken är full (%s). Väntar tills det finns ledigt utrymme... (Felkod: %M)"
         ukr "Диск заповнений (%s). Вичикую, доки звільниться трохи місця... (помилка: %M)"
-ER_DUP_KEY 23000
+ER_DUP_KEY 23000 
         chi "不能写;表'%-.192s'中有重复索引"
         cze "Nemohu zapsat, zdvojený klíč v tabulce '%-.192s'"
         dan "Kan ikke skrive, flere ens nøgler i tabellen '%-.192s'"
@@ -548,7 +548,7 @@ ER_DUP_KEY 23000
         spa "No puedo escribir, clave duplicada en la tabla '%-.192s'"
         swe "Kan inte skriva, dubbel söknyckel i register '%-.192s'"
         ukr "Не можу записати, дублюючийся ключ в таблиці '%-.192s'"
-ER_ERROR_ON_CLOSE
+ER_ERROR_ON_CLOSE  
         chi "'%-.192s'关闭时出错（错误号码：%M）"
         cze "Chyba při zavírání '%-.192s' (chybový kód: %M)"
         dan "Fejl ved lukning af '%-.192s' (Fejlkode: %M)"
@@ -574,7 +574,7 @@ ER_ERROR_ON_CLOSE
         spa "Error en el cierre de '%-.192s' (Error: %M)"
         swe "Fick fel vid stängning av '%-.192s' (Felkod: %M)"
         ukr "Не можу закрити '%-.192s' (помилка: %M)"
-ER_ERROR_ON_READ
+ER_ERROR_ON_READ  
         chi "读取文件'%-.200s'错误（错误号码：%M）"
         cze "Chyba při čtení souboru '%-.200s' (chybový kód: %M)"
         dan "Fejl ved læsning af '%-.200s' (Fejlkode: %M)"
@@ -600,7 +600,7 @@ ER_ERROR_ON_READ
         spa "Error leyendo el fichero/archivo '%-.200s' (Error: %M)"
         swe "Fick fel vid läsning av '%-.200s' (Felkod %M)"
         ukr "Не можу прочитати файл '%-.200s' (помилка: %M)"
-ER_ERROR_ON_RENAME
+ER_ERROR_ON_RENAME  
         chi "重命名'%-.210s'到'%-.210s'错误（错误号码：%M）"
         cze "Chyba při přejmenování '%-.210s' na '%-.210s' (chybový kód: %M)"
         dan "Fejl ved omdøbning af '%-.210s' til '%-.210s' (Fejlkode: %M)"
@@ -626,7 +626,7 @@ ER_ERROR_ON_RENAME
         spa "Error en el renombrado de '%-.210s' a '%-.210s' (Error: %M)"
         swe "Kan inte byta namn från '%-.210s' till '%-.210s' (Felkod: %M)"
         ukr "Не можу перейменувати '%-.210s' у '%-.210s' (помилка: %M)"
-ER_ERROR_ON_WRITE
+ER_ERROR_ON_WRITE  
         chi "写文件'%-.200s'错误（错误号码：%M）"
         cze "Chyba při zápisu do souboru '%-.200s' (chybový kód: %M)"
         dan "Fejl ved skriving av filen '%-.200s' (Fejlkode: %M)"
@@ -652,7 +652,7 @@ ER_ERROR_ON_WRITE
         spa "Error escribiendo el fichero/archivo '%-.200s' (Error: %M)"
         swe "Fick fel vid skrivning till '%-.200s' (Felkod %M)"
         ukr "Не можу записати файл '%-.200s' (помилка: %M)"
-ER_FILE_USED
+ER_FILE_USED  
         chi "'%-.192s'被锁定，不能改变"
         cze "'%-.192s' je zamčen proti změnám"
         dan "'%-.192s' er låst mod opdateringer"
@@ -678,7 +678,7 @@ ER_FILE_USED
         spa "'%-.192s' esta bloqueado contra cambios"
         swe "'%-.192s' är låst mot användning"
         ukr "'%-.192s' заблокований на внесення змін"
-ER_FILSORT_ABORT
+ER_FILSORT_ABORT  
         chi "排序中止"
         cze "Třídění přerušeno"
         dan "Sortering afbrudt"
@@ -704,7 +704,7 @@ ER_FILSORT_ABORT
         spa "Ordenación cancelada"
         swe "Sorteringen avbruten"
         ukr "Сортування перервано"
-ER_FORM_NOT_FOUND
+ER_FORM_NOT_FOUND  
         chi "视图'%-.192s'不存在'%-.192s'"
         cze "Pohled '%-.192s' pro '%-.192s' neexistuje"
         dan "View '%-.192s' eksisterer ikke for '%-.192s'"
@@ -730,7 +730,7 @@ ER_FORM_NOT_FOUND
         spa "La vista '%-.192s' no existe para '%-.192s'"
         swe "Formulär '%-.192s' finns inte i '%-.192s'"
         ukr "Вигляд '%-.192s' не існує для '%-.192s'"
-ER_GET_ERRNO
+ER_GET_ERRNO  
         chi "错误 %M, 来自存储引擎 %s"
         eng "Got error %M from storage engine %s"
         fre "Reçu l'erreur %M du handler de la table %s"
@@ -748,7 +748,7 @@ ER_GET_ERRNO
         spa "Obtenido error %M desde el motor de almacenaje %s"
         swe "Fick felkod %M från databashanteraren %s"
         ukr "Отримано помилку %M від дескриптора таблиці %s"
-ER_ILLEGAL_HA
+ER_ILLEGAL_HA  
         chi "存储引擎%s %`s.%`s 表没有该选项"
         eng "Storage engine %s of the table %`s.%`s doesn't have this option"
         ger "Diese Option gibt es nicht in Speicher-Engine %s für %`s.%`s"
@@ -756,7 +756,7 @@ ER_ILLEGAL_HA
         rus "Обработчик %s таблицы %`s.%`s не поддерживает эту возможность"
         spa "El motor de almacenaje %s de la tabla %`s.%`s no contiene esta opción"
         ukr "Дескриптор %s таблиці %`s.%`s не має цієї властивості"
-ER_KEY_NOT_FOUND
+ER_KEY_NOT_FOUND  
         chi "无法在'%-.192s'中找到记录"
         cze "Nemohu najít záznam v '%-.192s'"
         dan "Kan ikke finde posten i '%-.192s'"
@@ -782,7 +782,7 @@ ER_KEY_NOT_FOUND
         spa "No puedo encontrar el registro en '%-.192s'"
         swe "Hittar inte posten '%-.192s'"
         ukr "Не можу записати у '%-.192s'"
-ER_NOT_FORM_FILE
+ER_NOT_FORM_FILE  
         chi "文件中的信息不正确：'%-.200s'"
         cze "Nesprávná informace v souboru '%-.200s'"
         dan "Forkert indhold i: '%-.200s'"
@@ -808,7 +808,7 @@ ER_NOT_FORM_FILE
         spa "Información incorrecta en el fichero/archivo: '%-.200s'"
         swe "Felaktig fil: '%-.200s'"
         ukr "Хибна інформація у файлі: '%-.200s'"
-ER_NOT_KEYFILE
+ER_NOT_KEYFILE  
         chi "表'%-.200s'的索引损坏;试着修复"
         cze "Nesprávný klíč pro tabulku '%-.200s'; pokuste se ho opravit"
         dan "Fejl i indeksfilen til tabellen '%-.200s'; prøv at reparere den"
@@ -834,7 +834,7 @@ ER_NOT_KEYFILE
         spa "El índice para la tabla: '%-.200s' está corrupto; intente repararlo"
         swe "Fatalt fel vid hantering av register '%-.200s'; kör en reparation"
         ukr "Хибний файл ключей для таблиці: '%-.200s'; Спробуйте його відновити"
-ER_OLD_KEYFILE
+ER_OLD_KEYFILE  
         chi "表'%-.192s'的老索引文件损坏; 修复!"
         cze "Starý klíčový soubor pro '%-.192s'; opravte ho"
         dan "Gammel indeksfil for tabellen '%-.192s'; reparer den"
@@ -860,7 +860,7 @@ ER_OLD_KEYFILE
         spa "Clave antigua de fichero/archivo para la tabla '%-.192s'; ¡repárela!"
         swe "Gammal nyckelfil '%-.192s'; reparera registret"
         ukr "Старий файл ключей для таблиці '%-.192s'; Відновіть його!"
-ER_OPEN_AS_READONLY
+ER_OPEN_AS_READONLY  
         chi "表'%-.192s'只可读"
         cze "'%-.192s' je jen pro čtení"
         dan "'%-.192s' er skrivebeskyttet"
@@ -936,7 +936,7 @@ ER_OUT_OF_SORTMEMORY HY001 S1001
         spa "Memoria de ordenación insuficiente. Considere el incrementar el tamaño del búfer de ordenación del servidor"
         swe "Sorteringsbufferten räcker inte till. Kontrollera startparametrarna"
         ukr "Брак пам'яті для сортування. Треба збільшити розмір буфера сортування у сервера"
-ER_UNEXPECTED_EOF
+ER_UNEXPECTED_EOF  
         chi "阅读文件'%-.192s'时出现意外的EOF（错误号码：%M）"
         cze "Neočekávaný konec souboru při čtení '%-.192s' (chybový kód: %M)"
         dan "Uventet afslutning på fil (eof) ved læsning af filen '%-.192s' (Fejlkode: %M)"
@@ -961,7 +961,7 @@ ER_UNEXPECTED_EOF
         spa "Inesperado fin de fichero/archivo mientras leíamos el fichero/archivo '%-.192s' (Error: %M)"
         swe "Oväntat filslut vid läsning från '%-.192s' (Felkod: %M)"
         ukr "Хибний кінець файлу '%-.192s' (помилка: %M)"
-ER_CON_COUNT_ERROR 08004
+ER_CON_COUNT_ERROR 08004 
         chi "太多连接"
         cze "Příliš mnoho spojení"
         dan "For mange forbindelser (connections)"
@@ -987,7 +987,7 @@ ER_CON_COUNT_ERROR 08004
         spa "Demasiadas conexiones"
         swe "För många anslutningar"
         ukr "Забагато з'єднань"
-ER_OUT_OF_RESOURCES
+ER_OUT_OF_RESOURCES  
         chi "内存不足."
         cze "Málo prostoru/paměti pro thread"
         dan "Udgået for tråde/hukommelse"
@@ -1012,7 +1012,7 @@ ER_OUT_OF_RESOURCES
         spa "Memoria agotada"
         swe "Fick slut på minnet."
         ukr "Брак пам'яті."
-ER_BAD_HOST_ERROR 08S01
+ER_BAD_HOST_ERROR 08S01 
         chi "不能从你的地址获取主机名称"
         cze "Nemohu zjistit jméno stroje pro Vaši adresu"
         dan "Kan ikke få værtsnavn for din adresse"
@@ -1038,7 +1038,7 @@ ER_BAD_HOST_ERROR 08S01
         spa "No puedo obtener el nombre de equipo de la dirección de vd."
         swe "Kan inte hitta 'hostname' för din adress"
         ukr "Не можу визначити ім'я хосту для вашої адреси"
-ER_HANDSHAKE_ERROR 08S01
+ER_HANDSHAKE_ERROR 08S01 
         chi "坏握手"
         cze "Chyba při ustavování spojení"
         dan "Forkert håndtryk (handshake)"
@@ -1063,7 +1063,7 @@ ER_HANDSHAKE_ERROR 08S01
         spa "Mal apretón de manos (handshake)"
         swe "Fel vid initiering av kommunikationen med klienten"
         ukr "Невірна установка зв'язку"
-ER_DBACCESS_DENIED_ERROR 42000
+ER_DBACCESS_DENIED_ERROR 42000 
         chi "用户'%s'@'%s'无权访问数据库'%-.192s'"
         cze "Přístup pro uživatele '%s'@'%s' k databázi '%-.192s' není povolen"
         dan "Adgang nægtet bruger: '%s'@'%s' til databasen '%-.192s'"
@@ -1088,7 +1088,7 @@ ER_DBACCESS_DENIED_ERROR 42000
         spa "Acceso denegado para usuario: '%s'@'%s' a la base de datos '%-.192s'"
         swe "Användare '%s'@'%s' är ej berättigad att använda databasen %-.192s"
         ukr "Доступ заборонено для користувача: '%s'@'%s' до бази данних '%-.192s'"
-ER_ACCESS_DENIED_ERROR 28000
+ER_ACCESS_DENIED_ERROR 28000 
         chi "'%s'@'%s' 用户无权访问 (使用密码: %s)"
         cze "Přístup pro uživatele '%s'@'%s' (s heslem %s)"
         dan "Adgang nægtet bruger: '%s'@'%s' (Bruger adgangskode: %s)"
@@ -1113,7 +1113,7 @@ ER_ACCESS_DENIED_ERROR 28000
         spa "Acceso denegado para usuario: '%s'@'%s' (Usando contraseña: %s)"
         swe "Användare '%s'@'%s' är ej berättigad att logga in (Använder lösen: %s)"
         ukr "Доступ заборонено для користувача: '%s'@'%s' (Використано пароль: %s)"
-ER_NO_DB_ERROR 3D000
+ER_NO_DB_ERROR 3D000 
         chi "没有选择数据库"
         cze "Nebyla vybrána žádná databáze"
         dan "Ingen database valgt"
@@ -1139,7 +1139,7 @@ ER_NO_DB_ERROR 3D000
         spa "Base de datos no seleccionada"
         swe "Ingen databas i användning"
         ukr "Базу данних не вибрано"
-ER_UNKNOWN_COM_ERROR 08S01
+ER_UNKNOWN_COM_ERROR 08S01 
         chi "未知的命令"
         cze "Neznámý příkaz"
         dan "Ukendt kommando"
@@ -1165,7 +1165,7 @@ ER_UNKNOWN_COM_ERROR 08S01
         spa "Comando desconocido"
         swe "Okänt kommando"
         ukr "Невідома команда"
-ER_BAD_NULL_ERROR 23000
+ER_BAD_NULL_ERROR 23000 
         chi "列'%-.192s'不能为NULL"
         cze "Sloupec '%-.192s' nemůže být null"
         dan "Kolonne '%-.192s' kan ikke være NULL"
@@ -1191,7 +1191,7 @@ ER_BAD_NULL_ERROR 23000
         spa "La columna '%-.192s' no puede ser nula"
         swe "Kolumn '%-.192s' får inte vara NULL"
         ukr "Стовбець '%-.192s' не може бути нульовим"
-ER_BAD_DB_ERROR 42000
+ER_BAD_DB_ERROR 42000 
         chi "未知数据库'%-.192s'"
         cze "Neznámá databáze '%-.192s'"
         dan "Ukendt database '%-.192s'"
@@ -1217,7 +1217,7 @@ ER_BAD_DB_ERROR 42000
         spa "Base de datos '%-.192s' desconocida"
         swe "Okänd databas: '%-.192s'"
         ukr "Невідома база данних '%-.192s'"
-ER_TABLE_EXISTS_ERROR 42S01
+ER_TABLE_EXISTS_ERROR 42S01 
         chi "表'%-.192s'已经存在"
         cze "Tabulka '%-.192s' již existuje"
         dan "Tabellen '%-.192s' findes allerede"
@@ -1243,7 +1243,7 @@ ER_TABLE_EXISTS_ERROR 42S01
         spa "La tabla '%-.192s' ya existe"
         swe "Tabellen '%-.192s' finns redan"
         ukr "Таблиця '%-.192s' вже існує"
-ER_BAD_TABLE_ERROR 42S02
+ER_BAD_TABLE_ERROR 42S02 
         chi "未知表'%-.100T'"
         cze "Neznámá tabulka '%-.100T'"
         dan "Ukendt tabel '%-.100T'"
@@ -1269,7 +1269,7 @@ ER_BAD_TABLE_ERROR 42S02
         spa "Tabla '%-.100T' no reconocida"
         swe "Okänd tabell '%-.100T'"
         ukr "Невідома таблиця '%-.100T'"
-ER_NON_UNIQ_ERROR 23000
+ER_NON_UNIQ_ERROR 23000 
         chi "列名 '%-.192s' 在 %-.192s 定义模糊"
         cze "Sloupec '%-.192s' v %-.192s není zcela jasný"
         dan "Felt: '%-.192s' i tabel %-.192s er ikke entydigt"
@@ -1295,7 +1295,7 @@ ER_NON_UNIQ_ERROR 23000
         spa "La columna: '%-.192s' en %-.192s es ambigua"
         swe "Kolumn '%-.192s' i %-.192s är inte unik"
         ukr "Стовбець '%-.192s' у %-.192s визначений неоднозначно"
-ER_SERVER_SHUTDOWN 08S01
+ER_SERVER_SHUTDOWN 08S01 
         chi "服务器正在关闭"
         cze "Probíhá ukončování práce serveru"
         dan "Database nedlukning er i gang"
@@ -1423,7 +1423,7 @@ ER_WRONG_SUM_SELECT 42000 S1009
         spa "La sentencia tiene funciones de suma y columnas en la misma sentencia"
         swe "Kommandot har både sum functions och enkla funktioner"
         ukr "У виразі використано підсумовуючі функції поряд з іменами стовбців"
-ER_WRONG_VALUE_COUNT 21S01
+ER_WRONG_VALUE_COUNT 21S01 
         chi "列数与值数不匹配"
         cze "Počet sloupců neodpovídá zadané hodnotě"
         dan "Kolonne tæller stemmer ikke med antallet af værdier"
@@ -1606,7 +1606,7 @@ ER_PARSE_ERROR 42000 s1009
         spa "%s cerca de '%-.80T' en la línea %d"
         swe "%s nära '%-.80T' på rad %d"
         ukr "%s біля '%-.80T' в строці %d"
-ER_EMPTY_QUERY 42000
+ER_EMPTY_QUERY 42000  
         chi "查询为空"
         cze "Výsledek dotazu je prázdný"
         dan "Forespørgsel var tom"
@@ -1879,7 +1879,7 @@ ER_BINLOG_CANT_DELETE_GTID_DOMAIN
         eng "Could not delete gtid domain. Reason: %s."
         spa "No pude borrar el dominio gtid. Motivo: %s."
         ukr "Не можу видалити домен gtid. Причина: %s."
-ER_NORMAL_SHUTDOWN
+ER_NORMAL_SHUTDOWN  
         chi "%s（%s）:正常关闭"
         cze "%s (%s): normální ukončení"
         dan "%s (%s): Normal nedlukning"
@@ -1905,7 +1905,7 @@ ER_NORMAL_SHUTDOWN
         spa "%s (iniciado por: %s): Apagado normal"
         swe "%s (%s): Normal avslutning"
         ukr "%s (%s): Нормальне завершення"
-ER_GOT_SIGNAL
+ER_GOT_SIGNAL  
         chi "%s: 收到信号 %d. 强行中止!\n"
         cze "%s: přijat signal %d, končím\n"
         dan "%s: Fangede signal %d. Afslutter!!\n"
@@ -1931,7 +1931,7 @@ ER_GOT_SIGNAL
         spa "%s: Obtenida señal %d. ¡Abortando!\n"
         swe "%s: Fick signal %d. Avslutar!\n"
         ukr "%s: Отримано сигнал %d. Перериваюсь!\n"
-ER_SHUTDOWN_COMPLETE
+ER_SHUTDOWN_COMPLETE  
         chi "%s：关闭完成\n"
         cze "%s: ukončení práce hotovo\n"
         dan "%s: Server lukket\n"
@@ -1957,7 +1957,7 @@ ER_SHUTDOWN_COMPLETE
         spa "%s: Apagado completado\n"
         swe "%s: Avslutning klar\n"
         ukr "%s: Роботу завершено\n"
-ER_FORCING_CLOSE 08S01
+ER_FORCING_CLOSE 08S01 
         chi "%s: 强行关闭线程 %ld  用户: '%-.48s'\n"
         cze "%s: násilné uzavření threadu %ld uživatele '%-.48s'\n"
         dan "%s: Forceret nedlukning af tråd: %ld  bruger: '%-.48s'\n"
@@ -1966,7 +1966,7 @@ ER_FORCING_CLOSE 08S01
         fre "%s: Arrêt forcé de la tâche (thread) %ld  utilisateur: '%-.48s'\n"
         ger "%s: Thread %ld zwangsweise beendet. Benutzer: '%-.48s'\n"
         greek "%s: Το thread θα κλείσει %ld  user: '%-.48s'\n"
-        hindi "%s: %ld थ्रेड बंद किया जा रहा है (यूज़र: '%-.48s')\n"
+        hindi "%s: %ld थ्रेड बंद किया जा रहा है (यूज़र: '%-.48s')\n" 
         hun "%s: A(z) %ld thread kenyszeritett zarasa. Felhasznalo: '%-.48s'\n"
         ita "%s: Forzata la chiusura del thread %ld utente: '%-.48s'\n"
         jpn "%s: スレッド %ld を強制終了します (ユーザー: '%-.48s')\n"
@@ -1983,7 +1983,7 @@ ER_FORCING_CLOSE 08S01
         spa "%s: Forzando a cerrar el hilo (thread) %ld usuario: '%-.48s'\n"
         swe "%s: Stänger av tråd %ld; användare: '%-.48s'\n"
         ukr "%s: Прискорюю закриття гілки %ld користувача: '%-.48s'\n"
-ER_IPSOCK_ERROR 08S01
+ER_IPSOCK_ERROR 08S01 
         chi "无法创建IP插口"
         cze "Nemohu vytvořit IP socket"
         dan "Kan ikke oprette IP socket"
@@ -2087,7 +2087,7 @@ ER_BLOBS_AND_NO_TERMINATED 42000 S1009
         spa "No se pueden usar longitudes fijas de filas con BLOBs. Por favor, use 'campos terminados por'"
         swe "Man kan inte använda fast radlängd med blobs. Använd 'fields terminated by'"
         ukr "Не можна використовувати сталу довжину строки з BLOB. Зкористайтеся 'fields terminated by'"
-ER_TEXTFILE_NOT_READABLE
+ER_TEXTFILE_NOT_READABLE  
         chi "文件'%-.128s'必须位于数据库目录中，或所有人都可以读取"
         cze "Soubor '%-.128s' musí být v adresáři databáze nebo čitelný pro všechny"
         dan "Filen '%-.128s' skal være i database-folderen, eller kunne læses af alle"
@@ -2113,7 +2113,7 @@ ER_TEXTFILE_NOT_READABLE
         spa "El fichero/archivo '%-.128s' debe de estar en el directorio de la base de datos o debe de ser legible por todos"
         swe "Textfilen '%-.128s' måste finnas i databasbiblioteket eller vara läsbar för alla"
         ukr "Файл '%-.128s' повинен бути у теці бази данних або мати встановлене право на читання для усіх"
-ER_FILE_EXISTS_ERROR
+ER_FILE_EXISTS_ERROR  
         chi "文件'%-.200s'已经存在"
         cze "Soubor '%-.200s' již existuje"
         dan "Filen '%-.200s' eksisterer allerede"
@@ -2139,7 +2139,7 @@ ER_FILE_EXISTS_ERROR
         spa "El fichero/archivo '%-.200s' ya existe"
         swe "Filen '%-.200s' existerar redan"
         ukr "Файл '%-.200s' вже існує"
-ER_LOAD_INFO
+ER_LOAD_INFO  
         chi "记录：%ld删除：%ld跳过：%ld警告：%ld"
         cze "Záznamů: %ld  Vymazáno: %ld  Přeskočeno: %ld  Varování: %ld"
         dan "Poster: %ld  Fjernet: %ld  Sprunget over: %ld  Advarsler: %ld"
@@ -2165,7 +2165,7 @@ ER_LOAD_INFO
         spa "Registros: %ld Borrados: %ld Saltados: %ld Avisos: %ld"
         swe "Rader: %ld  Bortagna: %ld  Dubletter: %ld  Varningar: %ld"
         ukr "Записів: %ld  Видалено: %ld  Пропущено: %ld  Застережень: %ld"
-ER_ALTER_INFO
+ER_ALTER_INFO  
         chi "记录: %ld  重复: %ld"
         cze "Záznamů: %ld  Zdvojených: %ld"
         dan "Poster: %ld  Ens: %ld"
@@ -2191,7 +2191,7 @@ ER_ALTER_INFO
         spa "Registros: %ld  Duplicados: %ld"
         swe "Rader: %ld  Dubletter: %ld"
         ukr "Записів: %ld  Дублікатів: %ld"
-ER_WRONG_SUB_KEY
+ER_WRONG_SUB_KEY  
         chi "前缀索引不正确；使用的索引部分不是字符串，使用的长度比索引部分长，或者存储引擎不支持独特前缀索引"
         cze "Chybná podčást klíče -- není to řetězec nebo je delší než délka části klíče"
         dan "Forkert indeksdel. Den anvendte nøgledel er ikke en streng eller længden er større end nøglelængden"
@@ -2216,7 +2216,7 @@ ER_WRONG_SUB_KEY
         spa "Prefijo incorrecto de clave; la parte utilizada de la clave no es una cadena, la longitud usada es mayor que la parte de la clave o el motor de almacenaje no soporta claves con prefijo único"
         swe "Felaktig delnyckel. Nyckeldelen är inte en sträng eller den angivna längden är längre än kolumnlängden"
         ukr "Невірна частина ключа. Використана частина ключа не є строкою, задовга або вказівник таблиці не підтримує унікальних частин ключей"
-ER_CANT_REMOVE_ALL_FIELDS 42000
+ER_CANT_REMOVE_ALL_FIELDS 42000 
         chi "您不能使用 ALTER TABLE 删除所有列；改用 DROP TABLE"
         cze "Není možné vymazat všechny položky s ALTER TABLE. Použijte DROP TABLE"
         dan "Man kan ikke slette alle felter med ALTER TABLE. Brug DROP TABLE i stedet"
@@ -2242,7 +2242,7 @@ ER_CANT_REMOVE_ALL_FIELDS 42000
         spa "No se pueden borrar todas las columnas con ALTER TABLE. Use DROP TABLE para hacerlo"
         swe "Man kan inte radera alla fält med ALTER TABLE. Använd DROP TABLE istället"
         ukr "Не можливо видалити всі стовбці за допомогою ALTER TABLE. Для цього скористайтеся DROP TABLE"
-ER_CANT_DROP_FIELD_OR_KEY 42000
+ER_CANT_DROP_FIELD_OR_KEY 42000 
         chi "不能 DROP %s %`-.192s; 检查它是否存在"
         cze "Nemohu zrušit (DROP %s) %`-.192s. Zkontrolujte, zda neexistují záznamy/klíče"
         dan "Kan ikke udføre DROP %s %`-.192s. Undersøg om feltet/nøglen eksisterer"
@@ -2266,7 +2266,7 @@ ER_CANT_DROP_FIELD_OR_KEY 42000
         spa "No puedo eliminar %s %`-.192s; compruebe que ya existe"
         swe "Kan inte ta bort (DROP %s) %`-.192s. Kontrollera att begränsningen/fältet/nyckel finns"
         ukr "Не можу DROP %s %`-.192s. Перевірте, чи він існує"
-ER_INSERT_INFO
+ER_INSERT_INFO  
         chi "记录: %ld  重复: %ld  警告: %ld"
         cze "Záznamů: %ld  Zdvojených: %ld  Varování: %ld"
         dan "Poster: %ld  Ens: %ld  Advarsler: %ld"
@@ -2297,7 +2297,7 @@ ER_UPDATE_TABLE_USED
         eng "Table '%-.192s' is specified twice, both as a target for '%s' and as a separate source for data"
         swe "Table '%-.192s' är använd två gånger. Både för '%s' och för att hämta data"
         ukr "Таблиця '%-.192s' вказується двічі, як цільова для '%s', так і як окреме джерело даних"
-ER_NO_SUCH_THREAD
+ER_NO_SUCH_THREAD  
         chi "未知线程ID：%lu"
         cze "Neznámá identifikace threadu: %lu"
         dan "Ukendt tråd id: %lu"
@@ -2323,7 +2323,7 @@ ER_NO_SUCH_THREAD
         spa "Identificador del hilo (thread): %lu desconocido"
         swe "Finns ingen tråd med id %lu"
         ukr "Невідомий ідентифікатор гілки: %lu"
-ER_KILL_DENIED_ERROR
+ER_KILL_DENIED_ERROR  
         chi "你不是线程%lld的所有者"
         cze "Nejste vlastníkem threadu %lld"
         dan "Du er ikke ejer af tråden %lld"
@@ -2349,7 +2349,7 @@ ER_KILL_DENIED_ERROR
         spa "No eres el propietario del hilo (thread) %lld"
         swe "Du är inte ägare till tråd %lld"
         ukr "Ви не володар гілки %lld"
-ER_NO_TABLES_USED
+ER_NO_TABLES_USED  
         chi "没有使用表"
         cze "Nejsou použity žádné tabulky"
         dan "Ingen tabeller i brug"
@@ -2375,7 +2375,7 @@ ER_NO_TABLES_USED
         spa "No se están usando tablas"
         swe "Inga tabeller angivna"
         ukr "Не використано таблиць"
-ER_TOO_BIG_SET
+ER_TOO_BIG_SET  
         chi "列 %-.192s 和SET的字符串过多"
         cze "Příliš mnoho řetězců pro sloupec %-.192s a SET"
         dan "For mange tekststrenge til specifikationen af SET i kolonne %-.192s"
@@ -2400,7 +2400,7 @@ ER_TOO_BIG_SET
         spa "Demasiadas cadenas para la columna %-.192s y SET"
         swe "För många alternativ till kolumn %-.192s för SET"
         ukr "Забагато строк для стовбця %-.192s та SET"
-ER_NO_UNIQUE_LOGFILE
+ER_NO_UNIQUE_LOGFILE  
         chi "无法生成唯一的log-filename%-.200s.(1-999)\ n"
         cze "Nemohu vytvořit jednoznačné jméno logovacího souboru %-.200s.(1-999)\n"
         dan "Kan ikke lave unikt log-filnavn %-.200s.(1-999)\n"
@@ -2426,7 +2426,7 @@ ER_NO_UNIQUE_LOGFILE
         spa "No puedo generar un único fichero/archivo de historial (log) llamado %-.200s.(1-999)\n"
         swe "Kan inte generera ett unikt filnamn %-.200s.(1-999)\n"
         ukr "Не можу згенерувати унікальне ім'я log-файлу %-.200s.(1-999)\n"
-ER_TABLE_NOT_LOCKED_FOR_WRITE
+ER_TABLE_NOT_LOCKED_FOR_WRITE  
         chi "表 '%-.192s' 有 READ 锁，无法更新"
         cze "Tabulka '%-.192s' byla zamčena s READ a nemůže být změněna"
         dan "Tabellen '%-.192s' var låst med READ lås og kan ikke opdateres"
@@ -2452,7 +2452,7 @@ ER_TABLE_NOT_LOCKED_FOR_WRITE
         spa "La tabla '%-.192s' ha sido bloqueada con un READ lock y no puede ser actualizada"
         swe "Tabell '%-.192s' kan inte uppdateras emedan den är låst för läsning"
         ukr "Таблицю '%-.192s' заблоковано тільки для читання, тому її не можна оновити"
-ER_TABLE_NOT_LOCKED
+ER_TABLE_NOT_LOCKED  
         chi "表 '%-.192s' 未使用 LOCK TABLES 锁定"
         cze "Tabulka '%-.192s' nebyla zamčena s LOCK TABLES"
         dan "Tabellen '%-.192s' var ikke låst med LOCK TABLES"
@@ -2482,7 +2482,7 @@ ER_UNUSED_17
         chi "你永远不应该看到它"
         eng "You should never see it"
         spa "Nunca debería vd de ver esto"
-ER_WRONG_DB_NAME 42000
+ER_WRONG_DB_NAME 42000 
         chi "数据库名称不正确'%-.100T'"
         cze "Nepřípustné jméno databáze '%-.100T'"
         dan "Ugyldigt database navn '%-.100T'"
@@ -2508,7 +2508,7 @@ ER_WRONG_DB_NAME 42000
         spa "Nombre incorrecto de base de datos '%-.100T'"
         swe "Felaktigt databasnamn '%-.100T'"
         ukr "Невірне ім'я бази данних '%-.100T'"
-ER_WRONG_TABLE_NAME 42000
+ER_WRONG_TABLE_NAME 42000 
         chi "表名不正确'%-.100s'"
         cze "Nepřípustné jméno tabulky '%-.100s'"
         dan "Ugyldigt tabel navn '%-.100s'"
@@ -2534,7 +2534,7 @@ ER_WRONG_TABLE_NAME 42000
         spa "Nombre incorrecto de tabla '%-.100s'"
         swe "Felaktigt tabellnamn '%-.100s'"
         ukr "Невірне ім'я таблиці '%-.100s'"
-ER_TOO_BIG_SELECT 42000
+ER_TOO_BIG_SELECT 42000 
         chi "SELECT 将检查超过 MAX_JOIN_SIZE 行；检查您的 WHERE 并使用 SET SQL_BIG_SELECTS=1 或 SET MAX_JOIN_SIZE=# 如果 SELECT 没问题"
         cze "Zadaný SELECT by procházel příliš mnoho záznamů a trval velmi dlouho. Zkontrolujte tvar WHERE a je-li SELECT v pořádku, použijte SET SQL_BIG_SELECTS=1"
         dan "SELECT ville undersøge for mange poster og ville sandsynligvis tage meget lang tid. Undersøg WHERE delen og brug SET SQL_BIG_SELECTS=1 hvis udtrykket er korrekt"
@@ -2560,7 +2560,7 @@ ER_TOO_BIG_SELECT 42000
         spa "El SELECT debería de examinar más de MAX_JOIN_SIZE filas; revise su WHERE y utilice SET SQL_BIG_SELECTS=1 o SET MAX_JOIN_SIZE=# si el SELECT está ok"
         swe "Den angivna frågan skulle läsa mer än MAX_JOIN_SIZE rader.  Kontrollera din WHERE och använd SET SQL_BIG_SELECTS=1 eller SET MAX_JOIN_SIZE=# ifall du vill hantera stora joins"
         ukr "Запиту SELECT потрібно обробити багато записів, що, певне, займе дуже багато часу. Перевірте ваше WHERE та використовуйте SET SQL_BIG_SELECTS=1, якщо цей запит SELECT є вірним"
-ER_UNKNOWN_ERROR
+ER_UNKNOWN_ERROR  
         chi "未知错误"
         cze "Neznámá chyba"
         dan "Ukendt fejl"
@@ -2585,7 +2585,7 @@ ER_UNKNOWN_ERROR
         spa "Error desconocido"
         swe "Okänt fel"
         ukr "Невідома помилка"
-ER_UNKNOWN_PROCEDURE 42000
+ER_UNKNOWN_PROCEDURE 42000 
         chi "未知存储过程 '%-.192s'"
         cze "Neznámá procedura %-.192s"
         dan "Ukendt procedure %-.192s"
@@ -2611,7 +2611,7 @@ ER_UNKNOWN_PROCEDURE 42000
         spa "Procedimiento desconocido %-.192s"
         swe "Okänd procedur: %-.192s"
         ukr "Невідома процедура '%-.192s'"
-ER_WRONG_PARAMCOUNT_TO_PROCEDURE 42000
+ER_WRONG_PARAMCOUNT_TO_PROCEDURE 42000 
         chi "存储过程 '%-.192s' 需要的参数和提供的参数不吻合"
         cze "Chybný počet parametrů procedury %-.192s"
         dan "Forkert antal  parametre til proceduren %-.192s"
@@ -2637,7 +2637,7 @@ ER_WRONG_PARAMCOUNT_TO_PROCEDURE 42000
         spa "Contador de parámetros incorrecto para procedimiento %-.192s"
         swe "Felaktigt antal parametrar till procedur %-.192s"
         ukr "Хибна кількість параметрів процедури '%-.192s'"
-ER_WRONG_PARAMETERS_TO_PROCEDURE
+ER_WRONG_PARAMETERS_TO_PROCEDURE  
         chi "存储过程 '%-.192s' 的参数不对"
         cze "Chybné parametry procedury %-.192s"
         dan "Forkert(e) parametre til proceduren %-.192s"
@@ -2663,7 +2663,7 @@ ER_WRONG_PARAMETERS_TO_PROCEDURE
         spa "Parámetros incorrectos para procedimiento %-.192s"
         swe "Felaktiga parametrar till procedur %-.192s"
         ukr "Хибний параметер процедури '%-.192s'"
-ER_UNKNOWN_TABLE 42S02
+ER_UNKNOWN_TABLE 42S02 
         chi "未知表名 '%-.192s' 在 %-.32s"
         cze "Neznámá tabulka '%-.192s' v %-.32s"
         dan "Ukendt tabel '%-.192s' i %-.32s"
@@ -2689,7 +2689,7 @@ ER_UNKNOWN_TABLE 42S02
         spa "Tabla desconocida '%-.192s' en %-.32s"
         swe "Okänd tabell '%-.192s' i '%-.32s'"
         ukr "Невідома таблиця '%-.192s' у %-.32s"
-ER_FIELD_SPECIFIED_TWICE 42000
+ER_FIELD_SPECIFIED_TWICE 42000 
         chi "列 '%-.192s' 被指定了两次"
         cze "Položka '%-.192s' je zadána dvakrát"
         dan "Feltet '%-.192s' er anvendt to gange"
@@ -2715,7 +2715,7 @@ ER_FIELD_SPECIFIED_TWICE 42000
         spa "Columna '%-.192s' especificada dos veces"
         swe "Fält '%-.192s' är redan använt"
         ukr "Стовбець '%-.192s' зазначено двічі"
-ER_INVALID_GROUP_FUNC_USE
+ER_INVALID_GROUP_FUNC_USE  
         chi "组函数使用无效"
         cze "Nesprávné použití funkce group"
         dan "Forkert brug af grupperings-funktion"
@@ -2738,7 +2738,7 @@ ER_INVALID_GROUP_FUNC_USE
         spa "Inválido uso de función de grupo"
         swe "Felaktig användning av SQL grupp function"
         ukr "Хибне використання функції групування"
-ER_UNSUPPORTED_EXTENSION 42000
+ER_UNSUPPORTED_EXTENSION 42000 
         chi "表'%-.192s'使用此MariaDB版本不存在的扩展"
         cze "Tabulka '%-.192s' používá rozšíření, které v této verzi MariaDB není"
         dan "Tabellen '%-.192s' bruger et filtypenavn som ikke findes i denne MariaDB version"
@@ -2764,7 +2764,7 @@ ER_UNSUPPORTED_EXTENSION 42000
         spa "La tabla '%-.192s' usa una extensión que no existe en esta versión de MariaDB"
         swe "Tabell '%-.192s' har en extension som inte finns i denna version av MariaDB"
         ukr "Таблиця '%-.192s' використовує розширення, що не існує у цій версії MariaDB"
-ER_TABLE_MUST_HAVE_COLUMNS 42000
+ER_TABLE_MUST_HAVE_COLUMNS 42000 
         chi "表必须至少有1列"
         cze "Tabulka musí mít alespoň jeden sloupec"
         dan "En tabel skal have mindst een kolonne"
@@ -2787,7 +2787,7 @@ ER_TABLE_MUST_HAVE_COLUMNS 42000
         spa "Una tabla debe de tener al menos 1 columna"
         swe "Tabeller måste ha minst 1 kolumn"
         ukr "Таблиця повинна мати хочаб один стовбець"
-ER_RECORD_FILE_FULL
+ER_RECORD_FILE_FULL  
         chi "表'%-.192s'已满"
         cze "Tabulka '%-.192s' je plná"
         dan "Tabellen '%-.192s' er fuld"
@@ -2810,7 +2810,7 @@ ER_RECORD_FILE_FULL
         spa "La tabla '%-.192s' está llena"
         swe "Tabellen '%-.192s' är full"
         ukr "Таблиця '%-.192s' заповнена"
-ER_UNKNOWN_CHARACTER_SET 42000
+ER_UNKNOWN_CHARACTER_SET 42000 
         chi "未知字符集：'%-.64s'"
         cze "Neznámá znaková sada: '%-.64s'"
         dan "Ukendt tegnsæt: '%-.64s'"
@@ -2833,7 +2833,7 @@ ER_UNKNOWN_CHARACTER_SET 42000
         spa "Juego desconocido de caracteres: '%-.64s'"
         swe "Okänd teckenuppsättning: '%-.64s'"
         ukr "Невідома кодова таблиця: '%-.64s'"
-ER_TOO_MANY_TABLES
+ER_TOO_MANY_TABLES  
         chi "表太多; MariaDB 只能在join中使用 %d 个表"
         cze "Příliš mnoho tabulek, MariaDB jich může mít v joinu jen %d"
         dan "For mange tabeller. MariaDB kan kun bruge %d tabeller i et join"
@@ -2856,7 +2856,7 @@ ER_TOO_MANY_TABLES
         spa "Demasiadas tablas. MariaDB solamente puede usar %d tablas en un join"
         swe "För många tabeller. MariaDB can ha högst %d tabeller i en och samma join"
         ukr "Забагато таблиць. MariaDB може використовувати лише %d таблиць у об'єднанні"
-ER_TOO_MANY_FIELDS
+ER_TOO_MANY_FIELDS  
         chi "太多列"
         cze "Příliš mnoho položek"
         dan "For mange felter"
@@ -2879,7 +2879,7 @@ ER_TOO_MANY_FIELDS
         spa "Demasiadas columnas"
         swe "För många fält"
         ukr "Забагато стовбців"
-ER_TOO_BIG_ROWSIZE 42000
+ER_TOO_BIG_ROWSIZE 42000 
         chi "行尺寸太大. 不包括BLOB，表的最大的行大小是 %ld. 这包括存储开销，请查看文档。您必须将某些列更改为 TEXT 或 BLOB"
         cze "Řádek je příliš velký. Maximální velikost řádku, nepočítaje položky blob, je %ld. Musíte změnit některé položky na blob"
         dan "For store poster. Max post størrelse, uden BLOB's, er %ld. Du må lave nogle felter til BLOB's"
@@ -2901,7 +2901,7 @@ ER_TOO_BIG_ROWSIZE 42000
         spa "Tamaño de fila muy grande. El máximo tamaño de fila para el tipo de tabla usada, sin contar BLOBs, es de %ld. Esto incluye sobrecarga de almacenaje, revise el manual. Tiene que cambiar algunas columnas a TEXT o BLOBs"
         swe "För stor total radlängd. Den högst tillåtna radlängden, förutom BLOBs, är %ld. Ändra några av dina fält till BLOB"
         ukr "Задовга строка. Найбільшою довжиною строки, не рахуючи BLOB, є %ld. Вам потрібно привести деякі стовбці до типу BLOB"
-ER_STACK_OVERRUN
+ER_STACK_OVERRUN  
         chi "线程栈溢出:  已使用了: %ld 堆栈 %ld.  使用 'mariadbd --thread_stack=#' 指定更大的堆栈"
         cze "Přetečení zásobníku threadu: použito %ld z %ld. Použijte 'mariadbd --thread_stack=#' k zadání většího zásobníku"
         dan "Thread stack brugt:  Brugt: %ld af en %ld stak.  Brug 'mariadbd --thread_stack=#' for at allokere en større stak om nødvendigt"
@@ -2922,7 +2922,7 @@ ER_STACK_OVERRUN
         spa "Desbordamiento de la pila de hilos (threads): Usado: %ld de una pila de %ld. Considere el incrementar la variable de sistema thread_stack"
         swe "Trådstacken tog slut:  Har använt %ld av %ld bytes.  Använd 'mariadbd --thread_stack=#' ifall du behöver en större stack"
         ukr "Стек гілок переповнено:  Використано: %ld з %ld. Використовуйте 'mariadbd --thread_stack=#' аби зазначити більший стек, якщо необхідно"
-ER_WRONG_OUTER_JOIN 42000
+ER_WRONG_OUTER_JOIN 42000 
         chi "在 OUTER JOIN 中发现交叉依赖；检查您的 ON 条件"
         cze "V OUTER JOIN byl nalezen křížový odkaz. Prověřte ON podmínky"
         dan "Krydsreferencer fundet i OUTER JOIN; check dine ON conditions"
@@ -2943,13 +2943,13 @@ ER_WRONG_OUTER_JOIN 42000
         spa "Dependencia cruzada hallada en OUTER JOIN. Examina tus condiciones ON"
         swe "Felaktigt referens i OUTER JOIN.  Kontrollera ON-uttrycket"
         ukr "Перехресна залежність у OUTER JOIN. Перевірте умову ON"
-ER_NULL_COLUMN_IN_INDEX 42000
+ER_NULL_COLUMN_IN_INDEX 42000 
         chi "表处理程序不支持给定索引中的 NULL. 请将列 '%-.192s' 改为 NOT NULL 或使用其他处理程序"
         eng "Table handler doesn't support NULL in given index. Please change column '%-.192s' to be NOT NULL or use another handler"
         spa "El manejador de tabla no soporta NULL en índice suministrado. Por favor, cambie la columna '%-.192s' para que sea NOT NULL o utilice otro manejador"
         swe "Tabell hanteraren kan inte indexera NULL kolumner för den givna index typen. Ändra '%-.192s' till NOT NULL eller använd en annan hanterare"
         ukr "Вказівник таблиці не підтримує NULL у зазначенному індексі. Будь ласка, зменіть стовпчик '%-.192s' на NOT NULL або використайте інший вказівник таблиці."
-ER_CANT_FIND_UDF
+ER_CANT_FIND_UDF  
         chi "无法加载函数'%-.192s'"
         cze "Nemohu načíst funkci '%-.192s'"
         dan "Kan ikke læse funktionen '%-.192s'"
@@ -2972,7 +2972,7 @@ ER_CANT_FIND_UDF
         spa "No puedo cargar la función '%-.192s'"
         swe "Kan inte ladda funktionen '%-.192s'"
         ukr "Не можу завантажити функцію '%-.192s'"
-ER_CANT_INITIALIZE_UDF
+ER_CANT_INITIALIZE_UDF  
         chi "无法初始化函数 '%-.192s'; %-.80s"
         cze "Nemohu inicializovat funkci '%-.192s'; %-.80s"
         dan "Kan ikke starte funktionen '%-.192s'; %-.80s"
@@ -2995,7 +2995,7 @@ ER_CANT_INITIALIZE_UDF
         spa "No puedo inicializar la función '%-.192s'; %-.80s"
         swe "Kan inte initialisera funktionen '%-.192s'; '%-.80s'"
         ukr "Не можу ініціалізувати функцію '%-.192s'; %-.80s"
-ER_UDF_NO_PATHS
+ER_UDF_NO_PATHS  
         chi "共享库不允许使用路径"
         cze "Pro sdílenou knihovnu nejsou povoleny cesty"
         dan "Angivelse af sti ikke tilladt for delt bibliotek"
@@ -3017,7 +3017,7 @@ ER_UDF_NO_PATHS
         spa "No existen rutas autorizadas para biblioteca compartida"
         swe "Man får inte ange sökväg för dynamiska bibliotek"
         ukr "Не дозволено використовувати путі для розділюваних бібліотек"
-ER_UDF_EXISTS
+ER_UDF_EXISTS  
         chi "函数 '%-.192s' 已经存在"
         cze "Funkce '%-.192s' již existuje"
         dan "Funktionen '%-.192s' findes allerede"
@@ -3040,7 +3040,7 @@ ER_UDF_EXISTS
         spa "La función '%-.192s' ya existe"
         swe "Funktionen '%-.192s' finns redan"
         ukr "Функція '%-.192s' вже існує"
-ER_CANT_OPEN_LIBRARY
+ER_CANT_OPEN_LIBRARY  
         chi "不能打开共享库 '%-.192s' (错误号码: %d, %-.128s)"
         cze "Nemohu otevřít sdílenou knihovnu '%-.192s' (errno: %d, %-.128s)"
         dan "Kan ikke åbne delt bibliotek '%-.192s' (errno: %d, %-.128s)"
@@ -3087,7 +3087,7 @@ ER_CANT_FIND_DL_ENTRY
         spa "No puedo encontrar el símbolo '%-.128s' en biblioteca"
         swe "Hittar inte funktionen '%-.128s' in det dynamiska biblioteket"
         ukr "Не можу знайти функцію '%-.128s' у бібліотеці"
-ER_FUNCTION_NOT_DEFINED
+ER_FUNCTION_NOT_DEFINED  
         chi "未定义函数 '%-.192s'"
         cze "Funkce '%-.192s' není definována"
         dan "Funktionen '%-.192s' er ikke defineret"
@@ -3110,7 +3110,7 @@ ER_FUNCTION_NOT_DEFINED
         spa "La función '%-.192s' no está definida"
         swe "Funktionen '%-.192s' är inte definierad"
         ukr "Функцію '%-.192s' не визначено"
-ER_HOST_IS_BLOCKED
+ER_HOST_IS_BLOCKED  
         chi "主机 '%-.64s' 由于许多连接错误而被阻止；使用 'mariadb-admin flush-hosts' 解除阻塞"
         cze "Stroj '%-.64s' je zablokován kvůli mnoha chybám při připojování. Odblokujete použitím 'mariadb-admin flush-hosts'"
         dan "Værten '%-.64s' er blokeret på grund af mange fejlforespørgsler. Lås op med 'mariadb-admin flush-hosts'"
@@ -3132,7 +3132,7 @@ ER_HOST_IS_BLOCKED
         spa "El equipo '%-.64s' está bloqueado debido a muchos errores de conexión; desbloquea con 'mariadb-admin flush-hosts'"
         swe "Denna dator, '%-.64s', är blockerad pga många felaktig paket. Gör 'mariadb-admin flush-hosts' för att ta bort alla blockeringarna"
         ukr "Хост '%-.64s' заблоковано з причини великої кількості помилок з'єднання. Для розблокування використовуйте 'mariadb-admin flush-hosts'"
-ER_HOST_NOT_PRIVILEGED
+ER_HOST_NOT_PRIVILEGED  
         chi "Host'%-.64s'不允许连接到此MariaDB服务器"
         cze "Stroj '%-.64s' nemá povoleno se k tomuto MariaDB serveru připojit"
         dan "Værten '%-.64s' kan ikke tilkoble denne MariaDB-server"
@@ -3154,7 +3154,7 @@ ER_HOST_NOT_PRIVILEGED
         spa "El equipo '%-.64s' no está autorizado a conectar con este servidor MariaDB"
         swe "Denna dator, '%-.64s', har inte privileger att använda denna MariaDB server"
         ukr "Хосту '%-.64s' не доволено зв'язуватись з цим сервером MariaDB"
-ER_PASSWORD_ANONYMOUS_USER 42000
+ER_PASSWORD_ANONYMOUS_USER 42000 
         chi "您正在以匿名用户身份使用 MariaDB，匿名用户不能修改用户设置"
         cze "Používáte MariaDB jako anonymní uživatel a anonymní uživatelé nemají povoleno měnit hesla"
         dan "Du bruger MariaDB som anonym bruger. Anonyme brugere må ikke ændre adgangskoder"
@@ -3176,7 +3176,7 @@ ER_PASSWORD_ANONYMOUS_USER 42000
         spa "Está usando MariaDB como un usuario anónimo y lo usuarios anónimos no tienen permiso para cambiar las propiedades de usuario"
         swe "Du använder MariaDB som en anonym användare och som sådan får du inte ändra ditt lösenord"
         ukr "Ви використовуєте MariaDB як анонімний користувач, тому вам не дозволено змінювати паролі"
-ER_PASSWORD_NOT_ALLOWED 42000
+ER_PASSWORD_NOT_ALLOWED 42000 
         chi "您必须具有更新 MariaDB 数据库中的表的权限才能更改其他人的密码"
         cze "Na změnu hesel ostatním musíte mít právo provést update tabulek v databázi mysql"
         dan "Du skal have tilladelse til at opdatere tabeller i MariaDB databasen for at ændre andres adgangskoder"
@@ -3197,7 +3197,7 @@ ER_PASSWORD_NOT_ALLOWED 42000
         spa "Vd debe de tener privilegios para actualizar tablas en la base de datos mysql para poder cambiar las contraseñas de otros"
         swe "För att ändra lösenord för andra måste du ha rättigheter att uppdatera mysql-databasen"
         ukr "Ви повині мати право на оновлення таблиць у базі данних mysql, аби мати можливість змінювати пароль іншим"
-ER_PASSWORD_NO_MATCH 28000
+ER_PASSWORD_NO_MATCH 28000 
         chi "在用户表中找不到任何匹配的行"
         cze "V tabulce user není žádný odpovídající řádek"
         dan "Kan ikke finde nogen tilsvarende poster i bruger tabellen"
@@ -3219,7 +3219,7 @@ ER_PASSWORD_NO_MATCH 28000
         spa "No puedo encontrar una fila coincidente en la tabla de usuario"
         swe "Hittade inte användaren i 'user'-tabellen"
         ukr "Не можу знайти відповідних записів у таблиці користувача"
-ER_UPDATE_INFO
+ER_UPDATE_INFO  
         chi "匹配行：%ld已更改：%ld警告：%ld"
         cze "Nalezených řádků: %ld  Změněno: %ld  Varování: %ld"
         dan "Poster fundet: %ld  Ændret: %ld  Advarsler: %ld"
@@ -3239,7 +3239,7 @@ ER_UPDATE_INFO
         spa "Líneas coincidentes: %ld Cambiadas: %ld Avisos: %ld"
         swe "Rader: %ld  Uppdaterade: %ld  Varningar: %ld"
         ukr "Записів відповідає: %ld  Змінено: %ld  Застережень: %ld"
-ER_CANT_CREATE_THREAD
+ER_CANT_CREATE_THREAD  
         chi "无法创建新线程 (错误号码 %M); 如果您没有用完剩余内存，您可以查阅文档以了解可能与操作系统相关的错误"
         cze "Nemohu vytvořit nový thread (errno %M). Pokud je ještě nějaká volná paměť, podívejte se do manuálu na část o chybách specifických pro jednotlivé operační systémy"
         dan "Kan ikke danne en ny tråd (fejl nr. %M). Hvis computeren ikke er løbet tør for hukommelse, kan du se i brugervejledningen for en mulig operativ-system - afhængig fejl"
@@ -3262,7 +3262,7 @@ ER_CANT_CREATE_THREAD
         spa "No puedo crear un nuevo hilo (thread) (error %M). Si no está falto de memoria disponible, vd puede consultar el manual para un posible error dependiente del SO"
         swe "Kan inte skapa en ny tråd (errno %M)"
         ukr "Не можу створити нову гілку (помилка %M). Якщо ви не використали усю пам'ять, то прочитайте документацію до вашої ОС - можливо це помилка ОС"
-ER_WRONG_VALUE_COUNT_ON_ROW 21S01
+ER_WRONG_VALUE_COUNT_ON_ROW 21S01 
         chi "列计数与行%lu的值计数不匹配"
         cze "Počet sloupců neodpovídá počtu hodnot na řádku %lu"
         dan "Kolonne antallet stemmer ikke overens med antallet af værdier i post %lu"
@@ -3281,7 +3281,7 @@ ER_WRONG_VALUE_COUNT_ON_ROW 21S01
         spa "El número de columnas no se corresponde con el número de valores en la línea %lu"
         swe "Antalet kolumner motsvarar inte antalet värden på rad: %lu"
         ukr "Кількість стовбців не співпадає з кількістю значень у строці %lu"
-ER_CANT_REOPEN_TABLE
+ER_CANT_REOPEN_TABLE  
         chi "无法重新打开表：'%-.192s'"
         cze "Nemohu znovuotevřít tabulku: '%-.192s"
         dan "Kan ikke genåbne tabel '%-.192s"
@@ -3306,7 +3306,7 @@ ER_CANT_REOPEN_TABLE
         spa "No puedo reabrir la tabla: '%-.192s"
         swe "Kunde inte stänga och öppna tabell '%-.192s"
         ukr "Не можу перевідкрити таблицю: '%-.192s'"
-ER_INVALID_USE_OF_NULL 22004
+ER_INVALID_USE_OF_NULL 22004 
         chi "无效使用 NULL 值"
         cze "Neplatné užití hodnoty NULL"
         dan "Forkert brug af nulværdi (NULL)"
@@ -3327,7 +3327,7 @@ ER_INVALID_USE_OF_NULL 22004
         spa "Uso inválido del valor NULL"
         swe "Felaktig använding av NULL"
         ukr "Хибне використання значення NULL"
-ER_REGEXP_ERROR 42000
+ER_REGEXP_ERROR 42000 
         chi "正则表达错误 '%s'"
         cze "Regulární výraz vrátil chybu: %s"
         dan "Fik fejl '%s' fra regexp"
@@ -3348,7 +3348,7 @@ ER_REGEXP_ERROR 42000
         spa "Obtenido error '%s' de regexp"
         swe "Fick fel '%s' från REGEXP"
         ukr "Помилка регулярного виразу: %s"
-ER_MIX_OF_GROUP_FUNC_AND_FIELDS 42000
+ER_MIX_OF_GROUP_FUNC_AND_FIELDS 42000 
         chi "如果没有 GROUP BY 子句，不能混合没有 GROUP 列的 GROUP 列 (MIN(),MAX(),COUNT(),...)"
         cze "Pokud není žádná GROUP BY klauzule, není dovoleno současné použití GROUP položek (MIN(),MAX(),COUNT()...) s ne GROUP položkami"
         dan "Sammenblanding af GROUP kolonner (MIN(),MAX(),COUNT()...) uden GROUP kolonner er ikke tilladt, hvis der ikke er noget GROUP BY prædikat"
@@ -3368,7 +3368,7 @@ ER_MIX_OF_GROUP_FUNC_AND_FIELDS 42000
         spa "La mezcla de columnas GROUP (MIN(),MAX(),COUNT()...) con columnas no GROUP es ilegal si no exite la cláusula GROUP BY"
         swe "Man får ha både GROUP-kolumner (MIN(),MAX(),COUNT()...) och fält i en fråga om man inte har en GROUP BY-del"
         ukr "Змішування GROUP стовбців (MIN(),MAX(),COUNT()...) з не GROUP стовбцями є забороненим, якщо не має GROUP BY"
-ER_NONEXISTING_GRANT 42000
+ER_NONEXISTING_GRANT 42000 
         chi "用户 '%-.48s' 来自主机 '%-.64s'没有此类授权"
         cze "Neexistuje odpovídající grant pro uživatele '%-.48s' na stroji '%-.64s'"
         dan "Denne tilladelse findes ikke for brugeren '%-.48s' på vært '%-.64s'"
@@ -3388,7 +3388,7 @@ ER_NONEXISTING_GRANT 42000
         spa "No existe tal concesión (grant) definida para usuario '%-.48s' en el equipo '%-.64s'"
         swe "Det finns inget privilegium definierat för användare '%-.48s' på '%-.64s'"
         ukr "Повноважень не визначено для користувача '%-.48s' з хосту '%-.64s'"
-ER_TABLEACCESS_DENIED_ERROR 42000
+ER_TABLEACCESS_DENIED_ERROR 42000 
         chi "%-.100T 命令的权限拒绝用户 '%s'@'%s' 用在表 '%-.192s'"
         cze "%-.100T příkaz nepřístupný pro uživatele: '%s'@'%s' pro tabulku '%-.192s'"
         dan "%-.100T-kommandoen er ikke tilladt for brugeren '%s'@'%s' for tabellen '%-.192s'"
@@ -3408,7 +3408,7 @@ ER_TABLEACCESS_DENIED_ERROR 42000
         spa "%-.100T comando denegado a usuario '%s'@'%s' para la tabla '%-.192s'"
         swe "%-.100T ej tillåtet för '%s'@'%s' för tabell '%-.192s'"
         ukr "%-.100T команда заборонена користувачу: '%s'@'%s' у таблиці '%-.192s'"
-ER_COLUMNACCESS_DENIED_ERROR 42000
+ER_COLUMNACCESS_DENIED_ERROR 42000 
         chi "%-.32s 命令的权限拒绝用户 '%s'@'%s' 用在列 '%-.192s' 在表 '%-.192s'"
         cze "%-.32s příkaz nepřístupný pro uživatele: '%s'@'%s' pro sloupec '%-.192s' v tabulce '%-.192s'"
         dan "%-.32s-kommandoen er ikke tilladt for brugeren '%s'@'%s' for kolonne '%-.192s' in tabellen '%-.192s'"
@@ -3428,7 +3428,7 @@ ER_COLUMNACCESS_DENIED_ERROR 42000
         spa "%-.32s comando denegado a el usuario '%s'@'%s' para la columna '%-.192s' en la tabla '%-.192s'"
         swe "%-.32s ej tillåtet för '%s'@'%s' för kolumn '%-.192s' i tabell '%-.192s'"
         ukr "%-.32s команда заборонена користувачу: '%s'@'%s' для стовбця '%-.192s' у таблиці '%-.192s'"
-ER_ILLEGAL_GRANT_FOR_TABLE 42000
+ER_ILLEGAL_GRANT_FOR_TABLE 42000 
         chi "非法的 GRANT/REVOKE 命令；请查阅文档查看可以使用哪些权限"
         cze "Neplatný příkaz GRANT/REVOKE. Prosím, přečtěte si v manuálu, jaká privilegia je možné použít"
         dan "Forkert GRANT/REVOKE kommando. Se i brugervejledningen hvilke privilegier der kan specificeres"
@@ -3453,7 +3453,7 @@ ER_ILLEGAL_GRANT_FOR_TABLE 42000
         spa "Comando GRANT/REVOKE ilegal; por favor, consulte el manual para ver los permisos que se pueden usar"
         swe "Felaktigt GRANT-privilegium använt"
         ukr "Хибна GRANT/REVOKE команда; прочитайте документацію стосовно того, які права можна використовувати"
-ER_GRANT_WRONG_HOST_OR_USER 42000
+ER_GRANT_WRONG_HOST_OR_USER 42000 
         chi "GRANT 语句的主机或用户参数太长"
         cze "Argument příkazu GRANT uživatel nebo stroj je příliš dlouhý"
         dan "Værts- eller brugernavn for langt til GRANT"
@@ -3474,7 +3474,7 @@ ER_GRANT_WRONG_HOST_OR_USER 42000
         spa "El argumento de GRANT para el equipo o usuario es demasiado grande"
         swe "Felaktigt maskinnamn eller användarnamn använt med GRANT"
         ukr "Аргумент host або user для GRANT задовгий"
-ER_NO_SUCH_TABLE 42S02
+ER_NO_SUCH_TABLE 42S02 
         chi "表 '%-.192s.%-.192s' 不存在"
         cze "Tabulka '%-.192s.%-.192s' neexistuje"
         dan "Tabellen '%-.192s.%-.192s' eksisterer ikke"
@@ -3499,7 +3499,7 @@ ER_NO_SUCH_TABLE 42S02
         spa "La tabla '%-.192s.%-.192s' no existe"
         swe "Det finns ingen tabell som heter '%-.192s.%-.192s'"
         ukr "Таблиця '%-.192s.%-.192s' не існує"
-ER_NONEXISTING_TABLE_GRANT 42000
+ER_NONEXISTING_TABLE_GRANT 42000 
         chi "没有为用户 '%-.48s' 来自主机 '%-.64s' 在表 '%-.192s' 上授权"
         cze "Neexistuje odpovídající grant pro uživatele '%-.48s' na stroji '%-.64s' pro tabulku '%-.192s'"
         dan "Denne tilladelse eksisterer ikke for brugeren '%-.48s' på vært '%-.64s' for tabellen '%-.192s'"
@@ -3519,7 +3519,7 @@ ER_NONEXISTING_TABLE_GRANT 42000
         spa "No existe tal concesión (grant) definida para el usuario '%-.48s' en el equipo '%-.64s' en la tabla '%-.192s'"
         swe "Det finns inget privilegium definierat för användare '%-.48s' på '%-.64s' för tabell '%-.192s'"
         ukr "Повноважень не визначено для користувача '%-.48s' з хосту '%-.64s' для таблиці '%-.192s'"
-ER_NOT_ALLOWED_COMMAND 42000
+ER_NOT_ALLOWED_COMMAND 42000 
         chi "本 MariaDB 版本不允许使用这个命令"
         cze "Použitý příkaz není v této verzi MariaDB povolen"
         dan "Den brugte kommando er ikke tilladt med denne udgave af MariaDB"
@@ -3540,7 +3540,7 @@ ER_NOT_ALLOWED_COMMAND 42000
         spa "El comando usado no está permitido con esta versión de MariaDB"
         swe "Du kan inte använda detta kommando med denna MariaDB version"
         ukr "Використовувана команда не дозволена у цій версії MariaDB"
-ER_SYNTAX_ERROR 42000
+ER_SYNTAX_ERROR 42000 
         chi "您的 SQL 语法有错误；请查看相关文档"
         cze "Vaše syntaxe je nějaká divná"
         dan "Der er en fejl i SQL syntaksen"
@@ -3566,7 +3566,7 @@ ER_SYNTAX_ERROR 42000
         spa "Existe un error en su sintaxis SQL; revise el manual que se corresponde con su versión del servidor MariaDB para averiguar la sintaxis correcta a utilizar"
         swe "Du har något fel i din syntax"
         ukr "У вас помилка у синтаксисі SQL"
-ER_DELAYED_CANT_CHANGE_LOCK
+ER_DELAYED_CANT_CHANGE_LOCK  
         chi "延迟插入线程无法获得 %-.192s 的请求锁定"
         cze "Zpožděný insert threadu nebyl schopen získat požadovaný zámek pro tabulku %-.192s"
         dan "Forsinket indsættelse tråden (delayed insert thread) kunne ikke opnå lås på tabellen %-.192s"
@@ -3586,7 +3586,7 @@ ER_DELAYED_CANT_CHANGE_LOCK
         spa "El hilo (thread) de inserción retardada no pudo obtener bloqueo requerido para la tabla %-.192s"
         swe "DELAYED INSERT-tråden kunde inte låsa tabell '%-.192s'"
         ukr "Гілка для INSERT DELAYED не може отримати блокування для таблиці %-.192s"
-ER_TOO_MANY_DELAYED_THREADS
+ER_TOO_MANY_DELAYED_THREADS  
         chi "使用中的延迟线程太多"
         cze "Příliš mnoho zpožděných threadů"
         dan "For mange slettede tråde (threads) i brug"
@@ -3607,7 +3607,7 @@ ER_TOO_MANY_DELAYED_THREADS
         spa "Demasiados hilos (threads) retardados en uso"
         swe "Det finns redan 'max_delayed_threads' trådar i använding"
         ukr "Забагато затриманих гілок використовується"
-ER_ABORTING_CONNECTION 08S01
+ER_ABORTING_CONNECTION 08S01 
         chi "终止连线 %ld 数据库: '%-.192s' 用户: '%-.48s' (%-.64s)"
         cze "Zrušeno spojení %ld do databáze: '%-.192s' uživatel: '%-.48s' (%-.64s)"
         dan "Afbrudt forbindelse %ld til database: '%-.192s' bruger: '%-.48s' (%-.64s)"
@@ -3631,7 +3631,7 @@ ER_ABORTING_CONNECTION 08S01
         spa "Conexión %ld abortada para la base de datos: '%-.192s' usuario: '%-.48s' (%-.64s)"
         swe "Avbröt länken för tråd %ld till db '%-.192s', användare '%-.48s' (%-.64s)"
         ukr "Перервано з'єднання %ld до бази данних: '%-.192s' користувача: '%-.48s' (%-.64s)"
-ER_NET_PACKET_TOO_LARGE 08S01
+ER_NET_PACKET_TOO_LARGE 08S01 
         chi "收到的数据包大于 'max_allowed_packet' 字节"
         cze "Zjištěn příchozí packet delší než 'max_allowed_packet'"
         dan "Modtog en datapakke som var større end 'max_allowed_packet'"
@@ -3652,7 +3652,7 @@ ER_NET_PACKET_TOO_LARGE 08S01
         spa "Obtenido un paquete mayor de 'max_allowed_packet' bytes"
         swe "Kommunkationspaketet är större än 'max_allowed_packet'"
         ukr "Отримано пакет більший ніж max_allowed_packet"
-ER_NET_READ_ERROR_FROM_PIPE 08S01
+ER_NET_READ_ERROR_FROM_PIPE 08S01 
         chi "连接管道读取错误"
         cze "Zjištěna chyba při čtení z roury spojení"
         dan "Fik læsefejl fra forbindelse (connection pipe)"
@@ -3673,7 +3673,7 @@ ER_NET_READ_ERROR_FROM_PIPE 08S01
         spa "Obtenido un error de lectura desde la tubería de la conexión"
         swe "Fick läsfel från klienten vid läsning från 'PIPE'"
         ukr "Отримано помилку читання з комунікаційного каналу"
-ER_NET_FCNTL_ERROR 08S01
+ER_NET_FCNTL_ERROR 08S01 
         chi "fcntl（）的错误"
         cze "Zjištěna chyba fcntl()"
         dan "Fik fejlmeddelelse fra fcntl()"
@@ -3694,7 +3694,7 @@ ER_NET_FCNTL_ERROR 08S01
         spa "Obtenido un error de fcntl()"
         swe "Fick fatalt fel från 'fcntl()'"
         ukr "Отримано помилкку від fcntl()"
-ER_NET_PACKETS_OUT_OF_ORDER 08S01
+ER_NET_PACKETS_OUT_OF_ORDER 08S01 
         chi "数据包乱序"
         cze "Příchozí packety v chybném pořadí"
         dan "Modtog ikke datapakker i korrekt rækkefølge"
@@ -3715,7 +3715,7 @@ ER_NET_PACKETS_OUT_OF_ORDER 08S01
         spa "Obtenidos paquetes desordenados"
         swe "Kommunikationspaketen kom i fel ordning"
         ukr "Отримано пакети у неналежному порядку"
-ER_NET_UNCOMPRESS_ERROR 08S01
+ER_NET_UNCOMPRESS_ERROR 08S01 
         chi "无法解压缩通信数据包"
         cze "Nemohu rozkomprimovat komunikační packet"
         dan "Kunne ikke dekomprimere kommunikations-pakke (communication packet)"
@@ -3736,7 +3736,7 @@ ER_NET_UNCOMPRESS_ERROR 08S01
         spa "No pude descomprimir paquete de comunicación"
         swe "Kunde inte packa up kommunikationspaketet"
         ukr "Не можу декомпресувати комунікаційний пакет"
-ER_NET_READ_ERROR 08S01
+ER_NET_READ_ERROR 08S01 
         chi "读取通信数据包出错"
         cze "Zjištěna chyba při čtení komunikačního packetu"
         dan "Fik fejlmeddelelse ved læsning af kommunikations-pakker (communication packets)"
@@ -3757,7 +3757,7 @@ ER_NET_READ_ERROR 08S01
         spa "Obtenido un error leyendo paquetes de comunicación"
         swe "Fick ett fel vid läsning från klienten"
         ukr "Отримано помилку читання комунікаційних пакетів"
-ER_NET_READ_INTERRUPTED 08S01
+ER_NET_READ_INTERRUPTED 08S01 
         chi "读取通信包超时"
         cze "Zjištěn timeout při čtení komunikačního packetu"
         dan "Timeout-fejl ved læsning af kommunukations-pakker (communication packets)"
@@ -3778,7 +3778,7 @@ ER_NET_READ_INTERRUPTED 08S01
         spa "Obtenido tiempo agotado (timeout) leyendo paquetes de comunicación"
         swe "Fick 'timeout' vid läsning från klienten"
         ukr "Отримано затримку читання комунікаційних пакетів"
-ER_NET_ERROR_ON_WRITE 08S01
+ER_NET_ERROR_ON_WRITE 08S01 
         chi "写入通信包时出错"
         cze "Zjištěna chyba při zápisu komunikačního packetu"
         dan "Fik fejlmeddelelse ved skrivning af kommunukations-pakker (communication packets)"
@@ -3799,7 +3799,7 @@ ER_NET_ERROR_ON_WRITE 08S01
         spa "Obtenido un error escribiendo paquetes de comunicación"
         swe "Fick ett fel vid skrivning till klienten"
         ukr "Отримано помилку запису комунікаційних пакетів"
-ER_NET_WRITE_INTERRUPTED 08S01
+ER_NET_WRITE_INTERRUPTED 08S01 
         chi "写入通信包超时"
         cze "Zjištěn timeout při zápisu komunikačního packetu"
         dan "Timeout-fejl ved skrivning af kommunukations-pakker (communication packets)"
@@ -3820,7 +3820,7 @@ ER_NET_WRITE_INTERRUPTED 08S01
         spa "Obtenido tiempo agotado (timeout) escribiendo paquetes de comunicación"
         swe "Fick 'timeout' vid skrivning till klienten"
         ukr "Отримано затримку запису комунікаційних пакетів"
-ER_TOO_LONG_STRING 42000
+ER_TOO_LONG_STRING 42000 
         chi "结果字符串长于'max_allowed_packet'字节"
         cze "Výsledný řetězec je delší než 'max_allowed_packet'"
         dan "Strengen med resultater er større end 'max_allowed_packet'"
@@ -3841,7 +3841,7 @@ ER_TOO_LONG_STRING 42000
         spa "La cadena resultante es mayor de max_allowed_packet bytes"
         swe "Resultatsträngen är längre än max_allowed_packet"
         ukr "Строка результату довша ніж max_allowed_packet"
-ER_TABLE_CANT_HANDLE_BLOB 42000
+ER_TABLE_CANT_HANDLE_BLOB 42000 
         chi "存储引擎%s不支持blob / text列"
         cze "Typ použité tabulky (%s) nepodporuje BLOB/TEXT sloupce"
         dan "Denne tabeltype (%s) understøtter ikke brug af BLOB og TEXT kolonner"
@@ -3861,7 +3861,7 @@ ER_TABLE_CANT_HANDLE_BLOB 42000
         spa "El motor de almacenaje %s no soporta columnas de tipo BLOB/TEXT"
         swe "Den använda tabelltypen (%s) kan inte hantera BLOB/TEXT-kolumner"
         ukr "%s таблиці не підтримують BLOB/TEXT стовбці"
-ER_TABLE_CANT_HANDLE_AUTO_INCREMENT 42000
+ER_TABLE_CANT_HANDLE_AUTO_INCREMENT 42000 
         chi "存储引擎%s不支持auto_increment列"
         cze "Typ použité tabulky (%s) nepodporuje AUTO_INCREMENT sloupce"
         dan "Denne tabeltype understøtter (%s) ikke brug af AUTO_INCREMENT kolonner"
@@ -3881,7 +3881,7 @@ ER_TABLE_CANT_HANDLE_AUTO_INCREMENT 42000
         spa "El motor de almacenaje %s no soporta columnas AUTO_INCREMENT"
         swe "Den använda tabelltypen (%s) kan inte hantera AUTO_INCREMENT-kolumner"
         ukr "%s таблиці не підтримують AUTO_INCREMENT стовбці"
-ER_DELAYED_INSERT_TABLE_LOCKED
+ER_DELAYED_INSERT_TABLE_LOCKED  
         chi "INSERT DELAYED 不能用在表 '%-.192s' 因为它被LOCK TABLES 锁定"
         cze "INSERT DELAYED není možno s tabulkou '%-.192s' použít, protože je zamčená pomocí LOCK TABLES"
         dan "INSERT DELAYED kan ikke bruges med tabellen '%-.192s', fordi tabellen er låst med LOCK TABLES"
@@ -3906,7 +3906,7 @@ ER_DELAYED_INSERT_TABLE_LOCKED
         spa "INSERT DELAYED no puede ser usado con la tabla '%-.192s' porque esta bloqueada con LOCK TABLES"
         swe "INSERT DELAYED kan inte användas med tabell '%-.192s', emedan den är låst med LOCK TABLES"
         ukr "INSERT DELAYED не може бути використано з таблицею '%-.192s', тому що її заблоковано з LOCK TABLES"
-ER_WRONG_COLUMN_NAME 42000
+ER_WRONG_COLUMN_NAME 42000 
         chi "错误列名 '%-.100s'"
         cze "Nesprávné jméno sloupce '%-.100s'"
         dan "Forkert kolonnenavn '%-.100s'"
@@ -3926,7 +3926,7 @@ ER_WRONG_COLUMN_NAME 42000
         spa "Nombre Incorrecto de columna '%-.100s'"
         swe "Felaktigt kolumnnamn '%-.100s'"
         ukr "Невірне ім'я стовбця '%-.100s'"
-ER_WRONG_KEY_COLUMN 42000
+ER_WRONG_KEY_COLUMN 42000 
         chi "存储引擎 %s 不能给 %`s 列建索引"
         eng "The storage engine %s can't index column %`s"
         ger "Die Speicher-Engine %s kann die Spalte %`s nicht indizieren"
@@ -3934,7 +3934,7 @@ ER_WRONG_KEY_COLUMN 42000
         rus "Обработчик таблиц %s не может проиндексировать столбец %`s"
         spa "El motor de almacenaje %s no puede indizar la columna %`s"
         ukr "Вказівник таблиц %s не може індексувати стовбець %`s"
-ER_WRONG_MRG_TABLE
+ER_WRONG_MRG_TABLE  
         chi "无法打开定义不同或非 MyISAM 类型或不存在的表"
         cze "Všechny tabulky v MERGE tabulce nejsou definovány stejně"
         dan "Tabellerne i MERGE er ikke defineret ens"
@@ -3958,7 +3958,7 @@ ER_WRONG_MRG_TABLE
         spa "Incapaz de abrir la tabla subyacente por estar definida de forma diferente o por no ser del tipo no-MyISAM o por no existir"
         swe "Tabellerna i MERGE-tabellen är inte identiskt definierade"
         ukr "Таблиці у MERGE TABLE мають різну структуру"
-ER_DUP_UNIQUE 23000
+ER_DUP_UNIQUE 23000 
         chi "因为表'%-.192s' 唯一约束，无法写入"
         cze "Kvůli unique constraintu nemozu zapsat do tabulky '%-.192s'"
         dan "Kan ikke skrive til tabellen '%-.192s' fordi det vil bryde CONSTRAINT regler"
@@ -3977,7 +3977,7 @@ ER_DUP_UNIQUE 23000
         spa "No puedo grabar, debido a restricción única, en la tabla '%-.192s'"
         swe "Kan inte skriva till tabell '%-.192s'; UNIQUE-test"
         ukr "Не можу записати до таблиці '%-.192s', з причини вимог унікальності"
-ER_BLOB_KEY_WITHOUT_LENGTH 42000
+ER_BLOB_KEY_WITHOUT_LENGTH 42000 
         chi "BLOB/TEXT 列 '%-.192s' 在没有索引长度的索引规范中使用"
         cze "BLOB sloupec '%-.192s' je použit ve specifikaci klíče bez délky"
         dan "BLOB kolonnen '%-.192s' brugt i nøglespecifikation uden nøglelængde"
@@ -4002,7 +4002,7 @@ ER_BLOB_KEY_WITHOUT_LENGTH 42000
         spa "Columna BLOB/TEXT '%-.192s', usada en especificación de clave, sin tamaño"
         swe "Du har inte angett någon nyckellängd för BLOB '%-.192s'"
         ukr "Стовбець BLOB '%-.192s' використано у визначенні ключа без вказання довжини ключа"
-ER_PRIMARY_CANT_HAVE_NULL 42000
+ER_PRIMARY_CANT_HAVE_NULL 42000 
         chi "PRIMARY KEY 的所有部分都不能为NULL；如果您需要在键中使用 NULL，请改用 UNIQUE"
         cze "Všechny části primárního klíče musejí být NOT NULL; pokud potřebujete NULL, použijte UNIQUE"
         dan "Alle dele af en PRIMARY KEY skal være NOT NULL;  Hvis du skal bruge NULL i nøglen, brug UNIQUE istedet"
@@ -4022,7 +4022,7 @@ ER_PRIMARY_CANT_HAVE_NULL 42000
         spa "Todas las partes de una PRIMARY KEY deben de ser NOT NULL; si necesita NULL en una clave, use UNIQUE en su lugar"
         swe "Alla delar av en PRIMARY KEY måste vara NOT NULL;  Om du vill ha en nyckel med NULL, använd UNIQUE istället"
         ukr "Усі частини PRIMARY KEY повинні бути NOT NULL; Якщо ви потребуєте NULL у ключі, скористайтеся UNIQUE"
-ER_TOO_MANY_ROWS 42000
+ER_TOO_MANY_ROWS 42000 
         chi "结果多于一行"
         cze "Výsledek obsahuje více než jeden řádek"
         dan "Resultatet bestod af mere end een række"
@@ -4042,7 +4042,7 @@ ER_TOO_MANY_ROWS 42000
         spa "Resultado compuesto de más de una fila"
         swe "Resultet bestod av mera än en rad"
         ukr "Результат знаходиться у більше ніж одній строці"
-ER_REQUIRES_PRIMARY_KEY 42000
+ER_REQUIRES_PRIMARY_KEY 42000 
         chi "此表类型需要主索引"
         cze "Tento typ tabulky vyžaduje primární klíč"
         dan "Denne tabeltype kræver en primærnøgle"
@@ -4062,7 +4062,7 @@ ER_REQUIRES_PRIMARY_KEY 42000
         spa "Este tipo de tabla necesita de una clave primaria"
         swe "Denna tabelltyp kräver en PRIMARY KEY"
         ukr "Цей тип таблиці потребує первинного ключа"
-ER_NO_RAID_COMPILED
+ER_NO_RAID_COMPILED  
         chi "这个版本的 MariaDB 编译时不支持 RAID"
         cze "Tato verze MariaDB není zkompilována s podporou RAID"
         dan "Denne udgave af MariaDB er ikke oversat med understøttelse af RAID"
@@ -4082,7 +4082,7 @@ ER_NO_RAID_COMPILED
         spa "Esta versión de MariaDB no ha sido compilada con soporte para RAID"
         swe "Denna version av MariaDB är inte kompilerad med RAID"
         ukr "Ця версія MariaDB не зкомпільована з підтримкою RAID"
-ER_UPDATE_WITHOUT_KEY_IN_SAFE_MODE
+ER_UPDATE_WITHOUT_KEY_IN_SAFE_MODE  
         chi "您正在使用安全更新模式，同时您尝试更新时没有使用含有 KEY 列的 WHERE 语句"
         cze "Update tabulky bez WHERE s klíčem není v módu bezpečných update dovoleno"
         dan "Du bruger sikker opdaterings modus ('safe update mode') og du forsøgte at opdatere en tabel uden en WHERE klausul, der gør brug af et KEY felt"
@@ -4119,7 +4119,7 @@ ER_KEY_DOES_NOT_EXISTS 42000 S1009
         spa "La clave '%-.192s' no existe en la tabla '%-.192s'"
         swe "Nyckel '%-.192s' finns inte in tabell '%-.192s'"
         ukr "Ключ '%-.192s' не існує в таблиці '%-.192s'"
-ER_CHECK_NO_SUCH_TABLE 42000
+ER_CHECK_NO_SUCH_TABLE 42000 
         chi "无法打开表"
         cze "Nemohu otevřít tabulku"
         dan "Kan ikke åbne tabellen"
@@ -4138,7 +4138,7 @@ ER_CHECK_NO_SUCH_TABLE 42000
         spa "No puedo abrir tabla"
         swe "Kan inte öppna tabellen"
         ukr "Не можу відкрити таблицю"
-ER_CHECK_NOT_IMPLEMENTED 42000
+ER_CHECK_NOT_IMPLEMENTED 42000 
         chi "该表的存储引擎不支持%s"
         cze "Handler tabulky nepodporuje %s"
         dan "Denne tabeltype understøtter ikke %s"
@@ -4164,7 +4164,7 @@ ER_CHECK_NOT_IMPLEMENTED 42000
         spa "El motor de almacenaje para la tabla no soporta %s"
         swe "Tabellhanteraren för denna tabell kan inte göra %s"
         ukr "Вказівник таблиці не підтримуе %s"
-ER_CANT_DO_THIS_DURING_AN_TRANSACTION 25000
+ER_CANT_DO_THIS_DURING_AN_TRANSACTION 25000 
         chi "不允许在事务中执行此命令"
         cze "Provedení tohoto příkazu není v transakci dovoleno"
         dan "Du må ikke bruge denne kommando i en transaktion"
@@ -4182,7 +4182,7 @@ ER_CANT_DO_THIS_DURING_AN_TRANSACTION 25000
         spa "No tiene el permiso para ejecutar este comando en una transacción"
         swe "Du får inte utföra detta kommando i en transaktion"
         ukr "Вам не дозволено виконувати цю команду в транзакції"
-ER_ERROR_DURING_COMMIT
+ER_ERROR_DURING_COMMIT  
         chi "COMMIT时发生错误 %M "
         cze "Chyba %M při COMMIT"
         dan "Modtog fejl %M mens kommandoen COMMIT blev udført"
@@ -4201,7 +4201,7 @@ ER_ERROR_DURING_COMMIT
         spa "Obtenido error %M durante COMMIT"
         swe "Fick fel %M vid COMMIT"
         ukr "Отримано помилку %M під час COMMIT"
-ER_ERROR_DURING_ROLLBACK
+ER_ERROR_DURING_ROLLBACK  
         chi "回滚时出错%M"
         cze "Chyba %M při ROLLBACK"
         dan "Modtog fejl %M mens kommandoen ROLLBACK blev udført"
@@ -4220,7 +4220,7 @@ ER_ERROR_DURING_ROLLBACK
         spa "Obtenido error %M durante ROLLBACK"
         swe "Fick fel %M vid ROLLBACK"
         ukr "Отримано помилку %M під час ROLLBACK"
-ER_ERROR_DURING_FLUSH_LOGS
+ER_ERROR_DURING_FLUSH_LOGS  
         chi "flush_logs时出错%M"
         cze "Chyba %M při FLUSH_LOGS"
         dan "Modtog fejl %M mens kommandoen FLUSH_LOGS blev udført"
@@ -4239,7 +4239,7 @@ ER_ERROR_DURING_FLUSH_LOGS
         spa "Obtenido error %M durante FLUSH_LOGS"
         swe "Fick fel %M vid FLUSH_LOGS"
         ukr "Отримано помилку %M під час FLUSH_LOGS"
-ER_ERROR_DURING_CHECKPOINT
+ER_ERROR_DURING_CHECKPOINT  
         chi "CHECKPOINT时出错%M "
         cze "Chyba %M při CHECKPOINT"
         dan "Modtog fejl %M mens kommandoen CHECKPOINT blev udført"
@@ -4258,7 +4258,7 @@ ER_ERROR_DURING_CHECKPOINT
         spa "Obtenido error %M durante CHECKPOINT"
         swe "Fick fel %M vid CHECKPOINT"
         ukr "Отримано помилку %M під час CHECKPOINT"
-ER_NEW_ABORTING_CONNECTION 08S01
+ER_NEW_ABORTING_CONNECTION 08S01 
         chi "终止的连接 %lld 到数据库: '%-.192s' 用户: '%-.48s' 主机: '%-.64s' (%-.64s)"
         cze "Spojení %lld do databáze: '%-.192s' uživatel: '%-.48s' stroj: '%-.64s' (%-.64s) bylo přerušeno"
         dan "Afbrød forbindelsen %lld til databasen '%-.192s' bruger: '%-.48s' vært: '%-.64s' (%-.64s)"
@@ -4279,7 +4279,7 @@ ER_UNUSED_10
         chi "你应当永远看不到这个"
         eng "You should never see it"
         spa "Nunca lo debería vd de ver"
-ER_FLUSH_MASTER_BINLOG_CLOSED
+ER_FLUSH_MASTER_BINLOG_CLOSED  
         chi "Binlog 已关闭, 不能 RESET MASTER"
         eng "Binlog closed, cannot RESET MASTER"
         ger "Binlog geschlossen. Kann RESET MASTER nicht ausführen"
@@ -4289,7 +4289,7 @@ ER_FLUSH_MASTER_BINLOG_CLOSED
         serbian "Binarni log file zatvoren, ne mogu da izvršim komandu 'RESET MASTER'"
         spa "Binlog cerrado, no puedo hacer RESET MASTER"
         ukr "Реплікаційний лог закрито, не можу виконати RESET MASTER"
-ER_INDEX_REBUILD
+ER_INDEX_REBUILD  
         chi "重建 dumped table '%-.192s' 的索引失败"
         cze "Přebudování indexu dumpnuté tabulky '%-.192s' nebylo úspěšné"
         dan "Kunne ikke genopbygge indekset for den dumpede tabel '%-.192s'"
@@ -4306,7 +4306,7 @@ ER_INDEX_REBUILD
         serbian "Izgradnja indeksa dump-ovane tabele '%-.192s' nije uspela"
         spa "Fallo reconstruyendo el índice del volcado de la tabla '%-.192s'"
         ukr "Невдале відновлення індекса переданої таблиці '%-.192s'"
-ER_MASTER
+ER_MASTER  
         chi "Master错误：'%-.64s'"
         cze "Chyba masteru: '%-.64s'"
         dan "Fejl fra master: '%-.64s'"
@@ -4322,7 +4322,7 @@ ER_MASTER
         spa "Error del maestro (master): '%-.64s'"
         swe "Fel från master: '%-.64s'"
         ukr "Помилка від головного: '%-.64s'"
-ER_MASTER_NET_READ 08S01
+ER_MASTER_NET_READ 08S01 
         chi "读master时有网络错误"
         cze "Síťová chyba při čtení z masteru"
         dan "Netværksfejl ved læsning fra master"
@@ -4338,7 +4338,7 @@ ER_MASTER_NET_READ 08S01
         spa "Error de red leyendo del maestro (master)"
         swe "Fick nätverksfel vid läsning från master"
         ukr "Мережева помилка читання від головного"
-ER_MASTER_NET_WRITE 08S01
+ER_MASTER_NET_WRITE 08S01 
         chi "写master时有网络错误"
         cze "Síťová chyba při zápisu na master"
         dan "Netværksfejl ved skrivning til master"
@@ -4354,7 +4354,7 @@ ER_MASTER_NET_WRITE 08S01
         spa "Error de red grabando en maestro (master)"
         swe "Fick nätverksfel vid skrivning till master"
         ukr "Мережева помилка запису до головного"
-ER_FT_MATCHING_KEY_NOT_FOUND
+ER_FT_MATCHING_KEY_NOT_FOUND  
         chi "找不到与列列表匹配的全文索引"
         cze "Žádný sloupec nemá vytvořen fulltextový index"
         dan "Kan ikke finde en FULLTEXT nøgle som svarer til kolonne listen"
@@ -4371,7 +4371,7 @@ ER_FT_MATCHING_KEY_NOT_FOUND
         spa "No puedo encontrar índice FULLTEXT coincidente con la lista de columnas"
         swe "Hittar inte ett FULLTEXT-index i kolumnlistan"
         ukr "Не можу знайти FULLTEXT індекс, що відповідає переліку стовбців"
-ER_LOCK_OR_ACTIVE_TRANSACTION
+ER_LOCK_OR_ACTIVE_TRANSACTION  
         chi "无法执行给定的命令，因为表上有锁或有活动事务"
         cze "Nemohu provést zadaný příkaz, protože existují aktivní zamčené tabulky nebo aktivní transakce"
         dan "Kan ikke udføre den givne kommando fordi der findes aktive, låste tabeller eller fordi der udføres en transaktion"
@@ -4388,7 +4388,7 @@ ER_LOCK_OR_ACTIVE_TRANSACTION
         spa "No puedo ejecutar el comando dado porque tiene tablas activas bloqueadas o una transacción activa"
         swe "Kan inte utföra kommandot emedan du har en låst tabell eller an aktiv transaktion"
         ukr "Не можу виконати подану команду тому, що таблиця заблокована або виконується транзакція"
-ER_UNKNOWN_SYSTEM_VARIABLE
+ER_UNKNOWN_SYSTEM_VARIABLE  
         chi "未知系统变量 '%-.*s'"
         cze "Neznámá systémová proměnná '%-.*s'"
         dan "Ukendt systemvariabel '%-.*s'"
@@ -4406,7 +4406,7 @@ ER_UNKNOWN_SYSTEM_VARIABLE
         spa "Variable de sistema '%-.*s' desconocida"
         swe "Okänd systemvariabel: '%-.*s'"
         ukr "Невідома системна змінна '%-.*s'"
-ER_CRASHED_ON_USAGE
+ER_CRASHED_ON_USAGE  
         chi "表'%-.192s'标记为崩溃，应该修复"
         cze "Tabulka '%-.192s' je označena jako porušená a měla by být opravena"
         dan "Tabellen '%-.192s' er markeret med fejl og bør repareres"
@@ -4423,7 +4423,7 @@ ER_CRASHED_ON_USAGE
         spa "La tabla '%-.192s' está marcada como estropeada y debe de ser reparada"
         swe "Tabell '%-.192s' är trasig och bör repareras med REPAIR TABLE"
         ukr "Таблицю '%-.192s' марковано як зіпсовану та її потрібно відновити"
-ER_CRASHED_ON_REPAIR
+ER_CRASHED_ON_REPAIR  
         chi "表 '%-.192s' 被标记为崩溃，上一次的修复（自动？）失败"
         cze "Tabulka '%-.192s' je označena jako porušená a poslední (automatická?) oprava se nezdařila"
         dan "Tabellen '%-.192s' er markeret med fejl og sidste (automatiske?) REPAIR fejlede"
@@ -4440,7 +4440,7 @@ ER_CRASHED_ON_REPAIR
         spa "La tabla '%-.192s' está marcada como estropeada y la última reparación (¿automática?) falló"
         swe "Tabell '%-.192s' är trasig och senast (automatiska?) reparation misslyckades"
         ukr "Таблицю '%-.192s' марковано як зіпсовану та останнє (автоматичне?) відновлення не вдалося"
-ER_WARNING_NOT_COMPLETE_ROLLBACK
+ER_WARNING_NOT_COMPLETE_ROLLBACK  
         chi "某些非事务性更改的表无法回滚"
         dan "Advarsel: Visse data i tabeller der ikke understøtter transaktioner kunne ikke tilbagestilles"
         eng "Some non-transactional changed tables couldn't be rolled back"
@@ -4456,7 +4456,7 @@ ER_WARNING_NOT_COMPLETE_ROLLBACK
         spa "Algunas tablas no transaccionales ya cambiadas no puedieron ser retrocedidas (rolled back)"
         swe "Warning:  Några icke transaktionella tabeller kunde inte återställas vid ROLLBACK"
         ukr "Застереження: Деякі нетранзакційні зміни таблиць не можна буде повернути"
-ER_TRANS_CACHE_FULL
+ER_TRANS_CACHE_FULL  
         chi "多语句事务需要超过 'max_binlog_cache_size' 字节的存储空间；增加这个 mariadbd 变量后再试一次"
         dan "Fler-udtryks transaktion krævede mere plads en 'max_binlog_cache_size' bytes. Forhøj værdien af denne variabel og prøv igen"
         eng "Multi-statement transaction required more than 'max_binlog_cache_size' bytes of storage; increase this mariadbd variable and try again"
@@ -4471,7 +4471,7 @@ ER_TRANS_CACHE_FULL
         spa "Transacción multi-sentencia requirió de más de 'max_binlog_cache_size' bytes de almacenamiento"
         swe "Transaktionen krävde mera än 'max_binlog_cache_size' minne. Öka denna mariadbd-variabel och försök på nytt"
         ukr "Транзакція з багатьма виразами вимагає більше ніж 'max_binlog_cache_size' байтів для зберігання. Збільште цю змінну mariadbd та спробуйте знову"
-ER_SLAVE_MUST_STOP
+ER_SLAVE_MUST_STOP  
         chi "这个操作不能执行，因为你有个正在运行的 slave '%2$*1$s'; 先运行 STOP SLAVE '%2$*1$s' 后再试"
         dan "Denne handling kunne ikke udføres med kørende slave '%2$*1$s', brug først kommandoen STOP SLAVE '%2$*1$s'"
         eng "This operation cannot be performed as you have a running slave '%2$*1$s'; run STOP SLAVE '%2$*1$s' first"
@@ -4485,7 +4485,7 @@ ER_SLAVE_MUST_STOP
         spa "Esta operación no puede ser realizada con el esclavo '%2$*1$s' en marcha; primero ejecute STOP SLAVE '%2$*1$s'"
         swe "Denna operation kan inte göras under replikering; Du har en aktiv förbindelse till '%2$*1$s'. Gör STOP SLAVE '%2$*1$s' först"
         ukr "Операція не може бути виконана з запущеним підлеглим '%2$*1$s', спочатку виконайте STOP SLAVE '%2$*1$s'"
-ER_SLAVE_NOT_RUNNING
+ER_SLAVE_NOT_RUNNING  
         chi "这个操作需要一个正在运行的slave；配置从机并执行 START SLAVE"
         dan "Denne handling kræver en kørende slave. Konfigurer en slave og brug kommandoen START SLAVE"
         eng "This operation requires a running slave; configure slave and do START SLAVE"
@@ -4500,7 +4500,7 @@ ER_SLAVE_NOT_RUNNING
         spa "Esta operación requiere de un esclavo funcionando; configure el esclavo y haga el START SLAVE"
         swe "Denna operation kan endast göras under replikering; Konfigurera slaven och gör START SLAVE"
         ukr "Операція вимагає запущеного підлеглого, зконфігуруйте підлеглого та виконайте START SLAVE"
-ER_BAD_SLAVE
+ER_BAD_SLAVE  
         chi "服务器未配置为从站;修复配置文件或使用CHANGE MASTER TO"
         dan "Denne server er ikke konfigureret som slave. Ret in config-filen eller brug kommandoen CHANGE MASTER TO"
         eng "The server is not configured as slave; fix in config file or with CHANGE MASTER TO"
@@ -4515,7 +4515,7 @@ ER_BAD_SLAVE
         spa "El servidor no está configurado como esclavo; arréglelo en el fichero/archivo de configuración o con CHANGE MASTER TO"
         swe "Servern är inte konfigurerade som en replikationsslav. Ändra konfigurationsfilen eller gör CHANGE MASTER TO"
         ukr "Сервер не зконфігуровано як підлеглий, виправте це у файлі конфігурації або з CHANGE MASTER TO"
-ER_MASTER_INFO
+ER_MASTER_INFO  
         chi "无法初始化'%.*s'的master info structure;MariaDB错误日志中可以找到更多错误消息"
         eng "Could not initialize master info structure for '%.*s'; more error messages can be found in the MariaDB error log"
         fre "Impossible d'initialiser les structures d'information de maître '%.*s', vous trouverez des messages d'erreur supplémentaires dans le journal des erreurs de MariaDB"
@@ -4540,7 +4540,7 @@ ER_SLAVE_THREAD
         spa "No puedo crear el hilo (thread) esclavo; verifique recursos del sistema"
         swe "Kunde inte starta en tråd för replikering"
         ukr "Не можу створити підлеглу гілку, перевірте системні ресурси"
-ER_TOO_MANY_USER_CONNECTIONS 42000
+ER_TOO_MANY_USER_CONNECTIONS 42000 
         chi "用户%-.64s已经拥有超过“max_user_conections”的活连接"
         dan "Brugeren %-.64s har allerede mere end 'max_user_connections' aktive forbindelser"
         eng "User %-.64s already has more than 'max_user_connections' active connections"
@@ -4557,7 +4557,7 @@ ER_TOO_MANY_USER_CONNECTIONS 42000
         spa "El usuario %-.64s ya tiene más de 'max_user_connections' conexiones activas"
         swe "Användare '%-.64s' har redan 'max_user_connections' aktiva inloggningar"
         ukr "Користувач %-.64s вже має більше ніж 'max_user_connections' активних з'єднань"
-ER_SET_CONSTANTS_ONLY
+ER_SET_CONSTANTS_ONLY  
         chi "您只能在此语句中使用常量表达式"
         dan "Du må kun bruge konstantudtryk med SET"
         eng "You may only use constant expressions in this statement"
@@ -4574,7 +4574,7 @@ ER_SET_CONSTANTS_ONLY
         spa "Sólo puede usar expresiones constantes en esta sentencia"
         swe "Man kan endast använda konstantuttryck med SET"
         ukr "Можна використовувати лише вирази зі сталими у SET"
-ER_LOCK_WAIT_TIMEOUT
+ER_LOCK_WAIT_TIMEOUT  
         chi "锁等待超时;尝试重新启动事务"
         dan "Lock wait timeout overskredet"
         eng "Lock wait timeout exceeded; try restarting transaction"
@@ -4590,7 +4590,7 @@ ER_LOCK_WAIT_TIMEOUT
         spa "Tiempo de espera de bloqueo excedido; intente rearrancar la transacción"
         swe "Fick inte ett lås i tid ; Försök att starta om transaktionen"
         ukr "Затримку очікування блокування вичерпано"
-ER_LOCK_TABLE_FULL
+ER_LOCK_TABLE_FULL  
         chi "锁的总数超过锁定表大小"
         dan "Det totale antal låse overstiger størrelsen på låse-tabellen"
         eng "The total number of locks exceeds the lock table size"
@@ -4607,7 +4607,7 @@ ER_LOCK_TABLE_FULL
         spa "El número total de bloqueos excede el tamaño de bloqueo de la tabla"
         swe "Antal lås överskrider antalet reserverade lås"
         ukr "Загальна кількість блокувань перевищила розмір блокувань для таблиці"
-ER_READ_ONLY_TRANSACTION 25000
+ER_READ_ONLY_TRANSACTION 25000 
         chi "在READ UNCOMMITTED事务期间无法获取更新锁定"
         dan "Update lås kan ikke opnås under en READ UNCOMMITTED transaktion"
         eng "Update locks cannot be acquired during a READ UNCOMMITTED transaction"
@@ -4623,7 +4623,7 @@ ER_READ_ONLY_TRANSACTION 25000
         spa "No se pueden adquirir bloqueos de actualización durante una transacción READ UNCOMMITTED"
         swe "Updateringslås kan inte göras när man använder READ UNCOMMITTED"
         ukr "Оновити блокування не можливо на протязі транзакції READ UNCOMMITTED"
-ER_DROP_DB_WITH_READ_LOCK
+ER_DROP_DB_WITH_READ_LOCK  
         chi "线程持有全局读锁时，不允许删除数据库"
         dan "DROP DATABASE er ikke tilladt mens en tråd holder på globalt read lock"
         eng "DROP DATABASE not allowed while thread is holding global read lock"
@@ -4639,7 +4639,7 @@ ER_DROP_DB_WITH_READ_LOCK
         spa "DROP DATABASE no permitido mientras un hilo (thread) está ejerciendo un bloqueo de lectura global"
         swe "DROP DATABASE är inte tillåtet när man har ett globalt läslås"
         ukr "DROP DATABASE не дозволено доки гілка перебуває під загальним блокуванням читання"
-ER_CREATE_DB_WITH_READ_LOCK
+ER_CREATE_DB_WITH_READ_LOCK  
         chi "线程持有全局读锁时，不允许创建数据库"
         dan "CREATE DATABASE er ikke tilladt mens en tråd holder på globalt read lock"
         eng "CREATE DATABASE not allowed while thread is holding global read lock"
@@ -4655,7 +4655,7 @@ ER_CREATE_DB_WITH_READ_LOCK
         spa "CREATE DATABASE no permitido mientras un hilo (thread) está manteniendo un bloqueo de lectura global"
         swe "CREATE DATABASE är inte tillåtet när man har ett globalt läslås"
         ukr "CREATE DATABASE не дозволено доки гілка перебуває під загальним блокуванням читання"
-ER_WRONG_ARGUMENTS
+ER_WRONG_ARGUMENTS  
         chi "%s的参数不正确"
         eng "Incorrect arguments to %s"
         est "Vigased parameetrid %s-le"
@@ -4671,7 +4671,7 @@ ER_WRONG_ARGUMENTS
         spa "Argumentos incorrectos para %s"
         swe "Felaktiga argument till %s"
         ukr "Хибний аргумент для %s"
-ER_NO_PERMISSION_TO_CREATE_USER 42000
+ER_NO_PERMISSION_TO_CREATE_USER 42000 
         chi "'%s'@'%s'不允许创建新用户"
         eng "'%s'@'%s' is not allowed to create new users"
         est "Kasutajal '%s'@'%s' ei ole lubatud luua uusi kasutajaid"
@@ -4686,7 +4686,7 @@ ER_NO_PERMISSION_TO_CREATE_USER 42000
         spa "'%s'@'%s' no está permitido para crear nuevos usuarios"
         swe "'%s'@'%s' har inte rättighet att skapa nya användare"
         ukr "Користувачу '%s'@'%s' не дозволено створювати нових користувачів"
-ER_UNION_TABLES_IN_DIFFERENT_DIR
+ER_UNION_TABLES_IN_DIFFERENT_DIR  
         chi "表定义不正确;所有合并表必须在同一数据库中"
         eng "Incorrect table definition; all MERGE tables must be in the same database"
         est "Vigane tabelimääratlus; kõik MERGE tabeli liikmed peavad asuma samas andmebaasis"
@@ -4701,7 +4701,7 @@ ER_UNION_TABLES_IN_DIFFERENT_DIR
         spa "Definición incorrecta de la tabla; todas las tablas MERGE deben de estar en la misma base de datos"
         swe "Felaktig tabelldefinition; alla tabeller i en MERGE-tabell måste vara i samma databas"
         ukr "Хибне визначення таблиці; всі MERGE-таблиці повинні належити до однієї бази ланних."
-ER_LOCK_DEADLOCK 40001
+ER_LOCK_DEADLOCK 40001 
         chi "试图锁定时发现僵局;尝试重新启动事务"
         eng "Deadlock found when trying to get lock; try restarting transaction"
         est "Lukustamisel tekkis tupik (deadlock); alusta transaktsiooni otsast"
@@ -4716,7 +4716,7 @@ ER_LOCK_DEADLOCK 40001
         spa "Encontrado estancamiento (deadlock) al intentar obtener el bloqueo; intente volver a comenzar la transacción"
         swe "Fick 'DEADLOCK' vid låsförsök av block/rad. Försök att starta om transaktionen"
         ukr "Взаємне блокування знайдено під час спроби отримати блокування; спробуйте перезапустити транзакцію."
-ER_TABLE_CANT_HANDLE_FT
+ER_TABLE_CANT_HANDLE_FT  
         chi "存储引擎%s不支持fulltext索引"
         eng "The storage engine %s doesn't support FULLTEXT indexes"
         est "Antud tabelitüüp (%s) ei toeta FULLTEXT indekseid"
@@ -4745,7 +4745,7 @@ ER_CANNOT_ADD_FOREIGN
         spa "No puedo añadir restricción de clave foránea para `%s`"
         swe "Kan inte lägga till 'FOREIGN KEY constraint' för `%s`'"
         ukr "Не можу додати обмеження зовнішнього ключа Ha `%s`"
-ER_NO_REFERENCED_ROW 23000
+ER_NO_REFERENCED_ROW 23000 
         chi "无法添加或更新子行：外键约束失败"
         eng "Cannot add or update a child row: a foreign key constraint fails"
         fre "Impossible d'ajouter un enregistrement fils : une constrainte externe l'empèche"
@@ -4761,7 +4761,7 @@ ER_NO_REFERENCED_ROW 23000
         spa "No puedo añadir o actualizar una fila hija: ha fallado una restrición de clave foránea"
         swe "FOREIGN KEY-konflikt:  Kan inte skriva barn"
         ukr "Не вдається додати або оновити дочірній рядок: невдала перевірка обмеження зовнішнього ключа"
-ER_ROW_IS_REFERENCED 23000
+ER_ROW_IS_REFERENCED 23000 
         chi "无法删除或更新父行：外键约束失败"
         eng "Cannot delete or update a parent row: a foreign key constraint fails"
         fre "Impossible de supprimer un enregistrement père : une constrainte externe l'empèche"
@@ -4775,7 +4775,7 @@ ER_ROW_IS_REFERENCED 23000
         serbian "Ne mogu da izbrišem roditeljski slog: provera spoljnog ključa je neuspela"
         spa "No puedo borrar o actualizar una fila padre: ha fallado una restrición de clave foránea"
         swe "FOREIGN KEY-konflikt:  Kan inte radera fader"
-ER_CONNECT_TO_MASTER 08S01
+ER_CONNECT_TO_MASTER 08S01 
         chi "连接master时出错：%-.128s"
         eng "Error connecting to master: %-.128s"
         ger "Fehler bei der Verbindung zum Master: %-.128s"
@@ -4786,7 +4786,7 @@ ER_CONNECT_TO_MASTER 08S01
         rus "Ошибка соединения с головным сервером: %-.128s"
         spa "Error conectando al maestro (master): %-.128s"
         swe "Fick fel vid anslutning till master: %-.128s"
-ER_QUERY_ON_MASTER
+ER_QUERY_ON_MASTER  
         chi "在Master上运行查询时出错：%-.128s"
         eng "Error running query on master: %-.128s"
         ger "Beim Ausführen einer Abfrage auf dem Master trat ein Fehler auf: %-.128s"
@@ -4797,7 +4797,7 @@ ER_QUERY_ON_MASTER
         rus "Ошибка выполнения запроса на головном сервере: %-.128s"
         spa "Error ejecutando consulta (query) en maestro (master): %-.128s"
         swe "Fick fel vid utförande av command på mastern: %-.128s"
-ER_ERROR_WHEN_EXECUTING_COMMAND
+ER_ERROR_WHEN_EXECUTING_COMMAND  
         chi "执行命令%s时出错：%-.128s"
         eng "Error when executing command %s: %-.128s"
         est "Viga käsu %s täitmisel: %-.128s"
@@ -4810,7 +4810,7 @@ ER_ERROR_WHEN_EXECUTING_COMMAND
         serbian "Greška pri izvršavanju komande %s: %-.128s"
         spa "Error al ejecutar comando %s: %-.128s"
         swe "Fick fel vid utförande av %s: %-.128s"
-ER_WRONG_USAGE
+ER_WRONG_USAGE  
         chi "%s和%s使用不正确"
         eng "Incorrect usage of %s and %s"
         est "Vigane %s ja %s kasutus"
@@ -4824,7 +4824,7 @@ ER_WRONG_USAGE
         spa "Uso incorrecto de %s y %s"
         swe "Felaktig använding av %s and %s"
         ukr "Wrong usage of %s and %s"
-ER_WRONG_NUMBER_OF_COLUMNS_IN_SELECT 21000
+ER_WRONG_NUMBER_OF_COLUMNS_IN_SELECT 21000 
         chi "使用的SELECT语句具有不同数量的列"
         eng "The used SELECT statements have a different number of columns"
         est "Tulpade arv kasutatud SELECT lausetes ei kattu"
@@ -4837,7 +4837,7 @@ ER_WRONG_NUMBER_OF_COLUMNS_IN_SELECT 21000
         serbian "Upotrebljene 'SELECT' komande adresiraju različit broj kolona"
         spa "Las sentencias SELECT usadas tienen un número diferente de columnas"
         swe "SELECT-kommandona har olika antal kolumner"
-ER_CANT_UPDATE_WITH_READLOCK
+ER_CANT_UPDATE_WITH_READLOCK  
         chi "无法执行查询，因为您有冲突的读锁"
         eng "Can't execute the query because you have a conflicting read lock"
         est "Ei suuda täita päringut konfliktse luku tõttu"
@@ -4850,7 +4850,7 @@ ER_CANT_UPDATE_WITH_READLOCK
         serbian "Ne mogu da izvršim upit zbog toga što imate zaključavanja čitanja podataka u konfliktu"
         spa "No puedo ejecutar la consulta (query) porque vd tiene un conflicto de bloqueo de lectura"
         swe "Kan inte utföra kommandot emedan du har ett READ-lås"
-ER_MIXING_NOT_ALLOWED
+ER_MIXING_NOT_ALLOWED  
         chi "事务和非事务表的混合被禁用"
         eng "Mixing of transactional and non-transactional tables is disabled"
         est "Transaktsioone toetavate ning mittetoetavate tabelite kooskasutamine ei ole lubatud"
@@ -4863,7 +4863,7 @@ ER_MIXING_NOT_ALLOWED
         serbian "Mešanje tabela koje podržavaju transakcije i onih koje ne podržavaju transakcije je isključeno"
         spa "Desactivada la mezcla de tablas transaccionales y no transaccionales"
         swe "Blandning av transaktionella och icke-transaktionella tabeller är inaktiverat"
-ER_DUP_ARGUMENT
+ER_DUP_ARGUMENT  
         chi "选项'%s'在语句中使用两次"
         eng "Option '%s' used twice in statement"
         est "Määrangut '%s' on lauses kasutatud topelt"
@@ -4875,7 +4875,7 @@ ER_DUP_ARGUMENT
         rus "Опция '%s' дважды использована в выражении"
         spa "Opción '%s' usada dos veces en la sentencia"
         swe "Option '%s' användes två gånger"
-ER_USER_LIMIT_REACHED 42000
+ER_USER_LIMIT_REACHED 42000 
         chi "用户'%-.64s'已超过'%s'资源（当前值：%ld）"
         eng "User '%-.64s' has exceeded the '%s' resource (current value: %ld)"
         ger "Benutzer '%-.64s' hat die Ressourcenbeschränkung '%s' überschritten (aktueller Wert: %ld)"
@@ -4886,7 +4886,7 @@ ER_USER_LIMIT_REACHED 42000
         rus "Пользователь '%-.64s' превысил использование ресурса '%s' (текущее значение: %ld)"
         spa "El usuario '%-.64s' ha excedido el recurso '%s' (valor actual: %ld)"
         swe "Användare '%-.64s' har överskridit '%s' (nuvarande värde: %ld)"
-ER_SPECIFIC_ACCESS_DENIED_ERROR 42000
+ER_SPECIFIC_ACCESS_DENIED_ERROR 42000 
         chi "拒绝访问;您需要（至少一个）%-.128s特权用于此操作"
         eng "Access denied; you need (at least one of) the %-.128s privilege(s) for this operation"
         ger "Kein Zugriff. Hierfür wird die Berechtigung %-.128s benötigt"
@@ -4898,7 +4898,7 @@ ER_SPECIFIC_ACCESS_DENIED_ERROR 42000
         spa "Acceso denegado. Usted necesita (al menos un(os)) privilegio(s) %-.128s para esta operación"
         swe "Du har inte privlegiet '%-.128s' som behövs för denna operation"
         ukr "Access denied. You need the %-.128s privilege for this operation"
-ER_LOCAL_VARIABLE
+ER_LOCAL_VARIABLE  
         chi "变量'%-.64s'是一个SESSION变量，不能与Set Global一起使用"
         eng "Variable '%-.64s' is a SESSION variable and can't be used with SET GLOBAL"
         ger "Variable '%-.64s' ist eine lokale Variable und kann nicht mit SET GLOBAL verändert werden"
@@ -4909,7 +4909,7 @@ ER_LOCAL_VARIABLE
         rus "Переменная '%-.64s' является потоковой (SESSION) переменной и не может быть изменена с помощью SET GLOBAL"
         spa "La variable '%-.64s' es una variable de SESSION y no puede ser usada con SET GLOBAL"
         swe "Variabel '%-.64s' är en SESSION variabel och kan inte ändrad med SET GLOBAL"
-ER_GLOBAL_VARIABLE
+ER_GLOBAL_VARIABLE  
         chi "变量'%-.64s'是全局变量，应该用SET GLOBAL设置"
         eng "Variable '%-.64s' is a GLOBAL variable and should be set with SET GLOBAL"
         ger "Variable '%-.64s' ist eine globale Variable und muss mit SET GLOBAL verändert werden"
@@ -4920,7 +4920,7 @@ ER_GLOBAL_VARIABLE
         rus "Переменная '%-.64s' является глобальной (GLOBAL) переменной, и ее следует изменять с помощью SET GLOBAL"
         spa "La variable '%-.64s' es una variable GLOBAL y debería de ser configurada con SET GLOBAL"
         swe "Variabel '%-.64s' är en GLOBAL variabel och bör sättas med SET GLOBAL"
-ER_NO_DEFAULT 42000
+ER_NO_DEFAULT 42000 
         chi "变量'%-.64s'没有默认值"
         eng "Variable '%-.64s' doesn't have a default value"
         ger "Variable '%-.64s' hat keinen Vorgabewert"
@@ -4931,7 +4931,7 @@ ER_NO_DEFAULT 42000
         rus "Переменная '%-.64s' не имеет значения по умолчанию"
         spa "La variable '%-.64s' no tiene un valor por defecto"
         swe "Variabel '%-.64s' har inte ett DEFAULT-värde"
-ER_WRONG_VALUE_FOR_VAR 42000
+ER_WRONG_VALUE_FOR_VAR 42000 
         chi "变量'%-.64s'无法设置为'%-.200T'的值"
         eng "Variable '%-.64s' can't be set to the value of '%-.200T'"
         ger "Variable '%-.64s' kann nicht auf '%-.200T' gesetzt werden"
@@ -4942,7 +4942,7 @@ ER_WRONG_VALUE_FOR_VAR 42000
         rus "Переменная '%-.64s' не может быть установлена в значение '%-.200T'"
         spa "La variable '%-.64s' no puede ser configurada para el valor de '%-.200T'"
         swe "Variabel '%-.64s' kan inte sättas till '%-.200T'"
-ER_WRONG_TYPE_FOR_VAR 42000
+ER_WRONG_TYPE_FOR_VAR 42000 
         chi "变量'%-.64s'的参数类型不正确"
         eng "Incorrect argument type to variable '%-.64s'"
         ger "Falscher Argumenttyp für Variable '%-.64s'"
@@ -4953,7 +4953,7 @@ ER_WRONG_TYPE_FOR_VAR 42000
         rus "Неверный тип аргумента для переменной '%-.64s'"
         spa "Tipo de argumento incorrecto para variable '%-.64s'"
         swe "Fel typ av argument till variabel '%-.64s'"
-ER_VAR_CANT_BE_READ
+ER_VAR_CANT_BE_READ  
         chi "变量'%-.64s'只能设置，不能读"
         eng "Variable '%-.64s' can only be set, not read"
         ger "Variable '%-.64s' kann nur verändert, nicht gelesen werden"
@@ -4964,7 +4964,7 @@ ER_VAR_CANT_BE_READ
         rus "Переменная '%-.64s' может быть только установлена, но не считана"
         spa "La variable '%-.64s' solamente puede ser configurada, no leída"
         swe "Variabeln '%-.64s' kan endast sättas, inte läsas"
-ER_CANT_USE_OPTION_HERE 42000
+ER_CANT_USE_OPTION_HERE 42000 
         chi "'%s'的使用/放置不正确"
         eng "Incorrect usage/placement of '%s'"
         ger "Falsche Verwendung oder Platzierung von '%s'"
@@ -4975,7 +4975,7 @@ ER_CANT_USE_OPTION_HERE 42000
         rus "Неверное использование или в неверном месте указан '%s'"
         spa "Incorrecto uso/colocación de '%s'"
         swe "Fel använding/placering av '%s'"
-ER_NOT_SUPPORTED_YET 42000
+ER_NOT_SUPPORTED_YET 42000 
         chi "此版本的MariaDB尚未支持'%s'"
         eng "This version of MariaDB doesn't yet support '%s'"
         ger "Diese MariaDB-Version unterstützt '%s' nicht"
@@ -4986,7 +4986,7 @@ ER_NOT_SUPPORTED_YET 42000
         rus "Эта версия MariaDB пока еще не поддерживает '%s'"
         spa "Esta versión de MariaDB no soporta todavía '%s'"
         swe "Denna version av MariaDB kan ännu inte utföra '%s'"
-ER_MASTER_FATAL_ERROR_READING_BINLOG
+ER_MASTER_FATAL_ERROR_READING_BINLOG  
         chi "从二进制日志读取数据时，从master遇到致命错误%d：'%-.320s'"
         eng "Got fatal error %d from master when reading data from binary log: '%-.320s'"
         ger "Schwerer Fehler %d: '%-.320s vom Master beim Lesen des binären Logs"
@@ -4997,7 +4997,7 @@ ER_MASTER_FATAL_ERROR_READING_BINLOG
         rus "Получена неисправимая ошибка %d: '%-.320s' от головного сервера в процессе выборки данных из двоичного журнала"
         spa "Obtenido error fatal %d del maestro (master) al leer datos del historial (log) binario: '%-.320s'"
         swe "Fick fatalt fel %d: '%-.320s' från master vid läsning av binärloggen"
-ER_SLAVE_IGNORED_TABLE
+ER_SLAVE_IGNORED_TABLE  
         chi "由于复制replicate-*-table规则，Slave SQL线程忽略了查询"
         eng "Slave SQL thread ignored the query because of replicate-*-table rules"
         ger "Slave-SQL-Thread hat die Abfrage aufgrund von replicate-*-table-Regeln ignoriert"
@@ -5006,7 +5006,7 @@ ER_SLAVE_IGNORED_TABLE
         por "Slave SQL thread ignorado a consulta devido às normas de replicação-*-tabela"
         spa "El hilo (thread) SQL esclavo ha ignorado la consulta (query) debido a las reglas de replicar-*-tabla"
         swe "Slav SQL tråden ignorerade frågan pga en replicate-*-table regel"
-ER_INCORRECT_GLOBAL_LOCAL_VAR
+ER_INCORRECT_GLOBAL_LOCAL_VAR  
         chi "变量'%-.192s'是一个%s变量"
         eng "Variable '%-.192s' is a %s variable"
         ger "Variable '%-.192s' ist eine %s-Variable"
@@ -5015,7 +5015,7 @@ ER_INCORRECT_GLOBAL_LOCAL_VAR
         serbian "Promenljiva '%-.192s' je %s promenljiva"
         spa "La variable '%-.192s' es una variable %s"
         swe "Variabel '%-.192s' är av typ %s"
-ER_WRONG_FK_DEF 42000
+ER_WRONG_FK_DEF 42000 
         chi "'%-.192s'的外键定义不正确：%s"
         eng "Incorrect foreign key definition for '%-.192s': %s"
         ger "Falsche Fremdschlüssel-Definition für '%-.192s': %s"
@@ -5024,7 +5024,7 @@ ER_WRONG_FK_DEF 42000
         por "Definição errada da chave estrangeira para '%-.192s': %s"
         spa "Definición de clave foránea incorrecta para '%-.192s': %s"
         swe "Felaktig FOREIGN KEY-definition för '%-.192s': %s"
-ER_KEY_REF_DO_NOT_MATCH_TABLE_REF
+ER_KEY_REF_DO_NOT_MATCH_TABLE_REF  
         chi "索引参考和表参考不匹配"
         eng "Key reference and table reference don't match"
         ger "Schlüssel- und Tabellenverweis passen nicht zusammen"
@@ -5033,7 +5033,7 @@ ER_KEY_REF_DO_NOT_MATCH_TABLE_REF
         por "Referência da chave e referência da tabela não coincidem"
         spa "La referencia de clave y la referencia de tabla no coinciden"
         swe "Nyckelreferensen och tabellreferensen stämmer inte överens"
-ER_OPERAND_COLUMNS 21000
+ER_OPERAND_COLUMNS 21000 
         chi "操作数应包含%d列"
         eng "Operand should contain %d column(s)"
         ger "Operand sollte %d Spalte(n) enthalten"
@@ -5042,7 +5042,7 @@ ER_OPERAND_COLUMNS 21000
         rus "Операнд должен содержать %d колонок"
         spa "El operando debería de contener %d columna(s)"
         ukr "Операнд має складатися з %d стовбців"
-ER_SUBQUERY_NO_1_ROW 21000
+ER_SUBQUERY_NO_1_ROW 21000 
         chi "子查询返回超过1行"
         eng "Subquery returns more than 1 row"
         ger "Unterabfrage lieferte mehr als einen Datensatz zurück"
@@ -5053,7 +5053,7 @@ ER_SUBQUERY_NO_1_ROW 21000
         spa "La subconsulta (subquery) devuelve más de 1 fila"
         swe "Subquery returnerade mer än 1 rad"
         ukr "Підзапит повертає більш нiж 1 запис"
-ER_UNKNOWN_STMT_HANDLER
+ER_UNKNOWN_STMT_HANDLER  
         chi "未知prepared statement处理程序(%.*s)给予%s"
         dan "Unknown prepared statement handler (%.*s) given to %s"
         eng "Unknown prepared statement handler (%.*s) given to %s"
@@ -5064,7 +5064,7 @@ ER_UNKNOWN_STMT_HANDLER
         spa "Manejador desconocido de sentencia preparada (%.*s) dado para %s"
         swe "Okänd PREPARED STATEMENT id (%.*s) var given till %s"
         ukr "Unknown prepared statement handler (%.*s) given to %s"
-ER_CORRUPT_HELP_DB
+ER_CORRUPT_HELP_DB  
         chi "帮助数据库已损坏或不存在"
         eng "Help database is corrupt or does not exist"
         ger "Die Hilfe-Datenbank ist beschädigt oder existiert nicht"
@@ -5073,7 +5073,7 @@ ER_CORRUPT_HELP_DB
         por "Banco de dado de ajuda corrupto ou não existente"
         spa "O la Base de datos de Ayuda está corrupta o no existe"
         swe "Hjälpdatabasen finns inte eller är skadad"
-ER_CYCLIC_REFERENCE
+ER_CYCLIC_REFERENCE  
         chi "亚查询的死环参考"
         eng "Cyclic reference on subqueries"
         ger "Zyklischer Verweis in Unterabfragen"
@@ -5084,7 +5084,7 @@ ER_CYCLIC_REFERENCE
         spa "Referencia cíclica en subconsultas (subqueries)"
         swe "Cyklisk referens i subqueries"
         ukr "Циклічне посилання на підзапит"
-ER_AUTO_CONVERT
+ER_AUTO_CONVERT  
         chi "将列'%s'从%s转换为%s"
         eng "Converting column '%s' from %s to %s"
         ger "Feld '%s' wird von %s nach %s umgewandelt"
@@ -5095,7 +5095,7 @@ ER_AUTO_CONVERT
         spa "Convirtiendo la columna '%s' de %s a %s"
         swe "Konvertar kolumn '%s' från %s till %s"
         ukr "Перетворення стовбца '%s' з %s у %s"
-ER_ILLEGAL_REFERENCE 42S22
+ER_ILLEGAL_REFERENCE 42S22 
         chi "参考'%-.64s'不支持(%s)"
         eng "Reference '%-.64s' not supported (%s)"
         ger "Verweis '%-.64s' wird nicht unterstützt (%s)"
@@ -5106,7 +5106,7 @@ ER_ILLEGAL_REFERENCE 42S22
         spa "Referencia '%-.64s' no soportada (%s)"
         swe "Referens '%-.64s' stöds inte (%s)"
         ukr "Посилання '%-.64s' не пiдтримуется (%s)"
-ER_DERIVED_MUST_HAVE_ALIAS 42000
+ER_DERIVED_MUST_HAVE_ALIAS 42000 
         chi "每个派生的表必须有自己的别名"
         eng "Every derived table must have its own alias"
         ger "Für jede abgeleitete Tabelle muss ein eigener Alias angegeben werden"
@@ -5115,7 +5115,7 @@ ER_DERIVED_MUST_HAVE_ALIAS 42000
         por "Cada tabela derivada deve ter seu próprio alias"
         spa "Cada tabla derivada debe de tener su propio alias"
         swe "Varje 'derived table' måste ha sitt eget alias"
-ER_SELECT_REDUCED 01000
+ER_SELECT_REDUCED 01000 
         chi "SELECT %u在优化期间被减"
         eng "Select %u was reduced during optimization"
         ger "Select %u wurde während der Optimierung reduziert"
@@ -5126,7 +5126,7 @@ ER_SELECT_REDUCED 01000
         spa "La selección %u fué reducida durante optimización"
         swe "Select %u reducerades vid optimiering"
         ukr "Select %u was скасовано при оптимiзацii"
-ER_TABLENAME_NOT_ALLOWED_HERE 42000
+ER_TABLENAME_NOT_ALLOWED_HERE 42000 
         chi "表'%-.192s'从其中一个SELECT中不能用于%-.32s"
         eng "Table '%-.192s' from one of the SELECTs cannot be used in %-.32s"
         ger "Tabelle '%-.192s', die in einem der SELECT-Befehle verwendet wurde, kann nicht in %-.32s verwendet werden"
@@ -5135,7 +5135,7 @@ ER_TABLENAME_NOT_ALLOWED_HERE 42000
         por "Tabela '%-.192s' de um dos SELECTs não pode ser usada em %-.32s"
         spa "La tabla '%-.192s' de uno de los SELECT no puede ser usada en %-.32s"
         swe "Tabell '%-.192s' från en SELECT kan inte användas i %-.32s"
-ER_NOT_SUPPORTED_AUTH_MODE 08004
+ER_NOT_SUPPORTED_AUTH_MODE 08004 
         chi "客户端不支持服务器请求的身份验证协议;考虑升级MariaDB客户端"
         eng "Client does not support authentication protocol requested by server; consider upgrading MariaDB client"
         ger "Client unterstützt das vom Server erwartete Authentifizierungsprotokoll nicht. Bitte aktualisieren Sie Ihren MariaDB-Client"
@@ -5144,7 +5144,7 @@ ER_NOT_SUPPORTED_AUTH_MODE 08004
         por "Cliente não suporta o protocolo de autenticação exigido pelo servidor; considere a atualização do cliente MariaDB"
         spa "El cliente no soporta protocolo de autenticación requerido por el servidor; considere mejorar el cliente MariaDB"
         swe "Klienten stöder inte autentiseringsprotokollet som begärts av servern; överväg uppgradering av klientprogrammet"
-ER_SPATIAL_CANT_HAVE_NULL 42000
+ER_SPATIAL_CANT_HAVE_NULL 42000 
         chi "SPATIAL索引的所有部分必须不为null"
         eng "All parts of a SPATIAL index must be NOT NULL"
         ger "Alle Teile eines SPATIAL-Index müssen als NOT NULL deklariert sein"
@@ -5153,7 +5153,7 @@ ER_SPATIAL_CANT_HAVE_NULL 42000
         por "Todas as partes de uma SPATIAL index devem ser NOT NULL"
         spa "Todas las partes de un índice SPATIAL deben de ser NOT NULL"
         swe "Alla delar av en SPATIAL index måste vara NOT NULL"
-ER_COLLATION_CHARSET_MISMATCH 42000
+ER_COLLATION_CHARSET_MISMATCH 42000 
         chi "COLLATION'%s'无效地用于字符集'%s'"
         eng "COLLATION '%s' is not valid for CHARACTER SET '%s'"
         ger "COLLATION '%s' ist für CHARACTER SET '%s' ungültig"
@@ -5162,7 +5162,7 @@ ER_COLLATION_CHARSET_MISMATCH 42000
         por "COLLATION '%s' não é válida para CHARACTER SET '%s'"
         spa "El COTEJO (COLLATION) '%s' no es válido para CHARACTER SET '%s'"
         swe "COLLATION '%s' är inte tillåtet för CHARACTER SET '%s'"
-ER_SLAVE_WAS_RUNNING
+ER_SLAVE_WAS_RUNNING  
         chi "Slave已经在运行"
         eng "Slave is already running"
         ger "Slave läuft bereits"
@@ -5171,7 +5171,7 @@ ER_SLAVE_WAS_RUNNING
         por "O slave já está rodando"
         spa "El esclavo ya está funcionando"
         swe "Slaven har redan startat"
-ER_SLAVE_WAS_NOT_RUNNING
+ER_SLAVE_WAS_NOT_RUNNING  
         chi "slave已经停止了"
         eng "Slave already has been stopped"
         ger "Slave wurde bereits angehalten"
@@ -5180,7 +5180,7 @@ ER_SLAVE_WAS_NOT_RUNNING
         por "O slave já está parado"
         spa "El esclavo ya fué parado"
         swe "Slaven har redan stoppat"
-ER_TOO_BIG_FOR_UNCOMPRESS
+ER_TOO_BIG_FOR_UNCOMPRESS  
         chi "未压缩的数据量太大;最大量为%d（可能未压缩数据的长度已损坏）"
         eng "Uncompressed data size too large; the maximum size is %d (probably, length of uncompressed data was corrupted)"
         ger "Unkomprimierte Daten sind zu groß. Die maximale Größe beträgt %d (wahrscheinlich wurde die Länge der unkomprimierten Daten beschädigt)"
@@ -5188,7 +5188,7 @@ ER_TOO_BIG_FOR_UNCOMPRESS
         nla "Ongecomprimeerder data is te groot; de maximum lengte is %d (waarschijnlijk, de lengte van de gecomprimeerde data was beschadigd)"
         por "Tamanho muito grande dos dados des comprimidos. O máximo tamanho é %d. (provavelmente, o comprimento dos dados descomprimidos está corrupto)"
         spa "Tamaño demasiado grande para datos descomprimidos; el máximo tamaño es %d. (probablemente, el tamaño de datos descomprimidos fué corrompido)"
-ER_ZLIB_Z_MEM_ERROR
+ER_ZLIB_Z_MEM_ERROR  
         chi "ZLIB：内存不足"
         eng "ZLIB: Not enough memory"
         ger "ZLIB: Nicht genug Speicher"
@@ -5196,7 +5196,7 @@ ER_ZLIB_Z_MEM_ERROR
         nla "ZLIB: Onvoldoende geheugen"
         por "ZLIB: Não suficiente memória disponível"
         spa "ZLIB: No hay suficiente memoria"
-ER_ZLIB_Z_BUF_ERROR
+ER_ZLIB_Z_BUF_ERROR  
         chi "ZLIB：输出缓冲区中没有足够的空间（可能未压缩数据的长度已损坏）"
         eng "ZLIB: Not enough room in the output buffer (probably, length of uncompressed data was corrupted)"
         ger "ZLIB: Im Ausgabepuffer ist nicht genug Platz vorhanden (wahrscheinlich wurde die Länge der unkomprimierten Daten beschädigt)"
@@ -5204,7 +5204,7 @@ ER_ZLIB_Z_BUF_ERROR
         nla "ZLIB: Onvoldoende ruimte in uitgaande buffer (waarschijnlijk, de lengte van de ongecomprimeerde data was beschadigd)"
         por "ZLIB: Não suficiente espaço no buffer emissor (provavelmente, o comprimento dos dados descomprimidos está corrupto)"
         spa "ZLIB: No hay suficiente espacio en el búfer de salida (probablemente, el tamaño de datos descomprimidos fué corrompido)"
-ER_ZLIB_Z_DATA_ERROR
+ER_ZLIB_Z_DATA_ERROR  
         chi "ZLIB：输入数据已损坏"
         eng "ZLIB: Input data corrupted"
         ger "ZLIB: Eingabedaten beschädigt"
@@ -5212,11 +5212,11 @@ ER_ZLIB_Z_DATA_ERROR
         nla "ZLIB: Invoer data beschadigd"
         por "ZLIB: Dados de entrada está corrupto"
         spa "ZLIB: Dato de entrada corrupto"
-ER_CUT_VALUE_GROUP_CONCAT
+ER_CUT_VALUE_GROUP_CONCAT  
         chi "group_concat（）削减了行%u. %s"
         eng "Row %u was cut by %s)"
         spa "La fila %u ha sido cortada por %s)"
-ER_WARN_TOO_FEW_RECORDS 01000
+ER_WARN_TOO_FEW_RECORDS 01000 
         chi "行%lu不包含所有列的数据"
         eng "Row %lu doesn't contain data for all columns"
         ger "Zeile %lu enthält nicht für alle Felder Daten"
@@ -5224,7 +5224,7 @@ ER_WARN_TOO_FEW_RECORDS 01000
         nla "Rij %lu bevat niet de data voor alle kolommen"
         por "Conta de registro é menor que a conta de coluna na linha %lu"
         spa "La fila %lu no contiene datos para todas las columnas"
-ER_WARN_TOO_MANY_RECORDS 01000
+ER_WARN_TOO_MANY_RECORDS 01000 
         chi "行%lu被截断;它包含的数据比输入列更多"
         eng "Row %lu was truncated; it contained more data than there were input columns"
         ger "Zeile %lu gekürzt, die Zeile enthielt mehr Daten, als es Eingabefelder gibt"
@@ -5232,25 +5232,25 @@ ER_WARN_TOO_MANY_RECORDS 01000
         nla "Regel %lu ingekort, bevatte meer data dan invoer kolommen"
         por "Conta de registro é maior que a conta de coluna na linha %lu"
         spa "La fila %lu fué truncada; contenía más datos que columnas de entrada"
-ER_WARN_NULL_TO_NOTNULL 22004
+ER_WARN_NULL_TO_NOTNULL 22004 
         chi "列设置为默认值; NULL在行'%s'中提供给了NOT NULL列%lu"
         eng "Column set to default value; NULL supplied to NOT NULL column '%s' at row %lu"
         ger "Feld auf Vorgabewert gesetzt, da NULL für NOT-NULL-Feld '%s' in Zeile %lu angegeben"
         jpn "列にデフォルト値が設定されました。NOT NULLの列 '%s' に 行 %lu で NULL が与えられました。"
         por "Dado truncado, NULL fornecido para NOT NULL coluna '%s' na linha %lu"
         spa "Columna puesta a valor por defecto; NULL suministrado para columna NOT NULL '%s' en la fila %lu"
-ER_WARN_DATA_OUT_OF_RANGE 22003
+ER_WARN_DATA_OUT_OF_RANGE 22003 
         chi "列'%s'行%lu的值超出范围"
         eng "Out of range value for column '%s' at row %lu"
         spa "Valor fuera de rango para la columna '%s' en la fila %lu"
-WARN_DATA_TRUNCATED 01000
+WARN_DATA_TRUNCATED 01000 
         chi "数据被截断，在列'%s', 行%lu"
         eng "Data truncated for column '%s' at row %lu"
         ger "Daten abgeschnitten für Feld '%s' in Zeile %lu"
         jpn "列 '%s' の 行 %lu でデータが切り捨てられました。"
         por "Dado truncado para coluna '%s' na linha %lu"
         spa "Datos truncados para la columna '%s' en la fila %lu"
-ER_WARN_USING_OTHER_HANDLER
+ER_WARN_USING_OTHER_HANDLER  
         chi "使用存储引擎%s 表格'%s'"
         eng "Using storage engine %s for table '%s'"
         ger "Speicher-Engine %s wird für Tabelle '%s' benutzt"
@@ -5266,54 +5266,54 @@ ER_CANT_AGGREGATE_2COLLATIONS
         jpn "照合順序 (%s,%s) と (%s,%s) の混在は操作 '%s' では不正です。"
         por "Combinação ilegal de collations (%s,%s) e (%s,%s) para operação '%s'"
         spa "Mezcla ilegal de cotejos (collations) (%s,%s) y (%s,%s) para la operación '%s'"
-ER_DROP_USER
+ER_DROP_USER  
         chi "无法删除一个或多个请求的用户"
         eng "Cannot drop one or more of the requested users"
         ger "Kann einen oder mehrere der angegebenen Benutzer nicht löschen"
         spa "No puedo eliminar uno o más de los usuarios solicitados"
-ER_REVOKE_GRANTS
+ER_REVOKE_GRANTS  
         chi "无法为一个或多个请求的用户撤消所有权限"
         eng "Can't revoke all privileges for one or more of the requested users"
         ger "Kann nicht alle Berechtigungen widerrufen, die für einen oder mehrere Benutzer gewährt wurden"
         jpn "指定されたユーザーから指定された全ての権限を剥奪することができませんでした。"
         por "Não pode revocar todos os privilégios, grant para um ou mais dos usuários pedidos"
         spa "No puedo revocar todos los privilegios para uno o más de los usuarios solicitados"
-ER_CANT_AGGREGATE_3COLLATIONS
+ER_CANT_AGGREGATE_3COLLATIONS  
         chi "非法混合collations（%s，%s）,（%s，%s）和（%s，%s），用于操作'%s'"
         eng "Illegal mix of collations (%s,%s), (%s,%s), (%s,%s) for operation '%s'"
         ger "Unerlaubte Mischung von Sortierreihenfolgen (%s, %s), (%s, %s), (%s, %s) für Operation '%s'"
         jpn "照合順序 (%s,%s), (%s,%s), (%s,%s) の混在は操作 '%s' では不正です。"
         por "Ilegal combinação de collations (%s,%s), (%s,%s), (%s,%s) para operação '%s'"
         spa "Mezcla ilegal de cotejos (collations) (%s,%s), (%s,%s), (%s,%s) para la operación '%s'"
-ER_CANT_AGGREGATE_NCOLLATIONS
+ER_CANT_AGGREGATE_NCOLLATIONS  
         chi "非法混合collations操作'%s'"
         eng "Illegal mix of collations for operation '%s'"
         ger "Unerlaubte Mischung von Sortierreihenfolgen für Operation '%s'"
         jpn "操作 '%s' では不正な照合順序の混在です。"
         por "Ilegal combinação de collations para operação '%s'"
         spa "Mezcla ilegal de cotejos (collations) para la operación '%s'"
-ER_VARIABLE_IS_NOT_STRUCT
+ER_VARIABLE_IS_NOT_STRUCT  
         chi "变量'%-.64s'不是可变组件（不能用作xxxx.variable_name）"
         eng "Variable '%-.64s' is not a variable component (can't be used as XXXX.variable_name)"
         ger "Variable '%-.64s' ist keine Variablen-Komponente (kann nicht als XXXX.variablen_name verwendet werden)"
         jpn "変数 '%-.64s' は構造変数の構成要素ではありません。(XXXX.変数名 という指定はできません。)"
         por "Variável '%-.64s' não é uma variável componente (Não pode ser usada como XXXX.variável_nome)"
         spa "La variable '%-.64s' no es un componente variable (No puede ser usada como XXXX.variable_name)"
-ER_UNKNOWN_COLLATION
+ER_UNKNOWN_COLLATION  
         chi "未知的collation：'%-.64s'"
         eng "Unknown collation: '%-.64s'"
         ger "Unbekannte Sortierreihenfolge: '%-.64s'"
         jpn "不明な照合順序: '%-.64s'"
         por "Collation desconhecida: '%-.64s'"
         spa "Cotejo (Collation) desconocido: '%-.64s'"
-ER_SLAVE_IGNORED_SSL_PARAMS
+ER_SLAVE_IGNORED_SSL_PARAMS  
         chi "CHANGE MASTER中的SSL参数被忽略，因为此MariaDB从站未在没有SSL支持的情况下编译;如果启动了SSL的MariaDB从站，则可以使用它们"
         eng "SSL parameters in CHANGE MASTER are ignored because this MariaDB slave was compiled without SSL support; they can be used later if MariaDB slave with SSL is started"
         ger "SSL-Parameter in CHANGE MASTER werden ignoriert, weil dieser MariaDB-Slave ohne SSL-Unterstützung kompiliert wurde. Sie können aber später verwendet werden, wenn ein MariaDB-Slave mit SSL gestartet wird"
         jpn "このMariaDBスレーブはSSLサポートを含めてコンパイルされていないので、CHANGE MASTER のSSLパラメータは無視されました。今後SSLサポートを持つMariaDBスレーブを起動する際に利用されます。"
         por "SSL parâmetros em CHANGE MASTER são ignorados porque este escravo MariaDB foi compilado sem o SSL suporte. Os mesmos podem ser usados mais tarde quando o escravo MariaDB com SSL seja iniciado."
         spa "Los parámetros SSL en CHANGE MASTER son ignorados porque este esclavo MariaDB fue compilado sin soporte SSL; pueden ser usados después cuando el esclavo MariaDB con SSL sea arrancado"
-ER_SERVER_IS_IN_SECURE_AUTH_MODE
+ER_SERVER_IS_IN_SECURE_AUTH_MODE  
         chi "服务器在--secure-auth模式下运行，但'%s'@'%s'具有旧格式的密码;请将密码更改为新格式"
         eng "Server is running in --secure-auth mode, but '%s'@'%s' has a password in the old format; please change the password to the new format"
         ger "Server läuft im Modus --secure-auth, aber '%s'@'%s' hat ein Passwort im alten Format. Bitte Passwort ins neue Format ändern"
@@ -5321,7 +5321,7 @@ ER_SERVER_IS_IN_SECURE_AUTH_MODE
         por "Servidor está rodando em --secure-auth modo, porêm '%s'@'%s' tem senha no formato antigo; por favor troque a senha para o novo formato"
         rus "Сервер запущен в режиме --secure-auth (безопасной авторизации), но для пользователя '%s'@'%s' пароль сохранён в старом формате; необходимо обновить формат пароля"
         spa "El servidor se está ejecutando en modo --secure-auth, pero '%s'@'%s' tiene una contraseña con formato antiguo; por favor cambie la contraseña al nuevo formato"
-ER_WARN_FIELD_RESOLVED
+ER_WARN_FIELD_RESOLVED  
         chi "列或参考'%-.192s%s%-.192s%s%-.192s' 在SELECT #%d 中, 在SELECT #%d中得到解决"
         eng "Field or reference '%-.192s%s%-.192s%s%-.192s' of SELECT #%d was resolved in SELECT #%d"
         ger "Feld oder Verweis '%-.192s%s%-.192s%s%-.192s' im SELECT-Befehl Nr. %d wurde im SELECT-Befehl Nr. %d aufgelöst"
@@ -5330,28 +5330,28 @@ ER_WARN_FIELD_RESOLVED
         rus "Поле или ссылка '%-.192s%s%-.192s%s%-.192s' из SELECTа #%d была найдена в SELECTе #%d"
         spa "El campo o la referencia '%-.192s%s%-.192s%s%-.192s' de SELECT #%d se resolvió en SELECT #%d"
         ukr "Стовбець або посилання '%-.192s%s%-.192s%s%-.192s' із SELECTу #%d було знайдене у SELECTі #%d"
-ER_BAD_SLAVE_UNTIL_COND
+ER_BAD_SLAVE_UNTIL_COND  
         chi "START SLAVE UNTIL的参数或参数的组合不正确"
         eng "Incorrect parameter or combination of parameters for START SLAVE UNTIL"
         ger "Falscher Parameter oder falsche Kombination von Parametern für START SLAVE UNTIL"
         jpn "START SLAVE UNTIL へのパラメータまたはその組み合わせが不正です。"
         por "Parâmetro ou combinação de parâmetros errado para START SLAVE UNTIL"
         spa "Parámetro incorrecto o combinación de parámetros para START SLAVE UNTIL"
-ER_MISSING_SKIP_SLAVE
+ER_MISSING_SKIP_SLAVE  
         chi "START SLAVE UNTIL进行逐步复制时建议使用--skip-slave-start;否则，如果有意外的Slave的mariadbd重启，可能有问题"
         eng "It is recommended to use --skip-slave-start when doing step-by-step replication with START SLAVE UNTIL; otherwise, you will get problems if you get an unexpected slave's mariadbd restart"
         ger "Es wird empfohlen, mit --skip-slave-start zu starten, wenn mit START SLAVE UNTIL eine Schritt-für-Schritt-Replikation ausgeführt wird. Ansonsten gibt es Probleme, wenn ein Slave-Server unerwartet neu startet"
         jpn "START SLAVE UNTIL で段階的にレプリケーションを行う際には、--skip-slave-start オプションを使うことを推奨します。使わない場合、スレーブのmariadbdが不慮の再起動をすると問題が発生します。"
         por "É recomendado para rodar com --skip-slave-start quando fazendo replicação passo-por-passo com START SLAVE UNTIL, de outra forma você não está seguro em caso de inesperada reinicialição do mariadbd escravo"
         spa "Se recomienda usar --skip-slave-start al hacer réplica paso a paso con START SLAVE UNTIL; en caso contrario, obtendrá problemas si tiene lugar un rearranque inesperado del esclavo mariadb"
-ER_UNTIL_COND_IGNORED
+ER_UNTIL_COND_IGNORED  
         chi "不能启动SQL线程所以UNTIL选项被忽略"
         eng "SQL thread is not to be started so UNTIL options are ignored"
         ger "SQL-Thread soll nicht gestartet werden. Daher werden UNTIL-Optionen ignoriert"
         jpn "スレーブSQLスレッドが開始されないため、UNTILオプションは無視されました。"
         por "Thread SQL não pode ser inicializado tal que opções UNTIL são ignoradas"
         spa "Un hilo (thread) SQL no ha de ser arrancado de esa manera HASTA que las opciones sean ignordas"
-ER_WRONG_NAME_FOR_INDEX 42000
+ER_WRONG_NAME_FOR_INDEX 42000 
         chi "索引名称'%-.100s'不正确"
         eng "Incorrect index name '%-.100s'"
         ger "Falscher Indexname '%-.100s'"
@@ -5359,7 +5359,7 @@ ER_WRONG_NAME_FOR_INDEX 42000
         por "Incorreto nome de índice '%-.100s'"
         spa "Nombre de índice incorrecto '%-.100s'"
         swe "Felaktigt index namn '%-.100s'"
-ER_WRONG_NAME_FOR_CATALOG 42000
+ER_WRONG_NAME_FOR_CATALOG 42000 
         chi "目录名称'%-.100s'不正确"
         eng "Incorrect catalog name '%-.100s'"
         ger "Falscher Katalogname '%-.100s'"
@@ -5367,7 +5367,7 @@ ER_WRONG_NAME_FOR_CATALOG 42000
         por "Incorreto nome de catálogo '%-.100s'"
         spa "Nombre de catálogo incorrecto '%-.100s'"
         swe "Felaktigt katalog namn '%-.100s'"
-ER_WARN_QC_RESIZE
+ER_WARN_QC_RESIZE  
         chi "设置查询缓存值%llu失败;新查询缓存值为%lu"
         eng "Query cache failed to set size %llu; new query cache size is %lu"
         ger "Änderung der Query-Cache-Größe auf %llu fehlgeschlagen; neue Query-Cache-Größe ist %lu"
@@ -5376,7 +5376,7 @@ ER_WARN_QC_RESIZE
         spa "La caché de consulta (query) ha fallado al poner el tamaño %llu; el nuevo tamaño de caché de consulta (query) es %lu"
         swe "Storleken av "Query cache" kunde inte sättas till %llu, ny storlek är %lu"
         ukr "Кеш запитів неспроможен встановити розмір %llu, новий розмір кеша запитів - %lu"
-ER_BAD_FT_COLUMN
+ER_BAD_FT_COLUMN  
         chi "列'%-.192s'不能成为全文索引的一部分"
         eng "Column '%-.192s' cannot be part of FULLTEXT index"
         ger "Feld '%-.192s' kann nicht Teil eines FULLTEXT-Index sein"
@@ -5384,7 +5384,7 @@ ER_BAD_FT_COLUMN
         por "Coluna '%-.192s' não pode ser parte de índice FULLTEXT"
         spa "La columna '%-.192s' no puede format parte de índice FULLTEXT"
         swe "Kolumn '%-.192s' kan inte vara del av ett FULLTEXT index"
-ER_UNKNOWN_KEY_CACHE
+ER_UNKNOWN_KEY_CACHE  
         chi "未知索引缓存'%-.100s'"
         eng "Unknown key cache '%-.100s'"
         ger "Unbekannter Schlüssel-Cache '%-.100s'"
@@ -5392,14 +5392,14 @@ ER_UNKNOWN_KEY_CACHE
         por "Key cache desconhecida '%-.100s'"
         spa "Caché de clave desconocida '%-.100s'"
         swe "Okänd nyckel cache '%-.100s'"
-ER_WARN_HOSTNAME_WONT_WORK
+ER_WARN_HOSTNAME_WONT_WORK  
         chi "MariaDB以-skip-name-resolve模式启动;想用grant，您必须重新启动，不用这个选项"
         eng "MariaDB is started in --skip-name-resolve mode; you must restart it without this switch for this grant to work"
         ger "MariaDB wurde mit --skip-name-resolve gestartet. Diese Option darf nicht verwendet werden, damit diese Rechtevergabe möglich ist"
         jpn "MariaDBは --skip-name-resolve モードで起動しています。このオプションを外して再起動しなければ、この権限操作は機能しません。"
         por "MariaDB foi inicializado em modo --skip-name-resolve. Você necesita reincializá-lo sem esta opção para este grant funcionar"
         spa "MariaDB ha sido arrancada en modo --skip-name-resolve; vd necesita reinicializarla sin esta opción para que esta concesión funcione"
-ER_UNKNOWN_STORAGE_ENGINE 42000
+ER_UNKNOWN_STORAGE_ENGINE 42000 
         chi "未知的存储引擎'%s'"
         eng "Unknown storage engine '%s'"
         ger "Unbekannte Speicher-Engine '%s'"
@@ -5407,14 +5407,14 @@ ER_UNKNOWN_STORAGE_ENGINE 42000
         jpn "'%s' は不明なストレージエンジンです。"
         por "Motor de tabela desconhecido '%s'"
         spa "Motor de almacenaje '%s' desconocido"
-ER_WARN_DEPRECATED_SYNTAX
+ER_WARN_DEPRECATED_SYNTAX  
         chi "弃用'%s'，将在将来的版本中删除。请使用%s"
         eng "'%s' is deprecated and will be removed in a future release. Please use %s instead"
         ger "'%s' ist veraltet. Bitte benutzen Sie '%s'"
         jpn "'%s' は将来のリリースで廃止予定です。代わりに %s を使用してください。"
         por "'%s' é desatualizado. Use '%s' em seu lugar"
         spa "'%s' está obsoleto y será quitado en una entrega futura, use '%s' en su lugar"
-ER_NON_UPDATABLE_TABLE
+ER_NON_UPDATABLE_TABLE  
         chi "目标表%-.100s多个%s不可更新"
         eng "The target table %-.100s of the %s is not updatable"
         ger "Die Zieltabelle %-.100s von %s ist nicht aktualisierbar"
@@ -5424,7 +5424,7 @@ ER_NON_UPDATABLE_TABLE
         spa "La tabla destino %-.100s del %s no es actualizable"
         swe "Tabell %-.100s använd med '%s' är inte uppdateringsbar"
         ukr "Таблиця %-.100s у %s не може оновлюватись"
-ER_FEATURE_DISABLED
+ER_FEATURE_DISABLED  
         chi "'%s'功能被禁用;您需要MariaDB以'%s'构建以使其工作"
         eng "The '%s' feature is disabled; you need MariaDB built with '%s' to have it working"
         ger "Das Feature '%s' ist ausgeschaltet, Sie müssen MariaDB mit '%s' übersetzen, damit es verfügbar ist"
@@ -5432,7 +5432,7 @@ ER_FEATURE_DISABLED
         por "O recurso '%s' foi desativado; você necessita MariaDB construído com '%s' para ter isto funcionando"
         spa "La característica '%s' fue deshabilitada; usted necesita construir MariaDB con '%s' para tener eso funcionando"
         swe "'%s' är inte aktiverad; För att aktivera detta måste du bygga om MariaDB med '%s' definierad"
-ER_OPTION_PREVENTS_STATEMENT
+ER_OPTION_PREVENTS_STATEMENT  
         chi "MariaDB服务器使用%s选项运行，因此无法执行此语句"
         eng "The MariaDB server is running with the %s option so it cannot execute this statement"
         ger "Der MariaDB-Server läuft mit der Option %s und kann diese Anweisung deswegen nicht ausführen"
@@ -5440,40 +5440,40 @@ ER_OPTION_PREVENTS_STATEMENT
         por "O servidor MariaDB está rodando com a opção %s razão pela qual não pode executar esse commando"
         spa "El servidor MariaDB se está ejecutando con la opción %s por lo que no se puede ejecutar esta sentencia"
         swe "MariaDB är startad med %s. Pga av detta kan du inte använda detta kommando"
-ER_DUPLICATED_VALUE_IN_TYPE
+ER_DUPLICATED_VALUE_IN_TYPE  
         chi "列'%-.100s'有重复的值'%-.64s'在%s"
         eng "Column '%-.100s' has duplicated value '%-.64s' in %s"
         ger "Feld '%-.100s' hat doppelten Wert '%-.64s' in %s"
         jpn "列 '%-.100s' で、重複する値 '%-.64s' が %s に指定されています。"
         por "Coluna '%-.100s' tem valor duplicado '%-.64s' em %s"
         spa "La columna '%-.100s' tiene valor duplicado '%-.64s' en %s"
-ER_TRUNCATED_WRONG_VALUE 22007
+ER_TRUNCATED_WRONG_VALUE 22007 
         chi "截断的不正确%-.32T值：'%-.128T'"
         eng "Truncated incorrect %-.32T value: '%-.128T'"
         ger "Falscher %-.32T-Wert gekürzt: '%-.128T'"
         jpn "不正な %-.32T の値が切り捨てられました。: '%-.128T'"
         por "Truncado errado %-.32T valor: '%-.128T'"
         spa "Truncado incorrecto %-.32T valor: '%-.128T'"
-ER_TOO_MUCH_AUTO_TIMESTAMP_COLS
+ER_TOO_MUCH_AUTO_TIMESTAMP_COLS  
         chi "表定义不正确;默认或ON UPDATE中只能有一个带有CURRENT_TIMESTAMP的TIMESTAMP列"
         eng "Incorrect table definition; there can be only one TIMESTAMP column with CURRENT_TIMESTAMP in DEFAULT or ON UPDATE clause"
         ger "Fehlerhafte Tabellendefinition. Es kann nur eine einzige TIMESTAMP-Spalte mit CURRENT_TIMESTAMP als DEFAULT oder in einer ON-UPDATE-Klausel geben"
         jpn "不正な表定義です。DEFAULT句またはON UPDATE句に CURRENT_TIMESTAMP をともなうTIMESTAMP型の列は1つまでです。"
         por "Incorreta definição de tabela; Pode ter somente uma coluna TIMESTAMP com CURRENT_TIMESTAMP em DEFAULT ou ON UPDATE cláusula"
         spa "Definición incorrecta de tabla; solamente puede haber una columna TIMESTAMP con CURRENT_TIMESTAMP en DEFAULT o en cláusula ON UPDATE"
-ER_INVALID_ON_UPDATE
+ER_INVALID_ON_UPDATE  
         chi "在'%-.192s'列的ON UPDATE子句上无效"
         eng "Invalid ON UPDATE clause for '%-.192s' column"
         ger "Ungültige ON-UPDATE-Klausel für Spalte '%-.192s'"
         jpn "列 '%-.192s' に ON UPDATE句は無効です。"
         por "Inválida cláusula ON UPDATE para campo '%-.192s'"
         spa "Cláusula ON UPDATE inválida para la columna '%-.192s'"
-ER_UNSUPPORTED_PS
+ER_UNSUPPORTED_PS  
         chi "尚未在prepared statement协议中支持此命令"
         eng "This command is not supported in the prepared statement protocol yet"
         ger "Dieser Befehl wird im Protokoll für vorbereitete Anweisungen noch nicht unterstützt"
         spa "Este comando no se encuentra soportado para protocolo de sentencia preparada, aún"
-ER_GET_ERRMSG
+ER_GET_ERRMSG  
         chi "出错%d '%-.200s'来自%s"
         dan "Modtog fejl %d '%-.200s' fra %s"
         eng "Got error %d '%-.200s' from %s"
@@ -5482,7 +5482,7 @@ ER_GET_ERRMSG
         nor "Mottok feil %d '%-.200s' fa %s"
         norwegian-ny "Mottok feil %d '%-.200s' fra %s"
         spa "Obtenido error %d '%-.200s' desde %s"
-ER_GET_TEMPORARY_ERRMSG
+ER_GET_TEMPORARY_ERRMSG  
         chi "出临时错误%d '%-.200s'来自%s"
         dan "Modtog temporary fejl %d '%-.200s' fra %s"
         eng "Got temporary error %d '%-.200s' from %s"
@@ -5491,203 +5491,203 @@ ER_GET_TEMPORARY_ERRMSG
         nor "Mottok temporary feil %d '%-.200s' fra %s"
         norwegian-ny "Mottok temporary feil %d '%-.200s' fra %s"
         spa "Obtenido error temporal %d '%-.200s' desde %s"
-ER_UNKNOWN_TIME_ZONE
+ER_UNKNOWN_TIME_ZONE  
         chi "未知或不正确的时区：'%-.64s'"
         eng "Unknown or incorrect time zone: '%-.64s'"
         ger "Unbekannte oder falsche Zeitzone: '%-.64s'"
         spa "Zona temporal desconocida o incorrecta: '%-.64s'"
-ER_WARN_INVALID_TIMESTAMP
+ER_WARN_INVALID_TIMESTAMP  
         chi "无效TIMESTAMP值：列'%s' 行'%lu'"
         eng "Invalid TIMESTAMP value in column '%s' at row %lu"
         ger "Ungültiger TIMESTAMP-Wert in Feld '%s', Zeile %lu"
         spa "Valor inválido de SELLO TEMPORAL (TIMESTAMP) en la columna '%s' de la fila %lu"
-ER_INVALID_CHARACTER_STRING
+ER_INVALID_CHARACTER_STRING  
         chi "无效的%s字符串：'%.64T'"
         eng "Invalid %s character string: '%.64T'"
         ger "Ungültiger %s-Zeichen-String: '%.64T'"
         spa "Cadena de carácter %s inválida: '%.64T'"
-ER_WARN_ALLOWED_PACKET_OVERFLOWED
+ER_WARN_ALLOWED_PACKET_OVERFLOWED  
         chi "%s（）的结果大于max_allowed_packet（%ld） - 截断"
         eng "Result of %s() was larger than max_allowed_packet (%ld) - truncated"
         ger "Ergebnis von %s() war größer als max_allowed_packet (%ld) Bytes und wurde deshalb gekürzt"
         spa "El resultado de %s() ha sido mayor que max_allowed_packet (%ld) - truncado"
-ER_CONFLICTING_DECLARATIONS
+ER_CONFLICTING_DECLARATIONS  
         chi "矛盾语句：'%s%s'和'%s%s'"
         eng "Conflicting declarations: '%s%s' and '%s%s'"
         ger "Widersprüchliche Deklarationen: '%s%s' und '%s%s'"
         spa "Declaraciones conflictivas: '%s%s' y '%s%s'"
-ER_SP_NO_RECURSIVE_CREATE 2F003
+ER_SP_NO_RECURSIVE_CREATE 2F003 
         chi "无法从另一个存储过程中创建%s"
         eng "Can't create a %s from within another stored routine"
         ger "Kann kein %s innerhalb einer anderen gespeicherten Routine erzeugen"
         spa "No puedo crear una %s desde dentro de otra rutina almacenada"
-ER_SP_ALREADY_EXISTS 42000
+ER_SP_ALREADY_EXISTS 42000 
         chi "%s%s已经存在"
         eng "%s %s already exists"
         ger "%s %s existiert bereits"
         hindi "%s %s पहले से ही मौजूद है"
         spa "%s %s ya existe"
-ER_SP_DOES_NOT_EXIST 42000
+ER_SP_DOES_NOT_EXIST 42000 
         chi "%s%s不存在"
         eng "%s %s does not exist"
         ger "%s %s existiert nicht"
         hindi "%s %s मौजूद नहीं है"
         spa "%s %s no existe"
-ER_SP_DROP_FAILED
+ER_SP_DROP_FAILED  
         chi "未能DROP%s%s"
         eng "Failed to DROP %s %s"
         ger "DROP %s %s ist fehlgeschlagen"
         hindi "%s %s को ड्रॉप करने में असफल रहे"
         spa "No pude ELIMINAR (DROP) %s %s"
-ER_SP_STORE_FAILED
+ER_SP_STORE_FAILED  
         chi "无法创建%s%s"
         eng "Failed to CREATE %s %s"
         ger "CREATE %s %s ist fehlgeschlagen"
         hindi "%s %s को बनाने में असफल रहे"
         spa "No pude CREAR %s %s"
-ER_SP_LILABEL_MISMATCH 42000
+ER_SP_LILABEL_MISMATCH 42000 
         chi "%s，没有匹配标签：%s"
         eng "%s with no matching label: %s"
         ger "%s ohne passende Marke: %s"
         spa "%s sin etiqueta coincidente: %s"
-ER_SP_LABEL_REDEFINE 42000
+ER_SP_LABEL_REDEFINE 42000 
         chi "重新定义标签%s"
         eng "Redefining label %s"
         ger "Neudefinition der Marke %s"
         spa "Redefiniendo etiqueta %s"
-ER_SP_LABEL_MISMATCH 42000
+ER_SP_LABEL_MISMATCH 42000 
         chi "没有匹配的最终标签%s"
         eng "End-label %s without match"
         ger "Ende-Marke %s ohne zugehörigen Anfang"
         spa "Etiqueta-Final %s sin coincidencia"
-ER_SP_UNINIT_VAR 01000
+ER_SP_UNINIT_VAR 01000 
         chi "参考未初始化的变量%s"
         eng "Referring to uninitialized variable %s"
         ger "Zugriff auf nichtinitialisierte Variable %s"
         spa "Refiriéndose a variable %s sin inicializar"
-ER_SP_BADSELECT 0A000
+ER_SP_BADSELECT 0A000 
         chi "PROCEDURE%s不能返回给定上下文中的结果集"
         eng "PROCEDURE %s can't return a result set in the given context"
         ger "PROCEDURE %s kann im gegebenen Kontext keine Ergebnismenge zurückgeben"
         spa "El PROCEDIMIENTO (PROCEDURE) %s no puede devolver un conjunto de resultados en el contexto dado"
-ER_SP_BADRETURN 42000
+ER_SP_BADRETURN 42000 
         chi "RETURN仅允许在函数中"
         eng "RETURN is only allowed in a FUNCTION"
         ger "RETURN ist nur innerhalb einer FUNCTION erlaubt"
         hindi "RETURN को केवल FUNCTION में इस्तेमाल किया जा सकता है"
         spa "RETURN sólo se permite dentro de una FUNCIÓN"
-ER_SP_BADSTATEMENT 0A000
+ER_SP_BADSTATEMENT 0A000 
         chi "%s不允许在存储过程中"
         eng "%s is not allowed in stored procedures"
         ger "%s ist in gespeicherten Prozeduren nicht erlaubt"
         hindi "%s को STORED PROCEDURE में इस्तेमाल नहीं किया जा सकता है"
         spa "%s no permitido en procedimientos almacenados"
-ER_UPDATE_LOG_DEPRECATED_IGNORED 42000
+ER_UPDATE_LOG_DEPRECATED_IGNORED 42000 
         chi "更新日志被弃用并由二进制日志替换;SET SQL_LOG_UPDATE已被忽略。此选项将在MariaDB 5.6中删除"
         eng "The update log is deprecated and replaced by the binary log; SET SQL_LOG_UPDATE has been ignored. This option will be removed in MariaDB 5.6"
         ger "Das Update-Log ist veraltet und wurde durch das Binär-Log ersetzt. SET SQL_LOG_UPDATE wird ignoriert. Diese Option wird in MariaDB 5.6 entfernt"
         spa "El historial (log) de actualización se encuentra obsoleto y reemplazado por el historial (log) binario; SET SQL_LOG_UPDATE ha sido ignorado. Esta opción será quitada en MariaDB 5.6"
-ER_UPDATE_LOG_DEPRECATED_TRANSLATED 42000
+ER_UPDATE_LOG_DEPRECATED_TRANSLATED 42000 
         chi "更新日志被弃用并由二进制日志替换;SET SQL_LOG_UPDATE已被转换为设置SQL_LOG_BIN。此选项将在MariaDB 5.6中删除"
         eng "The update log is deprecated and replaced by the binary log; SET SQL_LOG_UPDATE has been translated to SET SQL_LOG_BIN. This option will be removed in MariaDB 5.6"
         ger "Das Update-Log ist veraltet und wurde durch das Binär-Log ersetzt. SET SQL_LOG_UPDATE wurde in SET SQL_LOG_BIN übersetzt. Diese Option wird in MariaDB 5.6 entfernt"
         spa "El historial (log) de actualización se encuentra obsoleto y reemplazado por el historial binario; SET SQL_LOG_UPDATE ha sido traducido a SET SQL_LOG_BIN. Esta opción será quitada en MariaDB 5.6"
-ER_QUERY_INTERRUPTED 70100
+ER_QUERY_INTERRUPTED 70100 
         chi "查询执行中断"
         eng "Query execution was interrupted"
         ger "Ausführung der Abfrage wurde unterbrochen"
         spa "Se ha interrumpido la ejecución de la consulta (query)"
-ER_SP_WRONG_NO_OF_ARGS 42000
+ER_SP_WRONG_NO_OF_ARGS 42000 
         chi "%s%s的参数数量不正确;预期%u，得到%u"
         eng "Incorrect number of arguments for %s %s; expected %u, got %u"
         ger "Falsche Anzahl von Argumenten für %s %s; erwarte %u, erhalte %u"
         spa "Número incorrecto de argumentos para %s %s; se esperaba %u, se obtuvo %u"
-ER_SP_COND_MISMATCH 42000
+ER_SP_COND_MISMATCH 42000 
         chi "未定义的CONDITION：%s"
         eng "Undefined CONDITION: %s"
         ger "Undefinierte CONDITION: %s"
         spa "CONDICIÓN no definida: %s"
-ER_SP_NORETURN 42000
+ER_SP_NORETURN 42000 
         chi "FUNCTION%s中没有RETURN"
         eng "No RETURN found in FUNCTION %s"
         ger "Kein RETURN in FUNCTION %s gefunden"
         hindi "FUNCTION %s में कोई RETURN है"
         spa "No se hallado RETURN en FUNCIÓN %s"
-ER_SP_NORETURNEND 2F005
+ER_SP_NORETURNEND 2F005 
         chi "FUNCTION%s结束但无RETURN"
         eng "FUNCTION %s ended without RETURN"
         ger "FUNCTION %s endete ohne RETURN"
         hindi "FUNCTION %s RETURN के बिना समाप्त हो गया"
         spa "La FUNCIÓN %s termina sin RETURN"
-ER_SP_BAD_CURSOR_QUERY 42000
+ER_SP_BAD_CURSOR_QUERY 42000 
         chi "Cursor语句必须是选择"
         eng "Cursor statement must be a SELECT"
         ger "Cursor-Anweisung muss ein SELECT sein"
         spa "La sentencia de cursor debe de ser un SELECT"
-ER_SP_BAD_CURSOR_SELECT 42000
+ER_SP_BAD_CURSOR_SELECT 42000 
         chi "Cursor SELECT不能有INTO"
         eng "Cursor SELECT must not have INTO"
         ger "Cursor-SELECT darf kein INTO haben"
         spa "El SELECT de cursor no debe de tener INTO"
-ER_SP_CURSOR_MISMATCH 42000
+ER_SP_CURSOR_MISMATCH 42000 
         chi "未定义的CURSOR：%s"
         eng "Undefined CURSOR: %s"
         ger "Undefinierter CURSOR: %s"
         hindi "CURSOR %s अपरिभाषित है"
         spa "CURSOR indefinido: %s"
-ER_SP_CURSOR_ALREADY_OPEN 24000
+ER_SP_CURSOR_ALREADY_OPEN 24000 
         chi "Cursor已经打开"
         eng "Cursor is already open"
         ger "Cursor ist schon geöffnet"
         hindi "CURSOR पहले से ही खुला है"
         spa "Cursor ya abierto"
-ER_SP_CURSOR_NOT_OPEN 24000
+ER_SP_CURSOR_NOT_OPEN 24000 
         chi "Cursor未打开"
         eng "Cursor is not open"
         ger "Cursor ist nicht geöffnet"
         spa "Cursor no abierto"
-ER_SP_UNDECLARED_VAR 42000
+ER_SP_UNDECLARED_VAR 42000 
         chi "未定义的变量：%s"
         eng "Undeclared variable: %s"
         ger "Nicht deklarierte Variable: %s"
         spa "Variable sin declarar: %s"
-ER_SP_WRONG_NO_OF_FETCH_ARGS
+ER_SP_WRONG_NO_OF_FETCH_ARGS  
         chi "FETCH变量数不正确"
         eng "Incorrect number of FETCH variables"
         ger "Falsche Anzahl von FETCH-Variablen"
         spa "Incorrecto número de variables FETCH"
-ER_SP_FETCH_NO_DATA 02000
+ER_SP_FETCH_NO_DATA 02000 
         chi "没有数据 - 零行被选择或处理"
         eng "No data - zero rows fetched, selected, or processed"
         ger "Keine Daten - null Zeilen geholt (fetch), ausgewählt oder verarbeitet"
         spa "No hay datos - cero filas logradas, seleccionadas o procesadas"
-ER_SP_DUP_PARAM 42000
+ER_SP_DUP_PARAM 42000 
         chi "重复参数：%s"
         eng "Duplicate parameter: %s"
         ger "Doppelter Parameter: %s"
         spa "Parámetro duplicado: %s"
-ER_SP_DUP_VAR 42000
+ER_SP_DUP_VAR 42000 
         chi "重复变量：%s"
         eng "Duplicate variable: %s"
         ger "Doppelte Variable: %s"
         spa "Variable duplicada: %s"
-ER_SP_DUP_COND 42000
+ER_SP_DUP_COND 42000 
         chi "重复条件：%s"
         eng "Duplicate condition: %s"
         ger "Doppelte Bedingung: %s"
         spa "Condición duplicada: %s"
-ER_SP_DUP_CURS 42000
+ER_SP_DUP_CURS 42000 
         chi "重复Cursor：%s"
         eng "Duplicate cursor: %s"
         ger "Doppelter Cursor: %s"
         spa "Cursor duplicado: %s"
-ER_SP_CANT_ALTER
+ER_SP_CANT_ALTER  
         chi "未能ALTER %s%s"
         eng "Failed to ALTER %s %s"
         ger "ALTER %s %s fehlgeschlagen"
         hindi "%s %s को ALTER करने में असफल रहे"
         spa "Fallo en ALTER %s %s"
-ER_SP_SUBSELECT_NYI 0A000
+ER_SP_SUBSELECT_NYI 0A000 
         chi "不支持子查询值"
         eng "Subquery value not supported"
         ger "Subquery-Wert wird nicht unterstützt"
@@ -5697,85 +5697,85 @@ ER_STMT_NOT_ALLOWED_IN_SF_OR_TRG 0A000
         eng "%s is not allowed in stored function or trigger"
         ger "%s ist in gespeicherten Funktionen und in Triggern nicht erlaubt"
         spa "%s no permitido en función almacenada o en disparador"
-ER_SP_VARCOND_AFTER_CURSHNDLR 42000
+ER_SP_VARCOND_AFTER_CURSHNDLR 42000 
         chi "变量或条件声明在cursor或处理程序定义之后"
         eng "Variable or condition declaration after cursor or handler declaration"
         ger "Deklaration einer Variablen oder einer Bedingung nach der Deklaration eines Cursors oder eines Handlers"
         spa "Declaración de variable o condición tras declaración de cursor o manejador"
-ER_SP_CURSOR_AFTER_HANDLER 42000
+ER_SP_CURSOR_AFTER_HANDLER 42000 
         chi "处理程序声明后的cursor声明"
         eng "Cursor declaration after handler declaration"
         ger "Deklaration eines Cursors nach der Deklaration eines Handlers"
         spa "Declaración de cursor tras declaración de manejador"
-ER_SP_CASE_NOT_FOUND 20000
+ER_SP_CASE_NOT_FOUND 20000 
         chi "未能在CASE语句找到Case"
         eng "Case not found for CASE statement"
         ger "Fall für CASE-Anweisung nicht gefunden"
         spa "Caso no hallado para sentencia CASE"
-ER_FPARSER_TOO_BIG_FILE
+ER_FPARSER_TOO_BIG_FILE  
         chi "配置文件'%-.192s'太大了"
         eng "Configuration file '%-.192s' is too big"
         ger "Konfigurationsdatei '%-.192s' ist zu groß"
         rus "Слишком большой конфигурационный файл '%-.192s'"
         spa "El fichero/archivo de configuración '%-.192s' es demasiado grande"
         ukr "Занадто великий конфігураційний файл '%-.192s'"
-ER_FPARSER_BAD_HEADER
+ER_FPARSER_BAD_HEADER  
         chi "文件'%-.192s'中的文件类型格式有问题"
         eng "Malformed file type header in file '%-.192s'"
         ger "Nicht wohlgeformter Dateityp-Header in Datei '%-.192s'"
         rus "Неверный заголовок типа файла '%-.192s'"
         spa "Cabecera de tipo de fichero/archivo malformada en fichero/archivo '%-.192s'"
         ukr "Невірний заголовок типу у файлі '%-.192s'"
-ER_FPARSER_EOF_IN_COMMENT
+ER_FPARSER_EOF_IN_COMMENT  
         chi "解析评论'%-.200s'时意外碰到EOF"
         eng "Unexpected end of file while parsing comment '%-.200s'"
         ger "Unerwartetes Dateiende beim Parsen des Kommentars '%-.200s'"
         rus "Неожиданный конец файла в коментарии '%-.200s'"
         spa "Inesperado fin de fichero/archivo mientras se analizaba comentario '%-.200s'"
         ukr "Несподіванний кінець файлу у коментарі '%-.200s'"
-ER_FPARSER_ERROR_IN_PARAMETER
+ER_FPARSER_ERROR_IN_PARAMETER  
         chi "解析参数'%-.192s'时出错（行：'%-.192s'）"
         eng "Error while parsing parameter '%-.192s' (line: '%-.192s')"
         ger "Fehler beim Parsen des Parameters '%-.192s' (Zeile: '%-.192s')"
         rus "Ошибка при распознавании параметра '%-.192s' (строка: '%-.192s')"
         spa "Error mientras se analizaba parámetro '%-.192s' (línea: '%-.192s')"
         ukr "Помилка в роспізнаванні параметру '%-.192s' (рядок: '%-.192s')"
-ER_FPARSER_EOF_IN_UNKNOWN_PARAMETER
+ER_FPARSER_EOF_IN_UNKNOWN_PARAMETER  
         chi "跳过未知参数'%-.192s'时意外碰到EOF"
         eng "Unexpected end of file while skipping unknown parameter '%-.192s'"
         ger "Unerwartetes Dateiende beim Überspringen des unbekannten Parameters '%-.192s'"
         rus "Неожиданный конец файла при пропуске неизвестного параметра '%-.192s'"
         spa "Inesperado fin de fichero/archivo mientras se saltaba parámetro desconocido '%-.192s'"
         ukr "Несподіванний кінець файлу у спробі проминути невідомий параметр '%-.192s'"
-ER_VIEW_NO_EXPLAIN
+ER_VIEW_NO_EXPLAIN  
         chi "ANALYZE/EXPLAIN/SHOW无法进行;缺乏底层表的特权"
         eng "ANALYZE/EXPLAIN/SHOW can not be issued; lacking privileges for underlying table"
         ger "ANALYZE/EXPLAIN/SHOW kann nicht verlangt werden. Rechte für zugrunde liegende Tabelle fehlen"
         rus "ANALYZE/EXPLAIN/SHOW не может быть выполнено; недостаточно прав на таблицы запроса"
         spa "ANALYZE/EXPLAIN/SHOW no puede ser emitdo; privilegios insuficientes para tabla subyacente"
         ukr "ANALYZE/EXPLAIN/SHOW не може бути виконано; немає прав на таблиці запиту"
-ER_FRM_UNKNOWN_TYPE
+ER_FRM_UNKNOWN_TYPE  
         chi "文件'%-.192s'在其标题中有未知的'%-.64s'"
         eng "File '%-.192s' has unknown type '%-.64s' in its header"
         ger "Datei '%-.192s' hat unbekannten Typ '%-.64s' im Header"
         rus "Файл '%-.192s' содержит неизвестный тип '%-.64s' в заголовке"
         spa "El fichero/archivo '%-.192s' es de un tipo desconocido '%-.64s' en su cabecera"
         ukr "Файл '%-.192s' має невідомий тип '%-.64s' у заголовку"
-ER_WRONG_OBJECT
+ER_WRONG_OBJECT  
         chi "'%-.192s.%-.192s'不是'%s'类"
         eng "'%-.192s.%-.192s' is not of type '%s'"
         ger "'%-.192s.%-.192s' ist nicht %s"
         rus "'%-.192s.%-.192s' - не %s"
         spa "'%-.192s.%-.192s' no es del tipo '%s'"
         ukr "'%-.192s.%-.192s' не є %s"
-ER_NONUPDATEABLE_COLUMN
+ER_NONUPDATEABLE_COLUMN  
         chi "列'%-.192s'不可更新"
         eng "Column '%-.192s' is not updatable"
         ger "Feld '%-.192s' ist nicht aktualisierbar"
         rus "Столбец '%-.192s' не обновляемый"
         spa "La columna '%-.192s' no es actualiable"
         ukr "Стовбець '%-.192s' не може бути зминений"
-ER_VIEW_SELECT_DERIVED
+ER_VIEW_SELECT_DERIVED  
         chi "View的Select的FROM包含子查询"
         eng "View's SELECT contains a subquery in the FROM clause"
         ger "SELECT der View enthält eine Subquery in der FROM-Klausel"
@@ -5784,96 +5784,96 @@ ER_VIEW_SELECT_DERIVED
         ukr "View SELECT має підзапит у конструкції FROM"
 
 # Not used any more, syntax error is returned instead
-ER_VIEW_SELECT_CLAUSE
+ER_VIEW_SELECT_CLAUSE  
         chi "View的Select包含“%s”子句"
         eng "View's SELECT contains a '%s' clause"
         ger "SELECT der View enthält eine '%s'-Klausel"
         rus "View SELECT содержит конструкцию '%s'"
         spa "El SELECT de la vista contiene una cláusula '%s'"
         ukr "View SELECT має конструкцію '%s'"
-ER_VIEW_SELECT_VARIABLE
+ER_VIEW_SELECT_VARIABLE  
         chi "View的选择包含变量或参数"
         eng "View's SELECT contains a variable or parameter"
         ger "SELECT der View enthält eine Variable oder einen Parameter"
         rus "View SELECT содержит переменную или параметр"
         spa "El SELECT de la vista contiene una variable o un parámetro"
         ukr "View SELECT має зминну або параметер"
-ER_VIEW_SELECT_TMPTABLE
+ER_VIEW_SELECT_TMPTABLE  
         chi "View的SELECT指的是临时表'%-.192s'"
         eng "View's SELECT refers to a temporary table '%-.192s'"
         ger "SELECT der View verweist auf eine temporäre Tabelle '%-.192s'"
         rus "View SELECT содержит ссылку на временную таблицу '%-.192s'"
         spa "El SELECT de la vista se refiere a una tabla temporal '%-.192s'"
         ukr "View SELECT використовує тимчасову таблицю '%-.192s'"
-ER_VIEW_WRONG_LIST
+ER_VIEW_WRONG_LIST  
         chi "View的选择和VIEW的字段列表具有不同的列计数"
         eng "View's SELECT and view's field list have different column counts"
         ger "SELECT- und Feldliste der Views haben unterschiedliche Anzahlen von Spalten"
         rus "View SELECT и список полей view имеют разное количество столбцов"
         spa "El SELECT de la vista y la lista de campos de la vista tienen un contador diferente de columnas"
         ukr "View SELECT і перелік стовбців view мають різну кількість сковбців"
-ER_WARN_VIEW_MERGE
+ER_WARN_VIEW_MERGE  
         chi "View合并算法目前不能使用（假设未定义的算法）"
         eng "View merge algorithm can't be used here for now (assumed undefined algorithm)"
         ger "View-Merge-Algorithmus kann hier momentan nicht verwendet werden (undefinierter Algorithmus wird angenommen)"
         rus "Алгоритм слияния view не может быть использован сейчас (алгоритм будет неопеределенным)"
         spa "El algoritmo de fusión de la vista no se puede usar aquí por ahora (se asume algoritmo indefinido)"
         ukr "Алгоритм зливання view не може бути використаний зараз (алгоритм буде невизначений)"
-ER_WARN_VIEW_WITHOUT_KEY
+ER_WARN_VIEW_WITHOUT_KEY  
         chi "更新的视图没有底层表的完整键"
         eng "View being updated does not have complete key of underlying table in it"
         ger "Die aktualisierte View enthält nicht den vollständigen Schlüssel der zugrunde liegenden Tabelle"
         rus "Обновляемый view не содержит ключа использованных(ой) в нем таблиц(ы)"
         spa "La vista que se está actualizando no tiene clave completa de la tabla subyacente que contiene"
         ukr "View, що оновлюеться, не містить повного ключа таблиці(ь), що викорістана в ньюому"
-ER_VIEW_INVALID
+ER_VIEW_INVALID  
         chi "View'%-.192s.%-.192s'引用无效的表、列、函数、或者函数或View缺乏使用权"
         eng "View '%-.192s.%-.192s' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them"
         spa "La vista '%-.192s.%-.192s' hace referencia a tabla(s) o columna(s) o función(es) inválida(s) o al definidor/invocador de vista le faltan derechos para usarlos"
-ER_SP_NO_DROP_SP
+ER_SP_NO_DROP_SP  
         chi "无法从另一个存储的例程中删除或更改%s"
         eng "Can't drop or alter a %s from within another stored routine"
         ger "Kann eine %s nicht von innerhalb einer anderen gespeicherten Routine löschen oder ändern"
         spa "No puedo eliminar o alterar una %s desde dentro de otra rutina almacenada"
-ER_SP_GOTO_IN_HNDLR
+ER_SP_GOTO_IN_HNDLR  
         chi "在存储过程处理程序中不允许GOTO"
         eng "GOTO is not allowed in a stored procedure handler"
         ger "GOTO ist im Handler einer gespeicherten Prozedur nicht erlaubt"
         spa "GOTO no permitido en manejador de procedimiento almacenado"
-ER_TRG_ALREADY_EXISTS
+ER_TRG_ALREADY_EXISTS  
         chi "触发'%s'已经存在"
         eng "Trigger '%s' already exists"
         ger "Trigger '%s' existiert bereits"
         hindi "TRIGGER '%s' पहले से मौजूद है"
         spa "Ya existe el disparador `%s`"
-ER_TRG_DOES_NOT_EXIST
+ER_TRG_DOES_NOT_EXIST  
         chi "触发不存在"
         eng "Trigger does not exist"
         ger "Trigger existiert nicht"
         hindi "TRIGGER मौजूद नहीं है"
         spa "El disparador no existe"
-ER_TRG_ON_VIEW_OR_TEMP_TABLE
+ER_TRG_ON_VIEW_OR_TEMP_TABLE  
         chi "触发器的'%-.192s'是视图或临时表"
         eng "Trigger's '%-.192s' is a view, temporary table or sequence"
         ger "'%-.192s' des Triggers ist ein View, temporäre Tabelle oder Sequence"
         spa "El disparador '%-.192s' es una vista, tabla temporal o secuencia"
         hindi "Trigger का '%-.192s' एक व्यू, टेम्पररी टेबल या सीक्वेंस है"
-ER_TRG_CANT_CHANGE_ROW
+ER_TRG_CANT_CHANGE_ROW  
         chi "更新%s行在%s触发器中不允许"
         eng "Updating of %s row is not allowed in %strigger"
         ger "Aktualisieren einer %s-Zeile ist in einem %s-Trigger nicht erlaubt"
         spa "Actualizar la fila %s no está permitido en disparador %s"
-ER_TRG_NO_SUCH_ROW_IN_TRG
+ER_TRG_NO_SUCH_ROW_IN_TRG  
         chi "没有%s行，触发%s"
         eng "There is no %s row in %s trigger"
         ger "Es gibt keine %s-Zeile im %s-Trigger"
         spa "No hay fila %s en disparador %s"
-ER_NO_DEFAULT_FOR_FIELD
+ER_NO_DEFAULT_FOR_FIELD  
         chi "字段'%-.192s'没有默认值"
         eng "Field '%-.192s' doesn't have a default value"
         ger "Feld '%-.192s' hat keinen Vorgabewert"
         spa "El campo '%-.192s' no tiene un valor por defecto"
-ER_DIVISION_BY_ZERO 22012
+ER_DIVISION_BY_ZERO 22012 
         chi "除0错误"
         eng "Division by 0"
         ger "Division durch 0"
@@ -5884,12 +5884,12 @@ ER_TRUNCATED_WRONG_VALUE_FOR_FIELD  22007
         eng "Incorrect %-.32s value: '%-.128T' for column `%.192s`.`%.192s`.`%.192s` at row %lu"
         ger "Falscher %-.32s-Wert: '%-.128T' für Feld '`%.192s`.`%.192s`.`%.192s` in Zeile %lu"
         spa "Incorrecto %-.32s valor: '%-.128T' para columna `%.192s`.`%.192s`.`%.192s` en la fila %lu"
-ER_ILLEGAL_VALUE_FOR_TYPE 22007
+ER_ILLEGAL_VALUE_FOR_TYPE 22007 
         chi "在解析期间发现的非法%s '%-.192T'值"
         eng "Illegal %s '%-.192T' value found during parsing"
         ger "Nicht zulässiger %s-Wert '%-.192T' beim Parsen gefunden"
         spa "Hallado valor ilegal %s '%-.192T' durante el análisi"
-ER_VIEW_NONUPD_CHECK
+ER_VIEW_NONUPD_CHECK  
         chi "在不可更新的视图%`-.192s.%`-.192s上CHECK OPTION"
         eng "CHECK OPTION on non-updatable view %`-.192s.%`-.192s"
         ger "CHECK OPTION auf nicht-aktualisierbarem View %`-.192s.%`-.192s"
@@ -5903,146 +5903,146 @@ ER_VIEW_CHECK_FAILED 44000
         rus "Проверка CHECK OPTION для VIEW %`-.192s.%`-.192s провалилась"
         spa "CHECK OPTION falló %`-.192s.%`-.192s"
         ukr "Перевірка CHECK OPTION для VIEW %`-.192s.%`-.192s не пройшла"
-ER_PROCACCESS_DENIED_ERROR 42000
+ER_PROCACCESS_DENIED_ERROR 42000 
         chi "%-.32s命令被拒绝。用户为'%s'@'%s' 例程'%-.192s'"
         eng "%-.32s command denied to user '%s'@'%s' for routine '%-.192s'"
         ger "Befehl %-.32s nicht zulässig für Benutzer '%s'@'%s' in Routine '%-.192s'"
         spa "Comando %-.32s denegado para el usuario '%s'@'%s' para rutina '%-.192s'"
-ER_RELAY_LOG_FAIL
+ER_RELAY_LOG_FAIL  
         chi "清除旧继relay日志失败：%s"
         eng "Failed purging old relay logs: %s"
         ger "Bereinigen alter Relais-Logs fehlgeschlagen: %s"
         spa "Falló la purga de viejos historiales (logs) de reenvío: %s"
-ER_PASSWD_LENGTH
+ER_PASSWD_LENGTH  
         chi "密码哈希应该是一个%d-digit十六进制数"
         eng "Password hash should be a %d-digit hexadecimal number"
         ger "Passwort-Hash sollte eine Hexdaezimalzahl mit %d Stellen sein"
         spa "El valor calculado de la contraseña debería de ser un número hexadecimal de %d-dígitos"
-ER_UNKNOWN_TARGET_BINLOG
+ER_UNKNOWN_TARGET_BINLOG  
         chi "在Binlog索引中找不到目标日志"
         eng "Target log not found in binlog index"
         ger "Ziel-Log im Binlog-Index nicht gefunden"
         spa "Historial (log) de destino no hallado en índice binlog"
-ER_IO_ERR_LOG_INDEX_READ
+ER_IO_ERR_LOG_INDEX_READ  
         chi "读取日志索引文件时I/O错误"
         eng "I/O error reading log index file"
         ger "Fehler beim Lesen der Log-Index-Datei"
         spa "Error de E/S leyendo fichero/archivo índice de historial (log)"
-ER_BINLOG_PURGE_PROHIBITED
+ER_BINLOG_PURGE_PROHIBITED  
         chi "服务器配置不允许Binlog清除"
         eng "Server configuration does not permit binlog purge"
         ger "Server-Konfiguration erlaubt keine Binlog-Bereinigung"
         spa "La configuración del servidor no permite purgar binlog"
-ER_FSEEK_FAIL
+ER_FSEEK_FAIL  
         chi "fseek（）失败"
         eng "Failed on fseek()"
         ger "fseek() fehlgeschlagen"
         hindi "fseek() विफल रहा"
         spa "Fallo en fseek()"
-ER_BINLOG_PURGE_FATAL_ERR
+ER_BINLOG_PURGE_FATAL_ERR  
         chi "日志清除期间的致命错误"
         eng "Fatal error during log purge"
         ger "Schwerwiegender Fehler bei der Log-Bereinigung"
         spa "Error fatal durante la purga del historial (log)"
-ER_LOG_IN_USE
+ER_LOG_IN_USE  
         chi "日志在用，不会清除"
         eng "A purgeable log is in use, will not purge"
         ger "Ein zu bereinigendes Log wird gerade benutzt, daher keine Bereinigung"
         spa "Se encuentra en uso un historial purgable, no lo purgaré"
-ER_LOG_PURGE_UNKNOWN_ERR
+ER_LOG_PURGE_UNKNOWN_ERR  
         chi "日志清除期间未知错误"
         eng "Unknown error during log purge"
         ger "Unbekannter Fehler bei Log-Bereinigung"
         spa "Error desconocido durante la purga del historial (log)"
-ER_RELAY_LOG_INIT
+ER_RELAY_LOG_INIT  
         chi "初始化relay日志失败。位置：%s"
         eng "Failed initializing relay log position: %s"
         ger "Initialisierung der Relais-Log-Position fehlgeschlagen: %s"
         spa "Fallo inicializando la posición del historial de reenvío: %s"
-ER_NO_BINARY_LOGGING
+ER_NO_BINARY_LOGGING  
         chi "您不使用二进制日志记录"
         eng "You are not using binary logging"
         ger "Sie verwenden keine Binärlogs"
         spa "No está usando historial (log) binario"
-ER_RESERVED_SYNTAX
+ER_RESERVED_SYNTAX  
         chi "'%-.64s'语法保留用于MariaDB服务器内部"
         eng "The '%-.64s' syntax is reserved for purposes internal to the MariaDB server"
         ger "Die Schreibweise '%-.64s' ist für interne Zwecke des MariaDB-Servers reserviert"
         spa "La sintaxis '%-.64s' está reservada para propósitos internos del servidor MariaDB"
-ER_WSAS_FAILED
+ER_WSAS_FAILED  
         chi "WSAStartup失败了"
         eng "WSAStartup Failed"
         ger "WSAStartup fehlgeschlagen"
         spa "Falló WSAStartup"
-ER_DIFF_GROUPS_PROC
+ER_DIFF_GROUPS_PROC  
         chi "无法处理具有不同组的过程"
         eng "Can't handle procedures with different groups yet"
         ger "Kann Prozeduren mit unterschiedlichen Gruppen noch nicht verarbeiten"
         spa "No puedo manejar procedimientos con grupos diferentes, aún"
-ER_NO_GROUP_FOR_PROC
+ER_NO_GROUP_FOR_PROC  
         chi "SELECT必须具有此过程的组"
         eng "Select must have a group with this procedure"
         ger "SELECT muss bei dieser Prozedur ein GROUP BY haben"
         spa "La selección debe de tener un grupo con este procedimiento"
-ER_ORDER_WITH_PROC
+ER_ORDER_WITH_PROC  
         chi "无法在次存储过程使用ORDER子句"
         eng "Can't use ORDER clause with this procedure"
         ger "Kann bei dieser Prozedur keine ORDER-BY-Klausel verwenden"
         spa "No puedo usar la cláusula ORDER con este procedimiento"
-ER_LOGGING_PROHIBIT_CHANGING_OF
+ER_LOGGING_PROHIBIT_CHANGING_OF  
         chi "二进制日志记录和复制禁止更改全局服务器%s"
         eng "Binary logging and replication forbid changing the global server %s"
         ger "Binärlogs und Replikation verhindern Wechsel des globalen Servers %s"
         spa "El historial (log) binario y la réplica prohibe cambiar el servidor global %s"
-ER_NO_FILE_MAPPING
+ER_NO_FILE_MAPPING  
         chi "无法映射文件：%-.200s，错误号码：%M"
         eng "Can't map file: %-.200s, errno: %M"
         ger "Kann Datei nicht abbilden: %-.200s, Fehler: %M"
         spa "No puedo mapear fichero/archivo: %-.200s, error: %M"
-ER_WRONG_MAGIC
+ER_WRONG_MAGIC  
         chi "魔法错误%-.64s"
         eng "Wrong magic in %-.64s"
         ger "Falsche magische Zahlen in %-.64s"
         spa "Magia equivocada en %-.64s"
-ER_PS_MANY_PARAM
+ER_PS_MANY_PARAM  
         chi "Prepared statement包含太多占位符"
         eng "Prepared statement contains too many placeholders"
         ger "Vorbereitete Anweisung enthält zu viele Platzhalter"
         spa "Sentencia preparada contiene demasiados marcadores de posición"
-ER_KEY_PART_0
+ER_KEY_PART_0  
         chi "索引部分'%-.192s'长度不能为0"
         eng "Key part '%-.192s' length cannot be 0"
         ger "Länge des Schlüsselteils '%-.192s' kann nicht 0 sein"
         spa "El tamaño de trozo de clave '%-.192s' no puede ser 0"
-ER_VIEW_CHECKSUM
+ER_VIEW_CHECKSUM  
         chi "查看文本checksum失败"
         eng "View text checksum failed"
         ger "View-Text-Prüfsumme fehlgeschlagen"
         rus "Проверка контрольной суммы текста VIEW провалилась"
         spa "Ha fallado la suma de comprobación del texto de la vista"
         ukr "Перевірка контрольної суми тексту VIEW не пройшла"
-ER_VIEW_MULTIUPDATE
+ER_VIEW_MULTIUPDATE  
         chi "无法通过JOIN视图'%-.192s.%-.192s'修改多个基础表。"
         eng "Can not modify more than one base table through a join view '%-.192s.%-.192s'"
         ger "Kann nicht mehr als eine Basistabelle über Join-View '%-.192s.%-.192s' ändern"
         rus "Нельзя изменить больше чем одну базовую таблицу используя многотабличный VIEW '%-.192s.%-.192s'"
         spa "No puedo modificar más de una tabla base a través de una vista de unión '%-.192s.%-.192s'"
         ukr "Неможливо оновити більш ниж одну базову таблицю выкористовуючи VIEW '%-.192s.%-.192s', що містіть декілька таблиць"
-ER_VIEW_NO_INSERT_FIELD_LIST
+ER_VIEW_NO_INSERT_FIELD_LIST  
         chi "无法写入JOIN视图'%-.192s.%-.192s'没有字段列表"
         eng "Can not insert into join view '%-.192s.%-.192s' without fields list"
         ger "Kann nicht ohne Feldliste in Join-View '%-.192s.%-.192s' einfügen"
         rus "Нельзя вставлять записи в многотабличный VIEW '%-.192s.%-.192s' без списка полей"
         spa "No puedo insertar dentro de vista de unión '%-.192s.%-.192s' sin lista de campos"
         ukr "Неможливо уставити рядки у VIEW '%-.192s.%-.192s', що містить декілька таблиць, без списку стовбців"
-ER_VIEW_DELETE_MERGE_VIEW
+ER_VIEW_DELETE_MERGE_VIEW  
         chi "无法从JOIN视图'%-.192s.%-.192s'删除"
         eng "Can not delete from join view '%-.192s.%-.192s'"
         ger "Kann nicht aus Join-View '%-.192s.%-.192s' löschen"
         rus "Нельзя удалять из многотабличного VIEW '%-.192s.%-.192s'"
         spa "No puedo borrar desde vista de unión '%-.192s.%-.192s'"
         ukr "Неможливо видалити рядки у VIEW '%-.192s.%-.192s', що містить декілька таблиць"
-ER_CANNOT_USER
+ER_CANNOT_USER  
         chi "操作%s失败%.256s"
         eng "Operation %s failed for %.256s"
         ger "Operation %s schlug fehl für %.256s"
@@ -6079,7 +6079,7 @@ ER_XA_RBROLLBACK XA100
         eng "XA_RBROLLBACK: Transaction branch was rolled back"
         ger "XA_RBROLLBACK: Transaktionszweig wurde zurückgerollt"
         spa "XA_RBROLLBACK: La rama de la transacción ha sido retrocedida (rolled back)"
-ER_NONEXISTING_PROC_GRANT 42000
+ER_NONEXISTING_PROC_GRANT 42000 
         chi "无授权：用户'%-.48s'主机'%-.64s'ROUTINE'%-.192s'"
         eng "There is no such grant defined for user '%-.48s' on host '%-.64s' on routine '%-.192s'"
         ger "Es gibt diese Berechtigung für Benutzer '%-.48s' auf Host '%-.64s' für Routine '%-.192s' nicht"
@@ -6119,7 +6119,7 @@ ER_CANT_CREATE_USER_WITH_GRANT 42000
         eng "You are not allowed to create a user with GRANT"
         ger "Sie dürfen keinen Benutzer mit GRANT anlegen"
         spa "No está autorizado a crear un usuario con GRANT"
-ER_WRONG_VALUE_FOR_TYPE
+ER_WRONG_VALUE_FOR_TYPE  
         chi "不正确的%-.32s值：'%-.128T' 函数：%-.32s"
         eng "Incorrect %-.32s value: '%-.128T' for function %-.32s"
         ger "Falscher %-.32s-Wert: '%-.128T' für Funktion %-.32s"
@@ -6144,7 +6144,7 @@ ER_SP_NO_RETSET 0A000
         eng "Not allowed to return a result set from a %s"
         ger "Rückgabe einer Ergebnismenge aus einer %s ist nicht erlaubt"
         spa "No autorizado a devolver un conjunto de resultados desde un %s"
-ER_CANT_CREATE_GEOMETRY_OBJECT 22003
+ER_CANT_CREATE_GEOMETRY_OBJECT 22003 
         chi "无法从发送到几何字段的数据中获取几何对象"
         eng "Cannot get geometry object from data you send to the GEOMETRY field"
         ger "Kann kein Geometrieobjekt aus den Daten machen, die Sie dem GEOMETRY-Feld übergeben haben"
@@ -6234,12 +6234,12 @@ ER_FOREIGN_DATA_STRING_INVALID
         eng "The data source connection string '%-.64s' is not in the correct format"
         ger "Der Datenquellen-Verbindungsstring '%-.64s' hat kein korrektes Format"
         spa "La cadena de conexón de la fuente de datos '%-.64s' no tiene el formato correcto"
-ER_CANT_CREATE_FEDERATED_TABLE
+ER_CANT_CREATE_FEDERATED_TABLE  
         chi "无法创建联合表。外数据SRC错误：%-.64s"
         eng "Can't create federated table. Foreign data src error:  %-.64s"
         ger "Kann föderierte Tabelle nicht erzeugen. Fremddatenquellenfehlermeldung:  %-.64s"
         spa "No puedo crear tabla federada. Error en fuente de datos foráneos:  %-.64s"
-ER_TRG_IN_WRONG_SCHEMA
+ER_TRG_IN_WRONG_SCHEMA  
         chi "触发在错的SCHEMA"
         eng "Trigger in wrong schema"
         ger "Trigger im falschen Schema"
@@ -6423,7 +6423,7 @@ ER_WRONG_STRING_LENGTH
         eng "String '%-.70T' is too long for %s (should be no longer than %d)"
         ger "String '%-.70T' ist zu lang für %s (sollte nicht länger sein als %d)"
         spa "La cadena '%-.70T' es demasiado larga para %s (no debería de ser mayor de %d)"
-ER_NON_INSERTABLE_TABLE
+ER_NON_INSERTABLE_TABLE  
         chi "目标表%-.100s %s不可插入"
         eng "The target table %-.100s of the %s is not insertable-into"
         ger "Die Zieltabelle %-.100s von %s ist nicht einfügbar"
@@ -6486,7 +6486,7 @@ ER_PARTITION_WRONG_VALUES_ERROR
         eng "Only %-.64s PARTITIONING can use VALUES %-.64s in partition definition"
         ger "Nur %-.64s-PARTITIONierung kann VALUES %-.64s in der Partitionsdefinition verwenden"
         spa "Sólo %-.64s PARTITIONING puede usar VALUES %-.64s en la definición de la partición"
-        swe "Endast %-.64s partitionering kan använda VALUES %-.64s i definition av partitionen"
+        swe "Endast %-.64s partitionering kan använda VALUES %-.64s i definition av partitionen" 
 ER_PARTITION_MAXVALUE_ERROR
         chi "MAXVALUE只能在最后一个分区定义中使用"
         eng "MAXVALUE can only be used in last partition definition"
@@ -6896,7 +6896,7 @@ ER_DROP_INDEX_FK
         spa "No puedo eliminar índice '%-.192s': necesario en una restricción de clave foránea"
 # When using this error message, use the ER_WARN_DEPRECATED_SYNTAX error
 # code.
-ER_WARN_DEPRECATED_SYNTAX_WITH_VER
+ER_WARN_DEPRECATED_SYNTAX_WITH_VER  
         chi "语法'%s'被弃用，将在Mariadb%s中删除。请使用%s"
         eng  "The syntax '%s' is deprecated and will be removed in MariaDB %s. Please use %s instead"
         ger "Die Syntax '%s' ist veraltet und wird in MariaDB %s entfernt. Bitte benutzen Sie statt dessen %s"
@@ -7053,7 +7053,7 @@ ER_WRONG_PARAMETERS_TO_NATIVE_FCT 42000
         eng "Incorrect parameters in the call to native function '%-.192s'"
         ger "Falscher Parameter beim Aufruf der nativen Funktion '%-.192s'"
         spa "Parámetros incorrectos en la llamada a función nativa '%-.192s'"
-ER_WRONG_PARAMETERS_TO_STORED_FCT 42000
+ER_WRONG_PARAMETERS_TO_STORED_FCT 42000  
         chi "呼叫中的参数不正确为存储函数'%-.192s'"
         eng "Incorrect parameters in the call to stored function '%-.192s'"
         ger "Falsche Parameter beim Aufruf der gespeicherten Funktion '%-.192s'"
@@ -7304,7 +7304,7 @@ ER_TOO_LONG_FIELD_COMMENT
         ger "Kommentar für Feld '%-.64s' ist zu lang (max = %u)"
         por "Comentário para o campo '%-.64s' é longo demais (max = %u)"
         spa "El comentario para el campo '%-.64s' es demasiado largo (máx = %u)"
-ER_FUNC_INEXISTENT_NAME_COLLISION 42000
+ER_FUNC_INEXISTENT_NAME_COLLISION 42000 
         chi "FUNCTION %s不存在。在参考手册中查看“函数名称解析”部分"
         eng "FUNCTION %s does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual"
         ger "FUNCTION %s existiert nicht. Erläuterungen im Abschnitt 'Function Name Parsing and Resolution' im Referenzhandbuch"
@@ -7555,7 +7555,7 @@ ER_PATH_LENGTH
         eng "The path specified for %.64T is too long"
         hindi "%.64T के लिए निर्दिष्ट पथ बहुत लंबा है"
         spa "La ruta especificada para %.64T es demasiado larga"
-ER_WARN_DEPRECATED_SYNTAX_NO_REPLACEMENT
+ER_WARN_DEPRECATED_SYNTAX_NO_REPLACEMENT  
         chi "'%s'被弃用，将在将来的版本中删除"
         eng "'%s' is deprecated and will be removed in a future release"
         ger "'%s' ist veraltet und wird in einer zukünftigen Version entfernt werden"
@@ -7594,7 +7594,7 @@ ER_LOCK_ABORTED
         chi "由于待处理的独家锁，等待锁被中止"
         eng "Wait on a lock was aborted due to a pending exclusive lock"
         spa "Se ha abortado la espera por un bloqueo debido a bloqueo exclusivo pendiente"
-ER_DATA_OUT_OF_RANGE 22003
+ER_DATA_OUT_OF_RANGE 22003 
         chi "%s值超出'%s'范围"
         eng "%s value is out of range in '%s'"
         spa "%s valor se encuentra fuera de rango '%s'"
@@ -7629,7 +7629,7 @@ ER_VALUES_IS_NOT_INT_TYPE_ERROR
         eng "VALUES value for partition '%-.64s' must have type INT"
         spa "El valor VALUES para la partición '%-.64s' debe de tener el tipo INT"
         swe "Värden i VALUES för partition '%-.64s' måste ha typen INT"
-ER_ACCESS_DENIED_NO_PASSWORD_ERROR 28000
+ER_ACCESS_DENIED_NO_PASSWORD_ERROR 28000 
         chi "拒绝用户'%s'@'%s'"
         cze "Přístup pro uživatele '%s'@'%s'"
         dan "Adgang nægtet bruger: '%s'@'%s'"
@@ -7684,7 +7684,7 @@ ER_SLAVE_HEARTBEAT_VALUE_OUT_OF_RANGE_MAX
         eng "The requested value for the heartbeat period exceeds the value of `slave_net_timeout' seconds. A sensible value for the period should be less than the timeout"
         spa "El valor de requerimiento para el período de latido excede el valor de `slave_net_timeout` segundos. Un valor sensible para el período debería de ser menor que el 'tiempo agotado'"
 
-ER_STMT_CACHE_FULL
+ER_STMT_CACHE_FULL  
         chi "需要多行语句超过“max_binlog_stmt_cache_size”字节的存储;增加这个mariadbd变量，然后重试"
         eng "Multi-row statements required more than 'max_binlog_stmt_cache_size' bytes of storage."
         spa "Las sentencias Multi-fila requieren de más de 'max_binlog_stmt_cache_size' bytes para almacenaje."
@@ -7731,7 +7731,7 @@ ER_UNDO_RECORD_TOO_BIG
         spa "El registro de historial (log) para deshacer es demasiado grande"
 
 ER_BINLOG_UNSAFE_INSERT_IGNORE_SELECT
-        chi "INSERT IGNORE...SELECT不安全，因为选择由select检索行的顺序确定哪个（如果有）行被忽略。无法预测此顺序，并且在master和slave方面可能有所不同"
+        chi "INSERT IGNORE...SELECT不安全，因为选择由select检索行的顺序确定哪个（如果有）行被忽略。无法预测此顺序，并且在master和slave方面可能有所不同" 
         eng "INSERT IGNORE... SELECT is unsafe because the order in which rows are retrieved by the SELECT determines which (if any) rows are ignored. This order cannot be predicted and may differ on master and the slave"
         spa "INSERT IGNORE... SELECT es no seguro porque el orden en el que las filas se recuperan por el SELECT determina qué filas (si hay alguna) son ignoradas. Este orden no puede ser predicho y puede diferir entre maestro (master) y esclavo"
 
@@ -8100,7 +8100,7 @@ ER_GTID_UNSAFE_CREATE_DROP_TEMPORARY_TABLE_IN_TRANSACTION
 
 ER_GTID_MODE_CAN_ONLY_CHANGE_ONE_STEP_AT_A_TIME
         chi "GTID_MODE的值只能一次更改一步：OFF<-> UPGRODE_STEP_1 <-> UPGRODE_STEP_2 <-> ON。另请注意，此值必须在所有服务器上同时上升或下降;有关说明，请参阅手册。“"
-        eng "The value of GTID_MODE can only change one step at a time: OFF <-> UPGRADE_STEP_1 <-> UPGRADE_STEP_2 <-> ON. Also note that this value must be stepped up or down simultaneously on all servers; see the Manual for instructions."
+        eng "The value of GTID_MODE can only change one step at a time: OFF <-> UPGRADE_STEP_1 <-> UPGRADE_STEP_2 <-> ON. Also note that this value must be stepped up or down simultaneously on all servers; see the Manual for instructions." 
         spa "El valor de GTID_MODE sólo puede cambiar un paso a la vez: OFF <-> UPGRADE_STEP_1 <-> UPGRADE_STEP_2 <-> ON. También ten en cuenta que este valor debe de ser aumentado y disminuido simultaneamente en todos los servidores; mira el Manual para instrucciones."
 
 ER_MASTER_HAS_PURGED_REQUIRED_GTIDS
@@ -8552,7 +8552,7 @@ ER_SLAVE_RLI_INIT_REPOSITORY
         eng "Slave failed to initialize relay log info structure from the repository"
         spa "El esclavo falló al inicializar estructura de información de historial (log) de reenvío desde el repositorio"
 
-ER_ACCESS_DENIED_CHANGE_USER_ERROR 28000
+ER_ACCESS_DENIED_CHANGE_USER_ERROR 28000 
         bgn "Отказан достъп при опит за смяна към потребител %-.48s'@'%-.64s' (използвана парола: %s). Затваряне на връзката"
         chi "访问拒绝尝试更改为用户'%-.48s'@'%-.64s'（使用密码：%s）。断开连接"
         eng "Access denied trying to change to user '%-.48s'@'%-.64s' (using password: %s). Disconnecting"
@@ -8707,7 +8707,7 @@ ER_VIEW_ORDERBY_IGNORED
         chi "查看'%-.192s'.'%-.192s's ORDER BY子句被忽略，因为还有其他ORDER BY子句"
         eng "View '%-.192s'.'%-.192s' ORDER BY clause ignored because there is other ORDER BY clause already"
         spa "Cláusula de vista '%-.192s'.'%-.192s' ORDER BY ignorada porque ya hay otra clásula ORDER BY"
-ER_CONNECTION_KILLED 70100
+ER_CONNECTION_KILLED 70100 
         chi "连接被杀死"
         eng "Connection was killed"
         hindi "कनेक्शन को समाप्त कर दिया गया है"
@@ -8728,7 +8728,7 @@ ER_QUERY_EXCEEDED_ROWS_EXAMINED_LIMIT
         chi "查询执行被中断。查询检查至少%llu行，超过限制行（%llu）。查询结果可能是不完整的"
         eng "Query execution was interrupted. The query examined at least %llu rows, which exceeds LIMIT ROWS EXAMINED (%llu). The query result may be incomplete"
         spa "Se ha interrumpido la ejecución de la consulta (query). La consulta (query) examinó al menos %llu filas, lo cual excede LIMIT ROWS EXAMINED (%llu). El resultado de la consulta (query) puede estar incompleto"
-ER_NO_SUCH_TABLE_IN_ENGINE 42S02
+ER_NO_SUCH_TABLE_IN_ENGINE 42S02 
         chi "表'%-.192s.%-.192s'在引擎中不存在"
         eng "Table '%-.192s.%-.192s' doesn't exist in engine"
         hindi "टेबल '%-.192s.%-.192s' इंजन में मौजूद नहीं है"
@@ -8904,8 +8904,8 @@ ER_SUBQUERIES_NOT_SUPPORTED 42000
         spa "%s no soporta subconsultas (subqueries) o funciones almacenadas"
 ER_SET_STATEMENT_NOT_SUPPORTED 42000
         chi "系统变量%.200s无法在set语句中设置。“"
-        eng "The system variable %.200s cannot be set in SET STATEMENT."
-        spa "La variable del sistema %.200s no se puede poner en SET STATEMENT."
+        eng "The system variable %.200s cannot be set in SET STATEMENT." 
+        spa "La variable del sistema %.200s no se puede poner en SET STATEMENT." 
 ER_UNUSED_9
         chi "你永远不应该看到它"
         eng "You should never see it"
@@ -9090,7 +9090,7 @@ ER_WARN_ONLY_MASTER_LOG_FILE_NO_POS
         eng "CHANGE MASTER TO with a MASTER_LOG_FILE clause but no MASTER_LOG_POS clause may not be safe. The old position value may not be valid for the new binary log file."
         spa "CHANGE MASTER TO mediante una cláusula MASTER_LOG_FILE pero sin existir cláusula MASTER_LOG_POS puede no ser seguro. El valor viejo de la posición puede no ser válido para el nuevo fichero/archivo binario de historial (log)."
 
-ER_QUERY_TIMEOUT
+ER_QUERY_TIMEOUT 
         chi "查询执行中断，超过了最大语句执行时间"
         eng "Query execution was interrupted, maximum statement execution time exceeded"
         spa "Se ha interrumpido la ejecución de la consulta (query), se ha excedido el tiempo máximo de ejecución de sentencia"
@@ -9403,7 +9403,7 @@ ER_PARTITION_DEFAULT_ERROR
         chi "只允许一个默认分区"
         eng "Only one DEFAULT partition allowed"
         spa "Sólo se permite una partición DEFAULT"
-        ukr "Припустимо мати тільки один DEFAULT розділ"
+        ukr "Припустимо мати тільки один DEFAULT розділ" 
 ER_REFERENCED_TRG_DOES_NOT_EXIST
         chi "给定动作时间和事件类型的引用触发'%s'不存在"
         eng "Referenced trigger '%s' for the given action time and event type does not exist"
@@ -9497,10 +9497,7 @@ ER_FLASHBACK_NOT_SUPPORTED
         chi "闪回不支持%s%s"
         eng "Flashback does not support %s %s"
         spa "Retrospectiva no soporta %s %s"
-ER_JSON_NON_UNIQUE_KEY_FOUND
-        chi "同一对象中有重复的键"
-        eng "Duplicate keys in the same object"
-        spa "Duplicar claves en el mismo objeto"
+
 #
 # MyRocks error messages
 #
@@ -10076,3 +10073,7 @@ ER_INCONSISTENT_SLAVE_TEMP_TABLE
         eng "Replicated query '%s' table `%s.%s` can not be temporary"
 ER_VERS_HIST_PART_FAILED
         eng "Versioned table %`s.%`s: adding HISTORY partition(s) failed"
+ER_JSON_NON_UNIQUE_KEY_FOUND
+        chi "同一对象中有重复的键"
+        eng "Duplicate keys in the same object"
+        spa "Duplicar claves en el mismo objeto"
