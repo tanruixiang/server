@@ -9498,10 +9498,6 @@ ER_FLASHBACK_NOT_SUPPORTED
         chi "闪回不支持%s%s"
         eng "Flashback does not support %s %s"
         spa "Retrospectiva no soporta %s %s"
-ER_JSON_NON_UNIQUE_KEY_FOUND
-        chi "同一对象中有重复的键"
-        eng "Duplicate keys in the same object"
-        spa "Duplicar claves en el mismo objeto"
 #
 # MyRocks error messages
 #
@@ -10077,3 +10073,7 @@ ER_INCONSISTENT_SLAVE_TEMP_TABLE
         eng "Replicated query '%s' table `%s.%s` can not be temporary"
 ER_VERS_HIST_PART_FAILED
         eng "Versioned table %`s.%`s: adding HISTORY partition(s) failed"
+ER_JSON_NON_UNIQUE_KEY_FOUND
+        chi "同一对象中有重复的键"
+        eng "Duplicate keys in the same object"
+        spa "Duplicar claves en el mismo objeto"

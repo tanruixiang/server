@@ -4650,7 +4650,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
       if (my_hash_update(&property_hash, (uchar*) search_result,
             (uchar*) (( (LEX_CSTRING_KEYVALUE*) search_result)->key.str),
                       ( (LEX_CSTRING_KEYVALUE*) search_result)->key.length))
-                        goto error;
+        goto error;
     }
   }
   return FALSE;
@@ -4736,7 +4736,7 @@ bool create_kv_pair_and_search_in_hash(LEX_CSTRING_KEYVALUE *&new_entry,
                       &new_entry, sizeof(LEX_CSTRING_KEYVALUE),
                       &new_entry_key_buf, value_len,
                       NullS))
-                      return TRUE;
+      return TRUE;
     memcpy(new_entry_key_buf, value_start, value_len);
     new_entry->key.str= new_entry_key_buf;
     new_entry->key.length= value_len;
@@ -4750,7 +4750,7 @@ bool create_kv_pair_and_search_in_hash(LEX_CSTRING_KEYVALUE *&new_entry,
                       &new_entry_key_buf, key_len,
                       &new_entry_value_buf, value_len,
                       NullS))
-                      return TRUE;
+      return TRUE;
     memcpy(new_entry_key_buf, key_start, key_len);
     memcpy(new_entry_value_buf, value_start, value_len);
     new_entry->key.str= new_entry_key_buf;
@@ -4836,24 +4836,16 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
           DYNAMIC_STRING norm_js, norm_value;
           if (init_dynamic_string(&norm_js, NULL, 0, 0) ||
               init_dynamic_string(&norm_value, NULL, 0, 0))
-          {
-            my_free(new_entry);
-            dynstr_free(&norm_js);
-            dynstr_free(&norm_value);
-            goto error;
-          }
+            goto error_free_space;
+
           if (json_normalize(&norm_js, (const char*) new_entry->value.str,
                                       new_entry->value.length, value->s.cs)||
               json_normalize(&norm_value,
                     ( (LEX_CSTRING_KEYVALUE*) search_result)->value.str,
                     ( (LEX_CSTRING_KEYVALUE*) search_result)->value.length,
                     value->s.cs))
-          {
-            my_free(new_entry);
-            dynstr_free(&norm_js);
-            dynstr_free(&norm_value);
-            goto error;
-          }
+            goto error_free_space;
+
           equal= norm_js.length == norm_value.length &&
                 !strncmp(norm_js.str, norm_value.str, norm_js.length);
           dynstr_free(&norm_js);
@@ -4863,9 +4855,7 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
         if (equal)
         {
           if (have_item)
-          {
             str->append(',');
-          }
           else
           {
             str->append('{');
@@ -4884,6 +4874,10 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
     if (have_item)
       str->append('}');
     return !have_item;
+  error_free_space:
+    my_free(new_entry);
+    dynstr_free(&norm_js);
+    dynstr_free(&norm_value);
   error:
     my_hash_free(&property_hash);
     return TRUE;
@@ -4979,7 +4973,7 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
         if (my_hash_update(&property_hash, (uchar*) search_result,
                   (uchar*) (( (LEX_CSTRING_KEYVALUE*) search_result)->key.str),
                   ( (LEX_CSTRING_KEYVALUE*) search_result)->key.length))
-                  goto error;
+          goto error;
       }
     }
   }
@@ -5159,7 +5153,7 @@ bool check_unique_key_in_object(json_engine_t *js)
 
     if (create_kv_pair_and_search_in_hash(new_entry, key_hash, search_result,
                           key_start, key_end - key_start, NULL, 0))
-                          goto error;
+      goto error;
 
     if (search_result)
     {
@@ -5255,9 +5249,8 @@ String* Item_func_json_intersect::val_str(String *str)
     goto error_return;
 
   if (check_intersect(str, &je1, &je2, FALSE))
-    goto null_return;
-  if (unlikely(je1.s.error||je2.s.error))
     goto error_return;
+
   json_scan_start(&je1, str->charset(), (const uchar *) str->ptr(),
                   (const uchar *) str->ptr() + str->length());
   str= &tmp_js1;
