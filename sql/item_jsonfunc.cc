@@ -4605,7 +4605,7 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
   size_t value_len= 0;
   LEX_CSTRING_KEYVALUE *new_entry= NULL;
   uchar *search_result= NULL;
-
+  DYNAMIC_STRING norm_js;
   if (my_hash_init(PSI_INSTRUMENT_ME, &property_hash, value->s.cs, 0, 0, 0,
     LEX_CSTRING_KEYVALUE::get_hash_key, LEX_CSTRING_KEYVALUE::hash_free,
     HASH_UNIQUE))
@@ -4616,7 +4616,6 @@ bool get_array_hash_from_json(json_engine_t *value, HASH &property_hash)
     if (get_value_from_json(value, value_start, value_len))
       goto error;
 
-    DYNAMIC_STRING norm_js;
     if (init_dynamic_string(&norm_js, NULL, 0, 0))
       goto error;
 
@@ -4781,8 +4780,9 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
       *js= tmp_js;
       if (compare_nested_object(js, value))
       {
-        str->append( (const char*) object_js_start,
-                    object_js_end - object_js_start);
+        if (str->append( (const char*) object_js_start,
+                    object_js_end - object_js_start))
+          return TRUE;
         return FALSE;
       }
       return TRUE;
@@ -4795,6 +4795,7 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
     size_t value_len= 0;
     LEX_CSTRING_KEYVALUE *new_entry= NULL;
     uchar* search_result= NULL;
+    DYNAMIC_STRING norm_js, norm_value;
     if (get_hash_from_json(value, property_hash))
       goto error;
     /*
@@ -4833,7 +4834,6 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
                   new_entry->value.length);
         else
         {
-          DYNAMIC_STRING norm_js, norm_value;
           if (init_dynamic_string(&norm_js, NULL, 0, 0) ||
               init_dynamic_string(&norm_value, NULL, 0, 0))
             goto error_free_space;
@@ -4855,29 +4855,34 @@ bool json_find_intersect_with_object(String *str, json_engine_t *js,
         if (equal)
         {
           if (have_item)
-            str->append(',');
+          {
+            if (str->append(','))
+              goto string_append_error;
+          }
           else
           {
-            str->append('{');
+            if (str->append('{'))
+              goto string_append_error;
             have_item= TRUE;
           }
-          str->append('"');
-          str->append(new_entry->key.str, new_entry->key.length);
-          str->append('"');
-          str->append(':');
-          str->append(new_entry->value.str, new_entry->value.length);
+          if (str->append('"') ||
+              str->append(new_entry->key.str, new_entry->key.length) ||
+              str->append("\":",2) ||
+              str->append(new_entry->value.str, new_entry->value.length))
+            goto string_append_error;
         }
         my_free(new_entry);
       }
     }
     my_hash_free(&property_hash);
-    if (have_item)
-      str->append('}');
+    if (have_item && str->append('}'))
+      return TRUE;
     return !have_item;
   error_free_space:
-    my_free(new_entry);
     dynstr_free(&norm_js);
     dynstr_free(&norm_value);
+  string_append_error:
+    my_free(new_entry);
   error:
     my_hash_free(&property_hash);
     return TRUE;
@@ -4912,14 +4917,13 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
   size_t value_len= 0;
   uchar* search_result= NULL;
   LEX_CSTRING_KEYVALUE *new_entry= NULL;
-
+  DYNAMIC_STRING norm_val;
   if (get_hash_from_json(js, property_hash))
     goto error;
   while (json_scan_next(value) == 0 && value->state == JST_VALUE)
   {
     if (get_value_from_json(value, value_start, value_len))
       goto error;
-    DYNAMIC_STRING norm_val;
     if (init_dynamic_string(&norm_val, NULL, 0, 0))
       goto error;
     if (value->value_type == JSON_VALUE_STRING)
@@ -4952,13 +4956,18 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
     else
     {
       if (have_item)
-        str->append(',');
+      {
+        if (str->append(','))
+          goto string_append_error;
+      }
       else
       {
-        str->append('[');
+        if (str->append('['))
+          goto string_append_error;
         have_item= TRUE;
       }
-      str->append( (const char*) value_start, value_len);
+      if (str->append( (const char*) value_start, value_len))
+        goto string_append_error;
       new_entry->count= ( (LEX_CSTRING_KEYVALUE*) search_result)->count - 1;
       if (new_entry->count == 0)
       {
@@ -4978,11 +4987,12 @@ bool json_intersect_between_arrays(String *str, json_engine_t *js,
     }
   }
 
-  if (have_item)
-    str->append(']');
+  if (have_item && str->append(']'))
+    return TRUE;
   my_hash_free(&property_hash);
   return !have_item;
-
+string_append_error:
+  my_free(new_entry);
 error:
   my_hash_free(&property_hash);
   return TRUE;
@@ -5006,7 +5016,8 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
 
     if (json_compare_arrays_in_order(js, value))
     {
-      str->append( (const char*) value_start, value_end - value_start);
+      if (str->append( (const char*) value_start, value_end - value_start))
+        return TRUE;
       return FALSE;
     }
     return TRUE;
@@ -5112,13 +5123,15 @@ bool check_intersect(String *str, json_engine_t *js,
       return TRUE;
     if (js->value_type == JSON_VALUE_NUMBER)
     {
-      str->append( (const char *) js->value,js->value_len);
+      if (str->append( (const char *) js->value,js->value_len))
+        return TRUE;
     }
     else if (js->value_type == JSON_VALUE_STRING)
     {
-      str->append('"');
-      str->append( (const char *) js->value, js->value_len);
-      str->append('"');
+      if (str->append('"') ||
+          str->append( (const char *) js->value, js->value_len) ||
+          str->append('"'))
+        return TRUE;
     }
     return FALSE;
   }
