@@ -5308,6 +5308,12 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
 bool check_intersect(String *str, json_engine_t *js,
             json_engine_t *value, bool compare_whole)
 {
+  DBUG_EXECUTE_IF("json_check_min_stack_requirement",
+                  {
+                    long arbitrary_var;
+                    long stack_used_up= (available_stack_size(current_thd->thread_stack, &arbitrary_var));
+                    ALLOCATE_MEM_ON_STACK(my_thread_stack_size-stack_used_up-STACK_MIN_SIZE);
+                  });
   switch (js->value_type)
   {
   case JSON_VALUE_OBJECT:
@@ -5391,6 +5397,12 @@ error:
 */
 bool check_unique_key_in_js(json_engine_t *js)
 {
+  DBUG_EXECUTE_IF("json_check_min_stack_requirement",
+                  {
+                    long arbitrary_var;
+                    long stack_used_up= (available_stack_size(current_thd->thread_stack, &arbitrary_var));
+                    ALLOCATE_MEM_ON_STACK(my_thread_stack_size-stack_used_up-STACK_MIN_SIZE);
+                  });
   if (js->value_type == JSON_VALUE_OBJECT)
   {
     return check_unique_key_in_object(js);
