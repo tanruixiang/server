@@ -5246,67 +5246,76 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
     js     - json document1(json1)
     value  - json document2(json2)
     str    - result string
-    compare_whole - For comparisons between scalars. If true, the two values
-                    compared need to be identical. Else find the largest
-                    one-to-one matching intersection between two objects or
-                    arrays.
+    compare_whole - If compare_whole is true(When the array or object or scalar
+                    is not at the outermost layer, compare_whole is true.),
+                    it means that the two jsons being compared, whether they
+                    are scalars, arrays or objects, must be exactly equal to
+                    have an intersection. Different types indicate that there is
+                    no intersection between jsons. If two scalars are compared,
+                    there is an intersection between them, which means that the
+                    two scalars are exactly the same. If two arrays are compared,
+                    there is an intersection between them, which means that the
+                    values at all indices of the two arrays are equal. If two
+                    objects are compared, there is an intersection between them,
+                    which means that all kv pairs of the two objects are equal.
 
   IMPLEMENTATION
-  We can compare two json datatypes if they are of same type to check if
-  they are equal. When comparing between json1 and json2.there can be
-  following cases(When false is returned, the result of the intersection
-  will be added to str):
+  When comparing between json1 and json2, there can be following cases(When
+  there is an intersection, the intersection will be added to str):
   1  When at least one of the two json documents is of scalar type:
      1.1  If json1 and json2 both are scalar and they have same type
-          and value, then return false, otherwise, return true.
+          and value, indicate that there is an intersection between them. The
+          intersection is this scalar. Else, there is no intersection.
      1.2  If json1 is scalar but other is array (or vice versa):
           1.2.1 if compare_whole = true:
-            Return true.
+            Indicate that there is no intersection between them.
           1.2.2 if compare_whole = false:
-            Return false if array has at least one element of
-            same type and value as scalar.
-      1.3 If one is scalar and other is object, then return true because
-          it can't be compared.
+            If the array has at least one element of same type and value as scalar,
+            indicate that there is an intersection between them. The intersection
+            is this scalar. Else there is no intersection between them.
+      1.3 If one is scalar and other is object, indicate that there is no
+          intersection between them, because they can not be compared.
 
   2  When json1 and json2 are non-scalar type:
-      2.1  If both arguments are arrays:
-           Use hash to store all the normalized values in the json1 array
-           and count the number of the same values.
-           Scan the values in json2 and normalize them, find out whether there
-           are equal values in the hash, and count the number.
-           2.1.1 compare_whole = true:
-             The values, order and length of the two arrays are identical,
-             return false, otherwise return true.
-           2.1.2 compare_whole = false:
-             If at least one value is equal, return false,
-             otherwise return true.
-      2.2  If both arguments are objects:
-           Use hash to store all the key-value pairs in the json1 object.
-           Scan the key-value pair in json2. Find out if there is the same key
-           in the hash. If yes, take out the value in the corresponding key and
-           normalize it. Then compare it with the value(normalization is also
-           required) in the json2's key-value pair.
-           2.2.1 compare_whole = true:
-             All key value pairs of the two objects are the same and return
-             false, otherwise return true.
-           2.2.2 compare_whole = false:
-             If at least one key-value pair of the two objects is the same,
-             return false, otherwise return true.
-      2.3  If either of json document or value is array and other is object:
-           2.3.1 compare_whole = true:
-             Return true.
-           2.3.2 compare_whole = false:
-             Iterate over the array, if an element of type object is found,
-             then compare it with the object (which is the other arguemnt).
-             If the entire object matches i.e all they key value pairs match,
-             then return false else return true.
-
-
-  When the array or object is not at the outermost layer, compare_whole is
-  true. At this time, it is required that the two are identical. Whencomparing
-  objects with objects, all key-value pairs needs to be exactly the same as the
-  another.When comparing an array with an array, the order, value and length of
-  the array should be identical.
+     2.1  If both jsons are arrays:
+          Use hash to store all the normalized values in the json1 array
+          and count the number of the same values.
+          Scan the values in json2 and normalize them, find out whether there
+          are equal values in the hash. Every time the same value is found in
+          the hash table, the count in the hash table need to be updated.
+          2.1.1 compare_whole = true:
+            If the values of all indices in the two arrays are exactly equal,
+            there is an intersection between them, and the intersection is any
+            one of these two arrays. Else there is no intersection between them.
+          2.1.2 compare_whole = false:
+            If there are equal values at any index of two arrays, then there
+            is an intersection between them. The intersection is the longest
+            array that can be obtained by matching equal values between two
+            arrays. Else there is no intersection between them.
+     2.2  If both jsons are objects:
+          Use hash to store all the key-value pairs in the json1 object.
+          Scan the key-value pair in json2. Find out if there is the same key
+          in the hash. If yes, take out the value in the corresponding key and
+          normalize it. Then compare it with the value(normalization is also
+          required) in the json2's key-value pair.
+          2.2.1 compare_whole = true:
+            If all kv pairs of two objects are equal, it means that there is an
+            intersection between them, and the intersection is any one of these
+            two objects. Else, there is no intersection between them.
+          2.2.2 compare_whole = false:
+            If there are equal kv pairs for two objects, it means that there is
+            an intersection between them, and the intersection is all the equal
+            kv pairs of these two objects. Else, there is no intersection
+            between them.
+     2.3  if one of the jsons is an object and the other is an array:
+          2.3.1 compare_whole = true:
+            Indicate that there is no intersection between them.
+          2.3.2 compare_whole = false:
+            Iterate over the array, if an element of type object is found,
+            then compare it with the object. If the entire object matches
+            i.e all they key value pairs match, indicates that there is an
+            intersection between them, and the intersection is this object.
+            Else, there is no intersection between them.
 
   RETURN
     FALSE  - if two json documents have intersection.
