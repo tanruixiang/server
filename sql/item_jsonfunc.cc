@@ -5258,6 +5258,13 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
                     values at all indices of the two arrays are equal. If two
                     objects are compared, there is an intersection between them,
                     which means that all KV pairs of the two objects are equal.
+                    if compare_whole is false. When a value is a subset of
+                    another value, there is an intersection. For example, taking
+                    the intersection of two objects is taking their common KV
+                    pairs. The intersection of array and array is to take their
+                    common elements. An object and a scalar take an intersection
+                    with an array. As long as the object or scalar exists in the
+                    array, the intersection is the object or the scalar.
 
   IMPLEMENTATION
   When comparing between json1 and json2, there can be following cases(When
