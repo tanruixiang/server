@@ -2477,7 +2477,7 @@ SELECT JSON_INTERSECT(@json1, @json2);
 ERROR HY000: Duplicate keys in the same object
 # syntax error
 SET @json1= '{"key1":"value1"';
-SET @json2= '{"key3":"val3", "key2":"val2", "key4":"val4", "key3":"val3", "key5":"val5"}';
+SET @json2= '{"key1":"val3", "key2":"val2", "key4":"val4", "key3":"val3", "key5":"val5"}';
 SELECT JSON_INTERSECT(@json1, @json2);
 JSON_INTERSECT(@json1, @json2)
 NULL

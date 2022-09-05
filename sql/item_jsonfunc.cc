@@ -5257,7 +5257,7 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
                     there is an intersection between them, which means that the
                     values at all indices of the two arrays are equal. If two
                     objects are compared, there is an intersection between them,
-                    which means that all kv pairs of the two objects are equal.
+                    which means that all KV pairs of the two objects are equal.
 
   IMPLEMENTATION
   When comparing between json1 and json2, there can be following cases(When
@@ -5299,13 +5299,13 @@ bool json_find_intersect_with_array(String *str, json_engine_t *js,
           normalize it. Then compare it with the value(normalization is also
           required) in the json2's key-value pair.
           2.2.1 compare_whole = true:
-            If all kv pairs of two objects are equal, it means that there is an
+            If all KV pairs of two objects are equal, it means that there is an
             intersection between them, and the intersection is any one of these
             two objects. Else, there is no intersection between them.
           2.2.2 compare_whole = false:
-            If there are equal kv pairs for two objects, it means that there is
+            If there are equal KV pairs for two objects, it means that there is
             an intersection between them, and the intersection is all the equal
-            kv pairs of these two objects. Else, there is no intersection
+            KV pairs of these two objects. Else, there is no intersection
             between them.
      2.3  if one of the jsons is an object and the other is an array:
           2.3.1 compare_whole = true:
@@ -5454,6 +5454,8 @@ String* Item_func_json_intersect::val_str(String *str)
 
   json_scan_start(&je1, js1->charset(), (const uchar *) js1->ptr(),
                   (const uchar *) js1->ptr() + js1->length());
+  json_scan_start(&je2, js2->charset(), (const uchar *) js2->ptr(),
+                  (const uchar *) js2->ptr() + js2->length());
   /*
     Duplicate keys are not allowed in the same object in json, otherwise it will
     lead to ambiguity. We will use the check_unique_key_in_js to check the json
@@ -5461,6 +5463,8 @@ String* Item_func_json_intersect::val_str(String *str)
   */
   tmp_jse= je1;
   json_read_value(&je1);
+  if (unlikely(je1.s.error))
+    goto error_return;
   if (check_unique_key_in_js(&je1))
   {
     if (unlikely(je1.s.error))
@@ -5471,10 +5475,11 @@ String* Item_func_json_intersect::val_str(String *str)
   if (unlikely(je1.s.error))
     goto error_return;
   je1= tmp_jse;
-  json_scan_start(&je2, js2->charset(), (const uchar *) js2->ptr(),
-                  (const uchar *) js2->ptr() + js2->length());
+
   tmp_jse= je2;
   json_read_value(&je2);
+  if (unlikely(je2.s.error))
+    goto error_return;
   if (check_unique_key_in_js(&je2))
   {
     if (unlikely(je2.s.error))
@@ -5485,6 +5490,7 @@ String* Item_func_json_intersect::val_str(String *str)
   if (unlikely(je2.s.error))
     goto error_return;
   je2= tmp_jse;
+
   if (json_read_value(&je1) || json_read_value(&je2))
     goto error_return;
 
